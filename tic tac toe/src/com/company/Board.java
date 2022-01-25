@@ -8,7 +8,6 @@ import java.awt.image.BufferedImage;
 public class Board extends JPanel implements MouseListener {
 
     BufferedImage buffer;
-
     Board()
     {
         setSize(1000,700);
@@ -26,13 +25,17 @@ public class Board extends JPanel implements MouseListener {
 
     public void reset()
     {
-        //idk yet
+        Game game = new Game();
+        String[][][] board = game.getBoard();
     }
 
 
     public void paint(Graphics g)
     {
+        for (int s=0;s<3;s++)
+        {
 
+        }
     }
 
 
