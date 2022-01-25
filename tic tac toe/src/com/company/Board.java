@@ -10,7 +10,7 @@ public class Board extends JPanel implements MouseListener {
     BufferedImage buffer;
     Board()
     {
-        setSize(1000,700);
+        setSize(400,700);
         addMouseListener(this);
 
         try
@@ -32,10 +32,9 @@ public class Board extends JPanel implements MouseListener {
 
     public void paint(Graphics g)
     {
-        for (int s=0;s<3;s++)
-        {
-
-        }
+        g.setColor(Color.BLACK);
+        g.fillRect(0,0,400,700);
+        //go thorugh board say at start of each row draw first line, if position equals
     }
 
 
