@@ -1,7 +1,7 @@
 package com.company;
 
 public class Game {
-    String[][][] board = new String[4][4][4]; //[s (sheet)],[r (row)], [c (collumn)
+    char[][][] board = new char[4][4][4]; //[s (sheet)],[r (row)], [c (collumn)
     boolean win = false;
     Game(){
         // E = empty, F = filled
@@ -9,20 +9,19 @@ public class Game {
         for(int sheet = 0; sheet < 4; sheet++){
             for(int row = 0; row < 4; row++){
                 for(int col = 0; col < 4; col++){
-                    board[sheet][row][col] = "E";
+                    board[sheet][row][col] = 'E';
                 }
             }
         }
 
     }
-
-    public String[][][] getBoard() {
+    public char[][][] getBoard() {
         return board;
     }
 
     public boolean win(){
+        //give scenarios
         return win;
     }
 
-    //include win methods
 }
