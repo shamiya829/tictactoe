@@ -6,10 +6,9 @@ public class Main {
 
     public static void main(String[] args)
     {
-
         Game game = new Game();
         char[][][] board = game.getBoard();
-
+        //hi
 
         new GameFrame("4X4X4 Tic Tac Toe");
 
