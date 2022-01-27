@@ -7,6 +7,9 @@ import java.awt.image.BufferedImage;
 
 public class Board extends JPanel implements MouseListener {
 
+    char[][][] board;
+    Game game = new Game();
+
     BufferedImage buffer;
     Board()
     {
@@ -25,8 +28,7 @@ public class Board extends JPanel implements MouseListener {
 
     public void reset()
     {
-        Game game = new Game();
-        char[][][] board = game.getBoard();
+        this.board = game.getBoard();
     }
 
 
@@ -37,16 +39,6 @@ public class Board extends JPanel implements MouseListener {
         b.fillRect(0,0,400,750);
         g.drawImage(buffer, 0, 0, null);
 
-        for(int sheet=0;sheet<4;sheet++)
-        {
-            for(int row=0;row<4;row++)
-            {
-                for(int col=0;col<4;col++)
-                {
-                    //draw player moves (x and o here)
-                }
-            }
-        }
 
         for (int y =50;y<700;y+=225) //boxes drawn
         {
@@ -56,10 +48,28 @@ public class Board extends JPanel implements MouseListener {
             {
                 g.drawLine(yx,y,yx,y+200);
             }
-            for (int hx=y+50;hx<y+250;hx+=50)
+            for (int hx=y+50;hx<y+250;hx+=50) //horizontal lines
             {
                 g.drawLine(100,hx,300,hx);
             }
+        }
+
+        int s=0,r=0,c=0; //used to check array values
+        for(int sheet=50;sheet<700;sheet+=225) //will run through each box drawn onto board
+        {
+            for(int row=sheet+50;row<sheet+250;row+=50)
+            {
+                for(int col=150;col<300;col+=50)
+                {
+                    if (board[s][r][c] != '-')
+                    {
+                         //draw corripoinding player stuff
+                    }
+                    c++;
+                }
+                r++;
+            }
+            s++;
         }
 
         //lines
