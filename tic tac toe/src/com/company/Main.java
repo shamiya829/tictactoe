@@ -40,7 +40,7 @@ public class Main {
                 System.out.println("Player one enter the col you want to play on: ");
                 col = keyboard.nextInt();
 
-                if (board[sheet][row][col] != 'E') {// i changed it to a comparison statement cuz u used board u can also use isEmpty(sheet, row, col) in Game
+                if (board[sheet][row][col] != '-') {// i changed it to a comparison statement cuz u used board u can also use isEmpty(sheet, row, col) in Game
                     System.out.println("That is not a valid move!");
                     continue;
                 } else {

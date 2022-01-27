@@ -9,7 +9,7 @@ public class Game {
         for(int sheet = 0; sheet < 4; sheet++){
             for(int row = 0; row < 4; row++){
                 for(int col = 0; col < 4; col++){
-                    board[sheet][row][col] = 'E';
+                    board[sheet][row][col] = '-';
                 }
             }
         }
@@ -20,7 +20,7 @@ public class Game {
     }
 
     public boolean isEmpty(int s, int r, int c){
-        if(board[s][r][c] == 'E')
+        if(board[s][r][c] == '-')
             return true;
         return false;
     }
@@ -35,13 +35,13 @@ public class Game {
         for(int row = 0; row < board.length; row++) {
             int numEqual = 0;
             char val = board[0][row][0];
-            if (val == 'E') continue;
+            if (val == '-') continue;
             for(int column = 1; column < board.length; column ++) {
 
                 for(int sheet = 0; sheet < board.length; sheet++){
                     char nextChar = board[0][row][column];
                     char nextNextChar = board[sheet][row][column];
-                if(nextChar == 'E' || nextNextChar == 'E')
+                if(nextChar == '-' || nextNextChar == '-')
                     break;
                 else if (val != nextChar || nextChar != nextNextChar)
                     break;
