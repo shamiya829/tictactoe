@@ -2,7 +2,7 @@ package com.company;
 
 public class Game {
     char[][][] board = new char[4][4][4]; //[s (sheet)],[r (row)], [c (collumn)
-    boolean win = false;
+
     Game(){
         // E = empty, F = filled
 
@@ -26,8 +26,40 @@ public class Game {
     }
 
     public boolean win(){
-        //give scenarios
-        return win;
+        if(rowWin()||colWin()||diagWin())
+            return true;
+        return false;
+    }
+
+    public boolean rowWin(){
+        for(int row = 0; row < board.length; row++) {
+            int numEqual = 0;
+            char val = board[0][row][0];
+            if (val == 'E') continue;
+            for(int column = 1; column < board.length; column ++) {
+
+                for(int sheet = 0; sheet < board.length; sheet++){
+                    char nextChar = board[0][row][column];
+                    char nextNextChar = board[sheet][row][column];
+                if(nextChar == 'E' || nextNextChar == 'E')
+                    break;
+                else if (val != nextChar || nextChar != nextNextChar)
+                    break;
+                else numEqual++;
+                }
+            }
+            if(numEqual == 4)
+                return true;
+        }
+        return false;
+    }
+
+    public boolean colWin(){
+        return false;
+    }
+
+    public boolean diagWin(){
+        return false;
     }
 
 }
