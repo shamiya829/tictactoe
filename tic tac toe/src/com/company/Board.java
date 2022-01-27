@@ -26,14 +26,17 @@ public class Board extends JPanel implements MouseListener {
     public void reset()
     {
         Game game = new Game();
-        String[][][] board = game.getBoard();
+        char[][][] board = game.getBoard();
     }
 
 
     public void paint(Graphics g)
     {
-        g.setColor(Color.BLACK);
-        g.fillRect(0,0,400,700);
+        Graphics b = buffer.createGraphics();
+        b.setColor(Color.BLACK);
+        b.fillRect(0,0,400,700);
+        g.drawImage(buffer, 0, 0, null);
+
         //go thorugh board say at start of each row draw first line, if position equals
     }
 

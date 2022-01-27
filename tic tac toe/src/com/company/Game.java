@@ -19,6 +19,12 @@ public class Game {
         return board;
     }
 
+    public boolean isEmpty(int s, int r, int c){
+        if(board[s][r][c] == 'E')
+            return true;
+        return false;
+    }
+
     public boolean win(){
         //give scenarios
         return win;

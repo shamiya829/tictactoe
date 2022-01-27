@@ -7,10 +7,13 @@ public class Main {
     public static void main(String[] args)
     {
         Game game = new Game();
-        String[][][] board = game.getBoard();
+        char[][][] board = game.getBoard();
 
 
-        //new GameFrame("tictac toe");
+        new GameFrame("4X4X4 Tic Tac Toe");
+
+        displayBoard(board);
+
         Scanner keyboard = new Scanner(System.in);
 
         System.out.println("Enter player 1 name");
@@ -37,12 +40,12 @@ public class Main {
                 System.out.println("Player one enter the col you want to play on: ");
                 col = keyboard.nextInt();
 
-                if (!board[sheet][row][col].isEmpty()) {
+                if (board[sheet][row][col] != 'E') {// i changed it to a comparison statement cuz u used board u can also use isEmpty(sheet, row, col) in Game
                     System.out.println("That is not a valid move!");
                     continue;
                 } else {
-                    String s = "";
-                    s += playerOne.getLetter();
+                    char s;
+                    s = playerOne.getLetter();
                     board[sheet][row][col] = s; //player places a move!!
                     turn++; //should be an even number now (playe2)}
                 }
@@ -56,23 +59,23 @@ public class Main {
                 System.out.println("Player 2 enter the col you want to play on: ");
                 col = keyboard.nextInt();
 
-                if (!board[sheet][row][col].isEmpty()) {
+                if (board[sheet][row][col] != 'E') {
                     System.out.println("That is not a valid move!");
                     continue;
                 } else {
-                    String s = "";
-                    s += playerTwo.getLetter();
+                    char s;
+                    s = playerTwo.getLetter();
                     board[sheet][row][col] = s; //player places a move!!
                     turn++; //should be an odd number now (playe1)}
                 }
             }
         }
-        displayBoard(board);
 
-        //Tavishee Shishulakr/Mr.Tully/4th period
+        //Tavishee Shishulakr/Mr.Tully/4th Period
+        //Shamiya Lin/Mr. Tully/4th Period
     }
 
-    public static void displayBoard(String[][][] board)
+    public static void displayBoard(char[][][] board)
     {
         for (int i = 0; i < 4; i++) {
 
