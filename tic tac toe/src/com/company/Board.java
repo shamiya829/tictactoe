@@ -11,6 +11,8 @@ public class Board extends JPanel implements MouseListener {
 
     char[][][] board;
     Game game;
+    Player player1,player2;
+    boolean player1turn;
 
     BufferedImage buffer,x,o;
     Board()
@@ -35,6 +37,9 @@ public class Board extends JPanel implements MouseListener {
     {
         this.game = new Game();
         this.board = game.getBoard();
+        this.player1 = new Player("player1",'x');
+        this.player2 = new Player("player2",'o');
+        this.player1turn = true;
     }
 
 
@@ -89,8 +94,12 @@ public class Board extends JPanel implements MouseListener {
             s++;
         }
 
-        //lines
-        //go thorugh board say at start of each row draw first line, if position equals
+        if (player1turn)
+        {
+            //draw string "player one (x) play your turn"
+        }
+        else
+            //draw string "player two (o) play your turn"
     }
 
 
@@ -99,10 +108,41 @@ public class Board extends JPanel implements MouseListener {
 
     }
 
+    int clicked = 0;
     @Override
     public void mousePressed(MouseEvent e) //use this one
     {
+        int x = e.getX();
+        int y = e.getY();
 
+        int s=0,r=0,c=0;
+        for(int sheet=50;sheet<950;sheet+=225) //will run through each box drawn onto board
+        {
+            if (s>3)
+                break;
+            for(int row=sheet+50;row<sheet+250;row+=50)
+            {
+                if (r>3)
+                    break;
+                for(int col=150;col<300;col+=50)
+                {
+                    if (c>3)
+                        break;
+                    if ((x>=col && x <= col+50) && (y>=row && y<=row+50)) //if you clicked the box
+                    {
+                        if (board[s][r][c] != '-') {
+                            if (player1turn) {
+                                board[s][r][c] = 'x';
+                            } else
+                                board[s][r][c] = 'o';
+                        }
+                    }
+                    c++;
+                }
+                r++;
+            }
+            s++;
+        }
     }
 
     @Override
