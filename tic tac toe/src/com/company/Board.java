@@ -1,16 +1,18 @@
 package com.company;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class Board extends JPanel implements MouseListener {
 
     char[][][] board;
-    Game game = new Game();
+    Game game;
 
-    BufferedImage buffer;
+    BufferedImage buffer,x,o;
     Board()
     {
         setSize(400,975);
@@ -19,15 +21,19 @@ public class Board extends JPanel implements MouseListener {
         try
         {
             buffer = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+            x = ImageIO.read((new File("images\\x.png")));
+            o = ImageIO.read(new File("images\\o.png"));
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
+        reset();
     }
 
     public void reset()
     {
+        this.game = new Game();
         this.board = game.getBoard();
     }
 
@@ -55,22 +61,33 @@ public class Board extends JPanel implements MouseListener {
         }
 
         int s=0,r=0,c=0; //used to check array values
-       /* for(int sheet=50;sheet<700;sheet+=225) //will run through each box drawn onto board
+        for(int sheet=50;sheet<950;sheet+=225) //will run through each box drawn onto board
         {
+            if (s>3)
+                break;
             for(int row=sheet+50;row<sheet+250;row+=50)
             {
+                if (r>3)
+                    break;
                 for(int col=150;col<300;col+=50)
                 {
+                    if (c>3)
+                        break;
                     if (board[s][r][c] != '-')
                     {
-                         //draw corripoinding player stuff
+                         if (board[s][r][c] == 'x')
+                         {
+                             g.drawImage(x,row+1,col+1,null);
+                         }
+                         else
+                             g.drawImage(o,row+1,col+1,null);
                     }
                     c++;
                 }
                 r++;
             }
             s++;
-        }*/
+        }
 
         //lines
         //go thorugh board say at start of each row draw first line, if position equals
