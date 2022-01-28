@@ -13,7 +13,7 @@ public class Board extends JPanel implements MouseListener {
     BufferedImage buffer;
     Board()
     {
-        setSize(400,750);
+        setSize(400,975);
         addMouseListener(this);
 
         try
@@ -36,11 +36,11 @@ public class Board extends JPanel implements MouseListener {
     {
         Graphics b = buffer.createGraphics();
         b.setColor(Color.BLACK);
-        b.fillRect(0,0,400,750);
+        b.fillRect(0,0,400,975);
         g.drawImage(buffer, 0, 0, null);
 
 
-        for (int y =50;y<700;y+=225) //boxes drawn
+        for (int y =50;y<950;y+=225) //boxes drawn
         {
             g.setColor(Color.WHITE);
             g.drawRect(100,y,200,200);
@@ -55,7 +55,7 @@ public class Board extends JPanel implements MouseListener {
         }
 
         int s=0,r=0,c=0; //used to check array values
-        for(int sheet=50;sheet<700;sheet+=225) //will run through each box drawn onto board
+       /* for(int sheet=50;sheet<700;sheet+=225) //will run through each box drawn onto board
         {
             for(int row=sheet+50;row<sheet+250;row+=50)
             {
@@ -70,7 +70,7 @@ public class Board extends JPanel implements MouseListener {
                 r++;
             }
             s++;
-        }
+        }*/
 
         //lines
         //go thorugh board say at start of each row draw first line, if position equals
