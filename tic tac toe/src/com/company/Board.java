@@ -9,6 +9,9 @@ import java.io.File;
 
 public class Board extends JPanel implements MouseListener {
 
+    //to do: set up g font and write string to tell players who's turn it is
+    //set up starting screen that lets you pick if u wanna play player v player or player v ai (adjust code for ai)
+
     char[][][] board;
     Game game;
     Player player1,player2;
