@@ -102,6 +102,9 @@ public class Board extends JPanel implements MouseListener {
             //draw string "player one (x) play your turn"
         }
         else
+        {
+
+        }
             //draw string "player two (o) play your turn"
     }
 
