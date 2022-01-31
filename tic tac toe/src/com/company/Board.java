@@ -121,35 +121,56 @@ public class Board extends JPanel implements MouseListener {
         int x = e.getX();
         int y = e.getY();
 
+        System.out.println("x clicked: " + x);
+        System.out.println("y clicked: " + y);
+
         int s=0,r=0,c=0;
         for(int sheet=50;sheet<950;sheet+=225) //will run through each box drawn onto board
         {
-            if (s>3)
+            System.out.println("S : " + s + " r: " + r+ " c: "+c);
+            System.out.println("going through sheet");
+
+            if (s>4)
                 break;
-            for(int row=sheet+50;row<sheet+250;row+=50)
+
+            for(int row=sheet;row<=sheet+200;row+=50)
             {
-                if (r>3)
+                System.out.println("going through row");
+
+                if (r>4)
                     break;
+
                 for(int col=150;col<300;col+=50)
                 {
-                    if (c>3)
+                    System.out.println("going through col");
+                    if (c>4)
                         break;
                     if ((x>=col && x <= col+50) && (y>=row && y<=row+50)) //if you clicked the box
                     {
-                        if (board[s][r][c] != '-') {
-                            if (player1turn) {
+                        if (board[s][r][c] == '-')
+                        {
+                            if (player1turn)
+                            {
                                 board[s][r][c] = 'x';
-                                System.out.println("");
-                            } else
+                                System.out.println("x placed");
+                                player1turn = !player1turn;
+                            }
+                            else
+                            {
                                 board[s][r][c] = 'o';
+                                player1turn = !player1turn;
+                                System.out.println("o placed");
+                            }
                         }
                     }
                     c++;
                 }
                 r++;
             }
+            System.out.println("AT S");
             s++;
         }
+        System.out.println("out of loop");
         repaint();
     }
 

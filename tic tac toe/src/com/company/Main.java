@@ -12,7 +12,7 @@ public class Main {
 
         new GameFrame("4X4X4 Tic Tac Toe");
 
-        displayBoard(board);
+        /*displayBoard(board);
 
         Scanner keyboard = new Scanner(System.in);
 
@@ -69,7 +69,7 @@ public class Main {
                     turn++; //should be an odd number now (playe1)}
                 }
             }
-        }
+        }*/
 
         //Tavishee Shishulakr/Mr.Tully/4th Period
         //Shamiya Lin/Mr. Tully/4th Period
