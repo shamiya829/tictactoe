@@ -13,7 +13,7 @@ public class Board extends JPanel implements MouseListener {
     //set up starting screen that lets you pick if u wanna play player v player or player v ai (adjust code for ai)
 
     char[][][] board;
-    Game game;
+    Game3 game;
     Player player1,player2;
     boolean player1turn;
 
@@ -38,7 +38,7 @@ public class Board extends JPanel implements MouseListener {
 
     public void reset()
     {
-        this.game = new Game();
+        this.game = new Game3();
         this.board = game.getBoard();
         this.player1 = new Player("player1",'x');
         this.player2 = new Player("player2",'o');
@@ -139,6 +139,7 @@ public class Board extends JPanel implements MouseListener {
                         if (board[s][r][c] != '-') {
                             if (player1turn) {
                                 board[s][r][c] = 'x';
+                                System.out.println("");
                             } else
                                 board[s][r][c] = 'o';
                         }
@@ -149,6 +150,7 @@ public class Board extends JPanel implements MouseListener {
             }
             s++;
         }
+        repaint();
     }
 
     @Override
