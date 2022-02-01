@@ -109,7 +109,19 @@ public class Game3 {
         {
             return pos;
         }
-        if ()
+
+        //checking second diagonal from top left to bottom right
+        pos = board[1][1][1];
+        if (pos=='-') //if its empty
+        {
+            return 'n';
+        }
+
+        if (board[1][1][1] == board[2][2][2] && board[3][3][3]==board[4][4][4] && board[1][1][1] ==board[4][4][4])
+        {
+            return pos;
+        }
+
         return 'n';
     }
 
