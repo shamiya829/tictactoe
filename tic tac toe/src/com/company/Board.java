@@ -68,27 +68,55 @@ public class Board extends JPanel implements MouseListener {
             }
         }
 
+
         int s=0,r=0,c=0; //used to check array values
-        for(int sheet=50;sheet<=950;sheet+=225) //will run through each box drawn onto board
+
+
+
+        /*for(int sheet=50;sheet<=950;sheet+=225) //will run through each box drawn onto board
         {
             if (s>3)
                 break;
             for(int col=150;col<=350;col+=50)
             {
+                r=0;
                 if (r>3)
                     break;
                 for(int row=sheet-50;row<=sheet+250;row+=50)
+                {
+                    c=0;
+                    if (c>3)
+                        break;
+
+                    c++;
+                }
+                r++;
+            }
+            s++;
+        }*/
+        for(int sheet=50;sheet<=950;sheet+=225) //will run through each box drawn onto board
+        {
+            r=0;
+            if (s>3)
+                break;
+
+            for(int row=sheet;row<=sheet+200;row+=50)
+            {
+                c=0;
+                if (r>3)
+                    break;
+                for(int col=100;col<=300;col+=50)
                 {
                     if (c>3)
                         break;
                     if (board[s][r][c] != '-')
                     {
-                         if (board[s][r][c] == 'x')
-                         {
-                             g.drawImage(x,row+101,col-99,null);
-                         }
-                         else
-                             g.drawImage(o,row+101,col-99,null);
+                        if (board[s][r][c] == 'x')
+                        {
+                            g.drawImage(x,col+1,row+1,null);
+                        }
+                        else
+                            g.drawImage(o,col+1,row+1,null);
                     }
                     c++;
                 }
@@ -128,7 +156,6 @@ public class Board extends JPanel implements MouseListener {
         for(int sheet=50;sheet<=950;sheet+=225) //will run through each box drawn onto board
         {
             r=0;
-            c=0;
             System.out.println("S : " + s);
             System.out.println("going through sheet");
 
