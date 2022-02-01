@@ -98,6 +98,18 @@ public class Game3 {
 
 
     public char diagWin(){
+        //gets char value
+        char pos = board[1][1][4];
+        if (pos=='-') //if its empty
+        {
+            return 'n';
+        }
+        //diagonal from top right to bottom left
+        if ((board[1][1][4]==board[2][2][3])&&(board[3][3][2]==board[4][4][1])&&(board[1][1][4]==board[4][4][1]))
+        {
+            return pos;
+        }
+        if ()
         return 'n';
     }
 
