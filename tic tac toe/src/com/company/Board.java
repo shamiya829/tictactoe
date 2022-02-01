@@ -72,7 +72,7 @@ public class Board extends JPanel implements MouseListener {
 
         int s=0,r=0,c=0; //used to check array values
 
-        if (!game.won())
+        if (game.won()!='n')
         {
             for (int sheet = 50; sheet <= 950; sheet += 225) //will run through each box drawn onto board
             {
