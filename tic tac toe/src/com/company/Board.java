@@ -17,7 +17,7 @@ public class Board extends JPanel implements MouseListener {
     Player player1,player2;
     boolean player1turn;
 
-    BufferedImage buffer,x,o;
+    BufferedImage buffer,x,o,xmac,omac;
     Board()
     {
         setSize(600,975);
@@ -28,6 +28,8 @@ public class Board extends JPanel implements MouseListener {
             buffer = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
             x = ImageIO.read((new File("images\\x.png")));
             o = ImageIO.read(new File("images\\o.png"));
+            xmac = ImageIO.read((new File("images/x.png")));
+            omac = ImageIO.read(new File("images/o.png"));
         }
         catch (Exception e)
         {
@@ -88,8 +90,10 @@ public class Board extends JPanel implements MouseListener {
                         if (board[s][r][c] != '-') {
                             if (board[s][r][c] == 'x') {
                                 g.drawImage(x, col + 1, row + 1, null);
+                                g.drawImage(xmac, col + 1, row + 1, null);
                             } else
                                 g.drawImage(o, col + 1, row + 1, null);
+                            g.drawImage(omac, col + 1, row + 1, null);
                         }
                         c++;
                     }

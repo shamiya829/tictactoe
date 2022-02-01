@@ -88,6 +88,7 @@ public class Game3 {
             }
             s++;
         }
+        return true;
     }
 
 
