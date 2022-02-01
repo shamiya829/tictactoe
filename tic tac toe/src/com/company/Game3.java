@@ -29,8 +29,9 @@ public class Game3 {
     }
 
     public boolean won(){
-        if(rowWin()||colWin()||colWinInSheet()||diagWin())
+        if(rowWin()||colWin()||diagWin())
             return true;
+        //return char who won - if no winner return 'n'
         return false;
     }
 
@@ -58,9 +59,7 @@ public class Game3 {
     }
 
     public boolean colWin() {
-        return false;
-    }
-        public boolean colWinInSheet() { //checking col wins on each sheet
+        //checking col wins on each sheet
         char pos = 'j';
         int r = 0, s = 0, c = 0;
         for (int sheet = 50; sheet <= 950; sheet += 225) //will run through each box drawn onto board
@@ -89,9 +88,8 @@ public class Game3 {
             }
             s++;
         }
+    }
 
-        return true;
-    }//on one sheet
 
     public boolean diagWin(){
         return false;

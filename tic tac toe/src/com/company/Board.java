@@ -116,6 +116,11 @@ public class Board extends JPanel implements MouseListener {
                 g.drawString("Player 2 (o) your move.",350,160);
             }
         }
+        else
+        {
+
+        }
+
             //draw string "player two (o) play your turn"
     }
 
@@ -125,7 +130,6 @@ public class Board extends JPanel implements MouseListener {
 
     }
 
-    int clicked = 0;
     @Override
     public void mousePressed(MouseEvent e) //use this one
     {
