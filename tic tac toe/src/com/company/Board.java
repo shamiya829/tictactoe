@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.URL;
 
 public class Board extends JPanel implements MouseListener {
 
@@ -26,10 +27,12 @@ public class Board extends JPanel implements MouseListener {
         try
         {
             buffer = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
-            x = ImageIO.read((new File("images\\x.png")));
-            o = ImageIO.read(new File("images\\o.png"));
-            xmac = ImageIO.read((new File("images/x.png")));
-            omac = ImageIO.read(new File("images/o.png"));
+            URL xUrl = new URL("https://github.com/shamiya829/tictactoe/blob/main/images/x.png?raw=true");
+            URL oUrl = new URL("https://github.com/shamiya829/tictactoe/blob/main/images/o.png?raw=true");
+
+            x = ImageIO.read(xUrl);
+            o = ImageIO.read(oUrl);
+
         }
         catch (Exception e)
         {
@@ -90,10 +93,11 @@ public class Board extends JPanel implements MouseListener {
                         if (board[s][r][c] != '-') {
                             if (board[s][r][c] == 'x') {
                                 g.drawImage(x, col + 1, row + 1, null);
-                                g.drawImage(xmac, col + 1, row + 1, null);
-                            } else
+
+                            } else {
                                 g.drawImage(o, col + 1, row + 1, null);
-                            g.drawImage(omac, col + 1, row + 1, null);
+                            }
+
                         }
                         c++;
                     }
