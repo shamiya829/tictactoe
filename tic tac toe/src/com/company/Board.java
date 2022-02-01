@@ -69,15 +69,15 @@ public class Board extends JPanel implements MouseListener {
         }
 
         int s=0,r=0,c=0; //used to check array values
-        for(int sheet=50;sheet<950;sheet+=225) //will run through each box drawn onto board
+        for(int sheet=50;sheet<=950;sheet+=225) //will run through each box drawn onto board
         {
             if (s>3)
                 break;
-            for(int row=sheet+50;row<sheet+250;row+=50)
+            for(int col=150;col<=350;col+=50)
             {
                 if (r>3)
                     break;
-                for(int col=150;col<300;col+=50)
+                for(int row=sheet-50;row<=sheet+250;row+=50)
                 {
                     if (c>3)
                         break;
@@ -85,10 +85,10 @@ public class Board extends JPanel implements MouseListener {
                     {
                          if (board[s][r][c] == 'x')
                          {
-                             g.drawImage(x,row+1,col+1,null);
+                             g.drawImage(x,row+101,col-99,null);
                          }
                          else
-                             g.drawImage(o,row+1,col+1,null);
+                             g.drawImage(o,row+101,col-99,null);
                     }
                     c++;
                 }
@@ -125,25 +125,28 @@ public class Board extends JPanel implements MouseListener {
         System.out.println("y clicked: " + y);
 
         int s=0,r=0,c=0;
-        for(int sheet=50;sheet<950;sheet+=225) //will run through each box drawn onto board
+        for(int sheet=50;sheet<=950;sheet+=225) //will run through each box drawn onto board
         {
-            System.out.println("S : " + s + " r: " + r+ " c: "+c);
+            r=0;
+            c=0;
+            System.out.println("S : " + s);
             System.out.println("going through sheet");
 
-            if (s>4)
+            if (s>3)
                 break;
 
             for(int row=sheet;row<=sheet+200;row+=50)
             {
-                System.out.println("going through row");
+                c=0;
+                System.out.println("going through row number: " + r + " on sheet: " + s);
 
-                if (r>4)
+                if (r>3)
                     break;
 
-                for(int col=150;col<300;col+=50)
+                for(int col=100;col<=300;col+=50)
                 {
                     System.out.println("going through col");
-                    if (c>4)
+                    if (c>3)
                         break;
                     if ((x>=col && x <= col+50) && (y>=row && y<=row+50)) //if you clicked the box
                     {
@@ -167,10 +170,10 @@ public class Board extends JPanel implements MouseListener {
                 }
                 r++;
             }
-            System.out.println("AT S");
             s++;
         }
         System.out.println("out of loop");
+        displayBoard(board);
         repaint();
     }
 
@@ -187,6 +190,23 @@ public class Board extends JPanel implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    public static void displayBoard(char[][][] board)
+    {
+        for (int i = 0; i < 4; i++) {
+
+            for (int j = 0; j < 4; j++) {
+
+                for (int k = 0; k < 4; k++) {
+
+                    System.out.print("[" + board[i][j][k] + "] ");
+                }
+
+                System.out.println();
+            }
+            System.out.println();
+        }
     }
 
 }
