@@ -28,19 +28,16 @@ public class Game3 {
         return true;
     }
 
-    public char won(){
-        if(rowWin()!='n')
-        {
-            return rowWin();
-        }
-        if (colWin()!='n')
-            return colWin();
-        if (diagWin()!='n')
-            return diagWin();
-        return 'n';
+    public boolean won(){
+        if(rowWin()||colWin()||diagWin())
+            return true;
+        //return char who won - if no winner return 'n'
+        return false;
     }
 
-    public char rowWin(){
+    
+
+    public boolean rowWin(){
         for(int row = 0; row < board.length; row++) {
             int numEqual = 0;
             char val = board[0][row][0];
@@ -58,12 +55,12 @@ public class Game3 {
                 }
             }
             if(numEqual == 4)
-                return val;
+                return true;
         }
-        return 'n';
+        return false;
     }
 
-    public char colWin() {
+    public boolean colWin() {
         //checking col wins on each sheet
         char pos = 'j';
         int r = 0, s = 0, c = 0;
@@ -82,10 +79,10 @@ public class Game3 {
                     if (r == 1) {
                         pos = board[s][0][c];
                         if (pos == '-')
-                            return 'n';
+                            return false;
                     }
                     if (board[s][r][c] != pos)
-                        return 'n';
+                        return false;
 
                     r++;
                 }
@@ -93,12 +90,12 @@ public class Game3 {
             }
             s++;
         }
-        return pos;
+        return true;
     }
 
 
-    public char diagWin(){
-        return 'n';
+    public boolean diagWin(){
+        return false;
     }
 
 }
