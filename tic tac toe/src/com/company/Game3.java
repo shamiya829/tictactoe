@@ -28,16 +28,19 @@ public class Game3 {
         return true;
     }
 
-    public boolean won(){
-        if(rowWin()||colWin()||diagWin())
-            return true;
-        //return char who won - if no winner return 'n'
-        return false;
+    public char won(){
+        if(rowWin()!='n')
+        {
+            return rowWin();
+        }
+        if (colWin()!='n')
+            return colWin();
+        if (diagWin()!='n')
+            return diagWin();
+        return 'n';
     }
 
-    
-
-    public boolean rowWin(){
+    public char rowWin(){
         for(int row = 0; row < board.length; row++) {
             int numEqual = 0;
             char val = board[0][row][0];
@@ -55,12 +58,12 @@ public class Game3 {
                 }
             }
             if(numEqual == 4)
-                return true;
+                return val;
         }
-        return false;
+        return 'n';
     }
 
-    public boolean colWin() {
+    public char colWin() {
         //checking col wins on each sheet
         char pos = 'j';
         int r = 0, s = 0, c = 0;
@@ -79,10 +82,10 @@ public class Game3 {
                     if (r == 1) {
                         pos = board[s][0][c];
                         if (pos == '-')
-                            return false;
+                            return 'n';
                     }
                     if (board[s][r][c] != pos)
-                        return false;
+                        return 'n';
 
                     r++;
                 }
@@ -90,12 +93,24 @@ public class Game3 {
             }
             s++;
         }
-        return true;
+        return pos;
     }
 
 
-    public boolean diagWin(){
-        return false;
+    public char diagWin(){
+        //gets char value
+        char pos = board[1][1][4];
+        if (pos=='-') //if its empty
+        {
+            return 'n';
+        }
+        //diagonal from top right to bottom left
+        if ((board[1][1][4]==board[2][2][3])&&(board[3][3][2]==board[4][4][1])&&(board[1][1][4]==board[4][4][1]))
+        {
+            return pos;
+        }
+        if ()
+        return 'n';
     }
 
 }
