@@ -20,7 +20,7 @@ public class Board extends JPanel implements MouseListener {
     BufferedImage buffer,x,o;
     Board()
     {
-        setSize(400,975);
+        setSize(600,975);
         addMouseListener(this);
 
         try
@@ -50,7 +50,7 @@ public class Board extends JPanel implements MouseListener {
     {
         Graphics b = buffer.createGraphics();
         b.setColor(Color.BLACK);
-        b.fillRect(0,0,400,975);
+        b.fillRect(0,0,600,975);
         g.drawImage(buffer, 0, 0, null);
 
 
@@ -68,70 +68,53 @@ public class Board extends JPanel implements MouseListener {
             }
         }
 
-
         int s=0,r=0,c=0; //used to check array values
 
-
-
-        /*for(int sheet=50;sheet<=950;sheet+=225) //will run through each box drawn onto board
+        if (!game.won())
         {
-            if (s>3)
-                break;
-            for(int col=150;col<=350;col+=50)
+            for (int sheet = 50; sheet <= 950; sheet += 225) //will run through each box drawn onto board
             {
-                r=0;
-                if (r>3)
+                r = 0;
+                if (s > 3)
                     break;
-                for(int row=sheet-50;row<=sheet+250;row+=50)
-                {
-                    c=0;
-                    if (c>3)
-                        break;
 
-                    c++;
-                }
-                r++;
-            }
-            s++;
-        }*/
-        for(int sheet=50;sheet<=950;sheet+=225) //will run through each box drawn onto board
-        {
-            r=0;
-            if (s>3)
-                break;
-
-            for(int row=sheet;row<=sheet+200;row+=50)
-            {
-                c=0;
-                if (r>3)
-                    break;
-                for(int col=100;col<=300;col+=50)
-                {
-                    if (c>3)
+                for (int row = sheet; row <= sheet + 200; row += 50) {
+                    c = 0;
+                    if (r > 3)
                         break;
-                    if (board[s][r][c] != '-')
-                    {
-                        if (board[s][r][c] == 'x')
-                        {
-                            g.drawImage(x,col+1,row+1,null);
+                    for (int col = 100; col <= 300; col += 50) {
+                        if (c > 3)
+                            break;
+                        if (board[s][r][c] != '-') {
+                            if (board[s][r][c] == 'x') {
+                                g.drawImage(x, col + 1, row + 1, null);
+                            } else
+                                g.drawImage(o, col + 1, row + 1, null);
                         }
-                        else
-                            g.drawImage(o,col+1,row+1,null);
+                        c++;
                     }
-                    c++;
+                    r++;
                 }
-                r++;
+                s++;
             }
-            s++;
-        }
 
-        if (player1turn)
-        {
-            //draw string "player one (x) play your turn"
-        }
-        else
-        {
-
+            Font k = new Font("Dialog", Font.PLAIN, 20);
+            g.setFont(k);
+            if (player1turn)
+            {
+                //draw string "player one (x) play your turn"
+                g.setColor(Color.cyan);
+                g.fillRect(350,100,200,100);
+                g.setColor(Color.black);
+                g.drawString("Player 1 (x) your move.",350,160);
+            }
+            else
+            {
+                g.setColor(Color.red);
+                g.fillRect(350,100,200,100);
+                g.setColor(Color.black);
+                g.drawString("Player 2 (o) your move.",350,160);
+            }
         }
             //draw string "player two (o) play your turn"
     }
