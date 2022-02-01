@@ -88,12 +88,16 @@ public class Board extends JPanel implements MouseListener {
                         if (c > 3)
                             break;
                         if (board[s][r][c] != '-') {
-                            if (board[s][r][c] == 'x') {
+                            if (board[s][r][c] == 'x')
+                            {
                                 g.drawImage(x, col + 1, row + 1, null);
                                 g.drawImage(xmac, col + 1, row + 1, null);
-                            } else
+                            }
+                            else
+                            {
                                 g.drawImage(o, col + 1, row + 1, null);
-                            g.drawImage(omac, col + 1, row + 1, null);
+                                g.drawImage(omac, col + 1, row + 1, null);
+                            }
                         }
                         c++;
                     }
