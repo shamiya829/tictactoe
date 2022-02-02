@@ -44,7 +44,8 @@ public class Game3 {
         return 'n';
     }
 
-    public char thruWin(){
+    public char thruWin()
+    {
         char val = ' ';
         char nextCh = ' ';
         char nnCh = ' ';
@@ -63,7 +64,7 @@ public class Game3 {
         }
 
             System.out.println(val + " " + nextCh + " " + nnCh + " " + nnnCh);
-        if(val == nextCh && nextCh == nnCh && nnCh == nnnCh)
+        if((val == nextCh && nextCh == nnCh && nnCh == nnnCh) && val!= ' ')
             return val;
         return 'n';
     }
@@ -91,9 +92,35 @@ public class Game3 {
         return 'n';
     }
 
-    public char colWin() {
+    public char colWin()
+    {
+
+        char val = ' ';
+        char nextCh = ' ';
+        char nnCh = ' ';
+        char nnnCh = ' ';
+        for(int s = 0; s < 4; s++)
+        {
+            for(int r = 0; r < 4; r++)
+            {
+                //x
+                if(board[s][r][0] != '-' && board[s][r][1] != '-' && board[s][r][2] != '-' && board[s][r][3] != '-' ) {
+                    val = board[s][r][0];
+                    nextCh = board[s][r][1];
+                    nnCh = board[s][r][2];
+                    nnnCh = board[s][r][3];
+
+                }
+            }
+        }
+
+        System.out.println(val + " " + nextCh + " " + nnCh + " " + nnnCh);
+        if((val == nextCh && nextCh == nnCh && nnCh == nnnCh) && val!= ' ')
+            return val;
+        return 'n';
+
         //checking col wins on each sheet
-        char pos = 'j';
+        /*char pos = 'j';
         int numequal =0;
         for (int s= 0; s <4; s++) //will run through each box drawn onto board
         {
@@ -115,7 +142,7 @@ public class Game3 {
         {
             return pos;
         }
-        return 'n';
+        return 'n';*/
     }
 
 
