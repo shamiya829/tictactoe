@@ -103,9 +103,9 @@ public class Board extends JPanel implements MouseListener {
             s++;
         }
 
+
         if (game.won()=='n'||game.won()==' ')
         {
-            System.out.println("awe");
 
             Font k = new Font("Dialog", Font.PLAIN, 25);
             g.setFont(k);

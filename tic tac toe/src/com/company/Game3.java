@@ -51,16 +51,18 @@ public class Game3 {
         char nnnCh = ' ';
             for(int r = 0; r < 4; r++){
                 for(int c = 0; c < 4; c++){
-                        if(board[0][r][c] != '-') {
-                            nextCh = board[1][r][c];
-                            nnCh = board[2][r][c];
-                            nnnCh = board[3][r][c];
-                            val = board[0][r][c];
-                        }
+                    //x
+                    if(board[0][r][c] != '-' && board[1][r][c] != '-' && board[2][r][c] != '-' && board[3][r][c] != '-' ) {
+                        val = board[0][r][c];
+                        nextCh = board[1][r][c];
+                        nnCh = board[2][r][c];
+                        nnnCh = board[3][r][c];
 
+                    }
             }
         }
 
+            System.out.println(val + " " + nextCh + " " + nnCh + " " + nnnCh);
         if(val == nextCh && nextCh == nnCh && nnCh == nnnCh)
             return val;
         return 'n';
