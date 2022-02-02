@@ -17,6 +17,8 @@ public class Board extends JPanel implements MouseListener {
     Game3 game;
     Player player1,player2;
     boolean player1turn;
+    int selection1,selection2;
+    public final int person=1,ai=2;
 
     BufferedImage buffer,x,o,xmac,omac;
     Board()
@@ -48,11 +50,16 @@ public class Board extends JPanel implements MouseListener {
         this.player1 = new Player("player1",'x');
         this.player2 = new Player("player2",'o');
         this.player1turn = true;
+        this.selection1=0;
+        this.selection2=0;
     }
 
 
     public void paint(Graphics g)
     {
+        Font k = new Font("Dialog", Font.PLAIN, 25);
+        g.setFont(k);
+
         Graphics b = buffer.createGraphics();
         b.setColor(Color.BLACK);
         b.fillRect(0,0,600,975);
@@ -72,6 +79,18 @@ public class Board extends JPanel implements MouseListener {
                 g.drawLine(100,hx,300,hx);
             }
         }
+
+        if (selection1==0) //if they havnt chosen who to be the first player
+        {
+            g.setColor(Color.gray);
+            g.fillRect(350,300,200,100);
+            g.setColor(Color.black);
+            g.drawString("pick 1st player: ",350,300);
+            g.fillRect(350,350,10,10);
+        }
+
+        //let the pick a player for each, change ifs to check if no winner and turn == 'x' 'o' if the selection turn is ai run that class
+        //if its a player run that if, if turn== 'x' (player
 
         int s=0,r=0,c=0; //used to check array values
         for (int sheet = 50; sheet <= 950; sheet += 225) //will run through each box drawn onto board
@@ -103,12 +122,10 @@ public class Board extends JPanel implements MouseListener {
             s++;
         }
 
-        if (game.won()=='n')
-        {
-            System.out.println("awe");
 
-            Font k = new Font("Dialog", Font.PLAIN, 25);
-            g.setFont(k);
+        if (game.won()=='n') //no winner shows whos turn it is
+        {
+
             if (player1turn)
             {
                 //draw string "player one (x) play your turn"
@@ -125,7 +142,7 @@ public class Board extends JPanel implements MouseListener {
                 g.drawString("O's move.",370,160);
             }
         }
-        else
+        else //there is a winner
         {
             char winner = game.won();
 
@@ -145,7 +162,7 @@ public class Board extends JPanel implements MouseListener {
                 g.drawString("O won!", 370, 160);
             }
         }
-            //draw string "player two (o) play your turn"
+
     }
 
 
