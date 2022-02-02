@@ -32,6 +32,9 @@ public class Game3 {
         if(rowWin()!='n')
             return rowWin();
 
+        if(sheetDiag() != 'n')
+            return sheetDiag();
+
         if (colWin()!='n')
             return colWin();
 
@@ -119,6 +122,24 @@ public class Game3 {
         return 'n';
     }
 
+    public char sheetDiag(){
+        //check sheet diagonals
+        for(int sh = 0; sh < 4; sh++){
+            System.out.println("check \\" + board[sh][0][0] + " " + board[sh][1][1] + " " + board[sh][2][2] + " " + board[sh][3][3]);
+            // \check
+            if(board[sh][0][0] != '-' && board[sh][0][0] != ' ' && board[sh][0][0] == board[sh][1][1] && board[sh][1][1] == board[sh][2][2] && board[sh][2][2] == board[sh][3][3]){
+                return board[sh][0][0];
+            }
+
+            System.out.println("check /" + board[sh][3][0] + " " + board[sh][2][1] + " " + board[sh][1][2] + " " + board[sh][0][3]);
+            // /check
+            if(board[sh][3][0] != '-'&& board[sh][3][0] != ' ' && board[sh][3][0] == board[sh][2][1] && board[sh][2][1] == board[sh][1][2] && board[sh][1][2] == board[sh][0][3] ){
+                return board[sh][3][0];
+            }
+        }
+        return 'n';
+    }
+
 
 
 
@@ -146,6 +167,8 @@ public class Game3 {
         {
             return pos;
         }
+
+
 
         return 'n';
     }
