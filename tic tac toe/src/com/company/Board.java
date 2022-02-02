@@ -103,7 +103,7 @@ public class Board extends JPanel implements MouseListener {
             s++;
         }
 
-        if (game.won()=='n'||game.won()==' ')
+        if (game.won()=='n')
         {
             System.out.println("awe");
 
@@ -165,7 +165,7 @@ public class Board extends JPanel implements MouseListener {
 
         System.out.println(game.won());
 
-        if (game.won()=='n'||game.won()==' ')
+        if (game.won()=='n')
         {
             int s = 0, r = 0, c = 0;
             for (int sheet = 50; sheet <= 950; sheet += 225) //will run through each box drawn onto board

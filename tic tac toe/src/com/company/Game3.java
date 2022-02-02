@@ -61,7 +61,7 @@ public class Game3 {
             }
         }
 
-        if(val == nextCh && nextCh == nnCh && nnCh == nnnCh)
+        if((val == nextCh && nextCh == nnCh && nnCh == nnnCh) && val!= ' ')
             return val;
         return 'n';
     }
