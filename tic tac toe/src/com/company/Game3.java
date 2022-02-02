@@ -30,15 +30,17 @@ public class Game3 {
 
     public char won(){
         if(rowWin()!='n')
-        {
             return rowWin();
-        }
+
         if (colWin()!='n')
             return colWin();
+
         if (diagWin()!='n')
             return diagWin();
+
         if(thruWin() != 'n')
             return thruWin();
+
         return 'n';
     }
 
