@@ -44,8 +44,7 @@ public class Game3 {
         return 'n';
     }
 
-    public char thruWin()
-    {
+    public char thruWin(){
         char val = ' ';
         char nextCh = ' ';
         char nnCh = ' ';
@@ -63,64 +62,37 @@ public class Game3 {
             }
         }
 
-            System.out.println(val + " " + nextCh + " " + nnCh + " " + nnnCh);
-        if((val == nextCh && nextCh == nnCh && nnCh == nnnCh) && val!= ' ')
+        if(val == nextCh && nextCh == nnCh && nnCh == nnnCh && val != ' ')
             return val;
         return 'n';
     }
 
     public char rowWin(){
-        for(int row = 0; row < board.length; row++) {
-            int numEqual = 0;
-            char val = board[0][row][0];
-            if (val == '-') continue;
-            for(int column = 1; column < board.length; column ++) {
-
-                for(int sheet = 1; sheet < board.length; sheet++){
-                    char nextChar = board[0][row][column];
-                    char nextNextChar = board[sheet][row][column];
-                if(nextChar == '-' || nextNextChar == '-')
-                    break;
-                else if (val != nextChar || nextChar != nextNextChar)
-                    break;
-                else numEqual++;
-                }
-            }
-            if(numEqual == 4)
-                return val;
-        }
-        return 'n';
-    }
-
-    public char colWin()
-    {
-
         char val = ' ';
         char nextCh = ' ';
         char nnCh = ' ';
         char nnnCh = ' ';
-        for(int s = 0; s < 4; s++)
-        {
-            for(int r = 0; r < 4; r++)
-            {
-                //x
-                if(board[s][r][0] != '-' && board[s][r][1] != '-' && board[s][r][2] != '-' && board[s][r][3] != '-' ) {
-                    val = board[s][r][0];
-                    nextCh = board[s][r][1];
-                    nnCh = board[s][r][2];
-                    nnnCh = board[s][r][3];
+        for(int r = 0; r < 4; r++){
+            for(int sh = 0; sh < 4;sh++){
+                if(board[sh][r][0] != '-' && board[sh][r][1] != '-' && board[sh][r][2] != '-' && board[sh][r][3] != '-' ) {
+                    val = board[sh][r][0];
+                    nextCh = board[sh][r][1];
+                    nnCh = board[sh][r][2];
+                    nnnCh = board[sh][r][3];
 
                 }
             }
         }
 
         System.out.println(val + " " + nextCh + " " + nnCh + " " + nnnCh);
-        if((val == nextCh && nextCh == nnCh && nnCh == nnnCh) && val!= ' ')
+        if(val == nextCh && nextCh == nnCh && nnCh == nnnCh && val != ' ')
             return val;
         return 'n';
+    }
 
+    public char colWin() {
         //checking col wins on each sheet
-        /*char pos = 'j';
+        char pos = 'j';
         int numequal =0;
         for (int s= 0; s <4; s++) //will run through each box drawn onto board
         {
@@ -142,7 +114,7 @@ public class Game3 {
         {
             return pos;
         }
-        return 'n';*/
+        return 'n';
     }
 
 
