@@ -94,34 +94,28 @@ public class Game3 {
     public char colWin() {
         //checking col wins on each sheet
         char pos = 'j';
-        int r = 0, s = 0, c = 0;
-        for (int sheet = 50; sheet <= 950; sheet += 225) //will run through each box drawn onto board
+        int numequal =0;
+        for (int s= 0; s <4; s++) //will run through each box drawn onto board
         {
-            c = 0;
-            if (s > 3)
-                break;
-            for (int col = 100; col <= 300; col += 50) {
-                r = 0;
-                if (c > 3)
-                    break;
-                for (int row = sheet; row <= sheet + 200; row += 50) {
-                    if (r > 3)
-                        break;
-                    if (r == 1) {
-                        pos = board[s][0][c];
-                        if (pos == '-')
-                            return 'n';
-                    }
-                    if (board[s][r][c] != pos)
+            for (int c = 0; c<4; c++)
+            {
+                pos = board[s][0][c];
+                for (int r = 0; r<4; r++)
+                {
+                    if (board[s][r][c]=='-')
                         return 'n';
-
-                    r++;
+                    else if (board[s][r][c] == pos)
+                    {
+                        numequal++;
+                    }
                 }
-                c++;
             }
-            s++;
         }
-        return pos;
+        if (numequal==4)
+        {
+            return pos;
+        }
+        return 'n';
     }
 
 
