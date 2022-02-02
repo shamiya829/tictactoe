@@ -37,6 +37,30 @@ public class Game3 {
             return colWin();
         if (diagWin()!='n')
             return diagWin();
+        if(thruWin() != 'n')
+            return thruWin();
+        return 'n';
+    }
+
+    public char thruWin(){
+        char val = ' ';
+        char nextCh = ' ';
+        char nnCh = ' ';
+        char nnnCh = ' ';
+            for(int r = 0; r < 4; r++){
+                for(int c = 0; c < 4; c++){
+                        if(board[0][r][c] != '-') {
+                            nextCh = board[1][r][c];
+                            nnCh = board[2][r][c];
+                            nnnCh = board[3][r][c];
+                            val = board[0][r][c];
+                        }
+
+            }
+        }
+
+        if(val == nextCh && nextCh == nnCh && nnCh == nnnCh)
+            return val;
         return 'n';
     }
 
@@ -47,7 +71,7 @@ public class Game3 {
             if (val == '-') continue;
             for(int column = 1; column < board.length; column ++) {
 
-                for(int sheet = 0; sheet < board.length; sheet++){
+                for(int sheet = 1; sheet < board.length; sheet++){
                     char nextChar = board[0][row][column];
                     char nextNextChar = board[sheet][row][column];
                 if(nextChar == '-' || nextNextChar == '-')
@@ -95,6 +119,8 @@ public class Game3 {
         }
         return pos;
     }
+
+
 
 
     public char diagWin(){
