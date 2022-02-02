@@ -99,25 +99,25 @@ public class Game3 {
 
     public char diagWin(){
         //gets char value
-        char pos = board[1][1][4];
+        char pos = board[0][0][3];
         if (pos=='-') //if its empty
         {
             return 'n';
         }
         //diagonal from top right to bottom left
-        if ((board[1][1][4]==board[2][2][3])&&(board[3][3][2]==board[4][4][1])&&(board[1][1][4]==board[4][4][1]))
+        if ((board[0][0][3]==board[1][1][2])&&(board[2][2][1]==board[3][3][0])&&(board[0][0][3]==board[3][3][0]))
         {
             return pos;
         }
 
         //checking second diagonal from top left to bottom right
-        pos = board[1][1][1];
+        pos = board[0][0][0];
         if (pos=='-') //if its empty
         {
             return 'n';
         }
 
-        if (board[1][1][1] == board[2][2][2] && board[3][3][3]==board[4][4][4] && board[1][1][1] ==board[4][4][4])
+        if (board[0][0][0] == board[1][1][1] && board[2][2][2]==board[3][3][3] && board[0][0][0] ==board[3][3][3])
         {
             return pos;
         }

@@ -74,39 +74,40 @@ public class Board extends JPanel implements MouseListener {
         }
 
         int s=0,r=0,c=0; //used to check array values
-
-        if (game.won()!='n')
+        for (int sheet = 50; sheet <= 950; sheet += 225) //will run through each box drawn onto board
         {
-            for (int sheet = 50; sheet <= 950; sheet += 225) //will run through each box drawn onto board
-            {
-                r = 0;
-                if (s > 3)
+            r = 0;
+            if (s > 3)
+                break;
+
+            for (int row = sheet; row <= sheet + 200; row += 50) {
+                c = 0;
+                if (r > 3)
                     break;
-
-                for (int row = sheet; row <= sheet + 200; row += 50) {
-                    c = 0;
-                    if (r > 3)
+                for (int col = 100; col <= 300; col += 50) {
+                    if (c > 3)
                         break;
-                    for (int col = 100; col <= 300; col += 50) {
-                        if (c > 3)
-                            break;
-                        if (board[s][r][c] != '-') {
-                            if (board[s][r][c] == 'x') {
-                                g.drawImage(x, col + 1, row + 1, null);
+                    if (board[s][r][c] != '-') {
+                        if (board[s][r][c] == 'x') {
+                            g.drawImage(x, col + 1, row + 1, null);
 
-                            } else {
-                                g.drawImage(o, col + 1, row + 1, null);
-                            }
-
+                        } else {
+                            g.drawImage(o, col + 1, row + 1, null);
                         }
-                        c++;
-                    }
-                    r++;
-                }
-                s++;
-            }
 
-            Font k = new Font("Dialog", Font.PLAIN, 20);
+                    }
+                    c++;
+                }
+                r++;
+            }
+            s++;
+        }
+
+        if (game.won()=='n')
+        {
+            System.out.println("awe");
+
+            Font k = new Font("Dialog", Font.PLAIN, 25);
             g.setFont(k);
             if (player1turn)
             {
@@ -114,21 +115,36 @@ public class Board extends JPanel implements MouseListener {
                 g.setColor(Color.cyan);
                 g.fillRect(350,100,200,100);
                 g.setColor(Color.black);
-                g.drawString("Player 1 (x) your move.",350,160);
+                g.drawString("X's move.",370,160);
             }
             else
             {
                 g.setColor(Color.red);
                 g.fillRect(350,100,200,100);
                 g.setColor(Color.black);
-                g.drawString("Player 2 (o) your move.",350,160);
+                g.drawString("O's move.",370,160);
             }
         }
         else
         {
+            char winner = game.won();
 
+            if(winner=='x')
+            {
+                g.setColor(Color.green);
+                g.fillRect(350, 100, 200, 100);
+                g.setColor(Color.black);
+                g.drawString("X won!", 370, 160);
+            }
+
+            if(winner=='o')
+            {
+                g.setColor(Color.green);
+                g.fillRect(350, 100, 200, 100);
+                g.setColor(Color.black);
+                g.drawString("O won!", 370, 160);
+            }
         }
-
             //draw string "player two (o) play your turn"
     }
 
@@ -147,53 +163,51 @@ public class Board extends JPanel implements MouseListener {
         System.out.println("x clicked: " + x);
         System.out.println("y clicked: " + y);
 
-        int s=0,r=0,c=0;
-        for(int sheet=50;sheet<=950;sheet+=225) //will run through each box drawn onto board
+        if (game.won()=='n')
         {
-            r=0;
-            System.out.println("S : " + s);
-            System.out.println("going through sheet");
-
-            if (s>3)
-                break;
-
-            for(int row=sheet;row<=sheet+200;row+=50)
+            int s = 0, r = 0, c = 0;
+            for (int sheet = 50; sheet <= 950; sheet += 225) //will run through each box drawn onto board
             {
-                c=0;
-                System.out.println("going through row number: " + r + " on sheet: " + s);
+                r = 0;
+                System.out.println("S : " + s);
+                System.out.println("going through sheet");
 
-                if (r>3)
+                if (s > 3)
                     break;
 
-                for(int col=100;col<=300;col+=50)
-                {
-                    System.out.println("going through col");
-                    if (c>3)
+                for (int row = sheet; row <= sheet + 200; row += 50) {
+                    c = 0;
+                    System.out.println("going through row number: " + r + " on sheet: " + s);
+
+                    if (r > 3)
                         break;
-                    if ((x>=col && x <= col+50) && (y>=row && y<=row+50)) //if you clicked the box
-                    {
-                        if (board[s][r][c] == '-')
+
+                    for (int col = 100; col <= 300; col += 50) {
+                        System.out.println("going through col");
+                        if (c > 3)
+                            break;
+                        if ((x >= col && x <= col + 50) && (y >= row && y <= row + 50)) //if you clicked the box
                         {
-                            if (player1turn)
-                            {
-                                board[s][r][c] = 'x';
-                                System.out.println("x placed");
-                                player1turn = !player1turn;
-                            }
-                            else
-                            {
-                                board[s][r][c] = 'o';
-                                player1turn = !player1turn;
-                                System.out.println("o placed");
+                            if (board[s][r][c] == '-') {
+                                if (player1turn) {
+                                    board[s][r][c] = 'x';
+                                    System.out.println("x placed");
+                                    player1turn = !player1turn;
+                                } else {
+                                    board[s][r][c] = 'o';
+                                    player1turn = !player1turn;
+                                    System.out.println("o placed");
+                                }
                             }
                         }
+                        c++;
                     }
-                    c++;
+                    r++;
                 }
-                r++;
+                s++;
             }
-            s++;
         }
+
         System.out.println("out of loop");
         displayBoard(board);
         repaint();
