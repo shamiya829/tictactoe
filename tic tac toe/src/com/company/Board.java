@@ -244,11 +244,11 @@ public class Board extends JPanel implements MouseListener {
         {
             if ((x>=350&&x<=360) && (y>=500&&y<=510)) //if they selected user for first player (x)
             {
-                selection1 = person;
+                selection2 = person;
             }
             else if ((x>=350&&x<=360) && (y>=530&&y<=540))
             {
-                selection1 = ai;
+                selection2 = ai;
             }
         }
 

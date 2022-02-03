@@ -7,7 +7,7 @@ public class RandomAI extends Game3{
         super();
     }
 
-    Random rand;
+    Random rand= new Random();
 
     int rSheet = rand.nextInt((3) + 1) ;
     int rRow = rand.nextInt((3) + 1) ;
