@@ -197,13 +197,13 @@ public class Board extends JPanel implements MouseListener {
                 g.drawString("O won!", 370, 160);
             }
 
-
         }
 
     }
 
     public void aimove()
     {
+
         if (selection1==ai)
         {
             Location move = randomAi1.generateRandomLocation();
@@ -214,7 +214,7 @@ public class Board extends JPanel implements MouseListener {
         }
         else if (selection2==ai)
         {
-            Location move = randomAi1.generateRandomLocation();
+            Location move = randomAi2.generateRandomLocation();
             System.out.println("s: " +move.getSheet());
             System.out.println("r: " +move.getRow());
             System.out.println("c: " +move.getCol());
@@ -325,7 +325,16 @@ public class Board extends JPanel implements MouseListener {
         }
 
         System.out.println("\nout of loop");
-        aimove();
+
+        if (!player1turn && selection2 == ai)
+        {
+            aimove();
+        }
+        else if (player1turn && selection1 == ai)
+        {
+            aimove();
+        }
+
         repaint();
     }
 
