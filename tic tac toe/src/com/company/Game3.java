@@ -73,25 +73,27 @@ public class Game3 {
     }
 
     public char rowWin(){
-        for(int row = 0; row < board.length; row++) {
-            int numEqual = 0;
-            char val = board[0][row][0];
-            if (val == '-') continue;
-            for(int column = 1; column < board.length; column ++) {
+        char val = ' ';
+        char nextCh = ' ';
+        char nnCh = ' ';
+        char nnnCh = ' ';
+        for(int s = 0; s < 4; s++)
+        {
+            for(int r = 0; r < 4; r++)
+            {
+                //x
+                if(board[s][r][0] != '-' && board[s][r][1] != '-' && board[s][r][2] != '-' && board[s][r][3] != '-' ) {
+                    val = board[s][r][0];
+                    nextCh = board[s][r][1];
+                    nnCh = board[s][r][2];
+                    nnnCh = board[s][r][3];
 
-                for(int sheet = 1; sheet < board.length; sheet++){
-                    char nextChar = board[0][row][column];
-                    char nextNextChar = board[sheet][row][column];
-                if(nextChar == '-' || nextNextChar == '-')
-                    break;
-                else if (val != nextChar || nextChar != nextNextChar)
-                    break;
-                else numEqual++;
                 }
             }
-            if(numEqual == 4)
-                return val;
         }
+
+        if((val == nextCh && nextCh == nnCh && nnCh == nnnCh) && val!= ' ')
+            return val;
         return 'n';
     }
 
@@ -116,7 +118,6 @@ public class Game3 {
             }
         }
 
-        System.out.println(val + " " + nextCh + " " + nnCh + " " + nnnCh);
         if((val == nextCh && nextCh == nnCh && nnCh == nnnCh) && val!= ' ')
             return val;
         return 'n';
