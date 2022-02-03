@@ -20,7 +20,7 @@ public class Board extends JPanel implements MouseListener {
     int selection1,selection2;
     public final int person=1,ai=2;
 
-    BufferedImage buffer,x,o,xmac,omac;
+    BufferedImage buffer,x,o;
     Board()
     {
         setSize(600,975);
@@ -85,9 +85,29 @@ public class Board extends JPanel implements MouseListener {
             g.setColor(Color.gray);
             g.fillRect(350,300,200,100);
             g.setColor(Color.black);
-            g.drawString("pick 1st player: ",350,300);
+            g.drawString("pick 1st player: ",350,330);
+
             g.fillRect(350,350,10,10);
+            g.drawString("user",370,360);
+
+            g.fillRect(350,380,10,10);
+            g.drawString("ai",370,395);
         }
+
+        if (selection2==0)
+        {
+            g.setColor(Color.gray);
+            g.fillRect(350,450,200,100);
+            g.setColor(Color.black);
+            g.drawString("pick 2nd player: ",350,480);
+
+            g.fillRect(350,500,10,10);
+            g.drawString("user",370,510);
+
+            g.fillRect(350,530,10,10);
+            g.drawString("ai",370,545);
+        }
+
 
         //let the pick a player for each, change ifs to check if no winner and turn == 'x' 'o' if the selection turn is ai run that class
         //if its a player run that if, if turn== 'x' (player
@@ -122,6 +142,16 @@ public class Board extends JPanel implements MouseListener {
             s++;
         }
 
+        if (player1turn && selection1==ai)
+        {
+            //generate random ai location
+            //seperate location values and adjust board for 'x'
+        }
+        else if (!player1turn && selection2==ai)
+        {
+            //generate random ai location
+            //seperate location values and adjust board for 'o'
+        }
 
         if (game.won()=='n') //no winner shows whos turn it is
         {
@@ -192,48 +222,74 @@ public class Board extends JPanel implements MouseListener {
 
         System.out.println(game.won());
 
+        if (selection1==0)
+        {
+            if ((x>=350&&x<=360) && (y>=350&&y<=360)) //if they selected user for first player (x)
+            {
+                selection1 = person;
+            }
+            else if ((x>=350&&x<=360) && (y>=380&&y<=390))
+            {
+                selection1 = ai;
+            }
+        }
+        if (selection2==0)
+        {
+            if ((x>=350&&x<=360) && (y>=500&&y<=510)) //if they selected user for first player (x)
+            {
+                selection1 = person;
+            }
+            else if ((x>=350&&x<=360) && (y>=530&&y<=540))
+            {
+                selection1 = ai;
+            }
+        }
+
         if (game.won()=='n')
         {
-            int s = 0, r = 0, c = 0;
-            for (int sheet = 50; sheet <= 950; sheet += 225) //will run through each box drawn onto board
+            if ((player1turn&& selection1==person) || (!player1turn && selection2==person) ) //if x's turn is user input or o's turn is userinput do this. if it is not the persons
             {
-                r = 0;
-                System.out.println("S : " + s);
-                System.out.println("going through sheet");
+                int s = 0, r = 0, c = 0;
+                for (int sheet = 50; sheet <= 950; sheet += 225) //will run through each box drawn onto board
+                {
+                    r = 0;
+                    System.out.println("S : " + s);
+                    System.out.println("going through sheet");
 
-                if (s > 3)
-                    break;
-
-                for (int row = sheet; row <= sheet + 200; row += 50) {
-                    c = 0;
-                    System.out.println("going through row number: " + r + " on sheet: " + s);
-
-                    if (r > 3)
+                    if (s > 3)
                         break;
 
-                    for (int col = 100; col <= 300; col += 50) {
-                        System.out.println("going through col");
-                        if (c > 3)
+                    for (int row = sheet; row <= sheet + 200; row += 50) {
+                        c = 0;
+                        System.out.println("going through row number: " + r + " on sheet: " + s);
+
+                        if (r > 3)
                             break;
-                        if ((x >= col && x <= col + 50) && (y >= row && y <= row + 50)) //if you clicked the box
-                        {
-                            if (board[s][r][c] == '-') {
-                                if (player1turn) {
-                                    board[s][r][c] = 'x';
-                                    System.out.println("x placed");
-                                    player1turn = !player1turn;
-                                } else {
-                                    board[s][r][c] = 'o';
-                                    player1turn = !player1turn;
-                                    System.out.println("o placed");
+
+                        for (int col = 100; col <= 300; col += 50) {
+                            System.out.println("going through col");
+                            if (c > 3)
+                                break;
+                            if ((x >= col && x <= col + 50) && (y >= row && y <= row + 50)) //if you clicked the box
+                            {
+                                if (board[s][r][c] == '-') {
+                                    if (player1turn) {
+                                        board[s][r][c] = 'x';
+                                        System.out.println("x placed");
+                                        player1turn = !player1turn;
+                                    } else {
+                                        board[s][r][c] = 'o';
+                                        player1turn = !player1turn;
+                                        System.out.println("o placed");
+                                    }
                                 }
                             }
+                            c++;
                         }
-                        c++;
+                        r++;
                     }
-                    r++;
+                    s++;
                 }
-                s++;
             }
         }
 
