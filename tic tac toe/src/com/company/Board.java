@@ -1,6 +1,7 @@
 package com.company;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.util.Scanner;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -148,7 +149,77 @@ public class Board extends JPanel implements MouseListener, KeyListener {
             }
             s++;
         }
+        if (selection1 == ai && selection2 == ai)
+        {
+            Scanner keyboard = new Scanner(System.in);
 
+            System.out.println("\n\nEnter how many games you want the ais to play: ");
+            int gamenum = keyboard.nextInt();
+            System.out.println("\n\nEnter how many seconds you want the ai to wait: ");
+            int delaytime = keyboard.nextInt();
+            int currentgame = 0;
+
+            while (currentgame <= gamenum)
+            {
+                try {
+                    Thread.sleep(delaytime);
+                } catch (InterruptedException m) {
+                    m.printStackTrace();
+                }
+
+                if (player1turn && game.won() == 'n') {
+                    aigamexmove();
+                }
+                else if (game.won() == 'n')
+                    aigameomove();
+
+                if (game.won()!='n')
+                {
+                    currentgame++;
+                    if(game.checkTie()){
+                        g.setColor(Color.green);
+                        g.fillRect(350, 100, 200, 100);
+                        g.setColor(Color.black);
+                        g.drawString("There's a tie!", 370, 160);
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException m) {
+                            m.printStackTrace();
+                        }
+                        reset();
+                        }
+                    char winner = game.won();
+
+                    if(winner=='x')
+                    {
+                        g.setColor(Color.green);
+                        g.fillRect(350, 100, 200, 100);
+                        g.setColor(Color.black);
+                        g.drawString("X won!", 370, 160);
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException m) {
+                            m.printStackTrace();
+                        }
+                        reset();
+                    }
+
+                    if(winner=='o')
+                    {
+                        g.setColor(Color.green);
+                        g.fillRect(350, 100, 200, 100);
+                        g.setColor(Color.black);
+                        g.drawString("O won!", 370, 160);
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException m) {
+                            m.printStackTrace();
+                        }
+                        reset();
+                    }
+                }
+            }
+        }
        /* if ((game.won()=='n') && selection1!=0 && selection2!=0) {
             System.out.print("loops ai win");
             aimove();
@@ -162,6 +233,14 @@ public class Board extends JPanel implements MouseListener, KeyListener {
                 g.fillRect(350, 100, 200, 100);
                 g.setColor(Color.black);
                 g.drawString("There's a tie!", 370, 160);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException m) {
+                    m.printStackTrace();
+                }
+                reset();
+
+
             }
 
             else if (player1turn)
@@ -190,6 +269,12 @@ public class Board extends JPanel implements MouseListener, KeyListener {
                 g.fillRect(350, 100, 200, 100);
                 g.setColor(Color.black);
                 g.drawString("X won!", 370, 160);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException m) {
+                    m.printStackTrace();
+                }
+                reset();
             }
 
             if(winner=='o')
@@ -198,16 +283,42 @@ public class Board extends JPanel implements MouseListener, KeyListener {
                 g.fillRect(350, 100, 200, 100);
                 g.setColor(Color.black);
                 g.drawString("O won!", 370, 160);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException m) {
+                    m.printStackTrace();
+                }
+                reset();
             }
 
         }
 
     }
 
+    public void aigamexmove()
+    {
+        Location move;
+        move = randomAi1.generateRandomLocation();
+        board[move.getSheet()][move.getRow()][move.getCol()] = 'x';
+        player1turn = false;
+        repaint();
+    }
+
+    public void aigameomove()
+    {
+        Location move;
+        move = randomAi2.generateRandomLocation();
+        board[move.getSheet()][move.getRow()][move.getCol()] = 'o';
+        player1turn = true;
+        repaint();
+    }
+
+
+
     public void aimove()
     {
 
-        if (selection1==ai)
+        if (selection1==ai && selection2!=0)
         {
             Location move = randomAi1.generateRandomLocation();
             board[move.getSheet()][move.getRow()][move.getCol()] = 'x';
