@@ -19,6 +19,7 @@ public class Board extends JPanel implements MouseListener {
     boolean player1turn;
     int selection1,selection2;
     public final int person=1,ai=2;
+    RandomAI randomAi1,randomAi2;
 
     BufferedImage buffer,x,o;
     Board()
@@ -52,6 +53,8 @@ public class Board extends JPanel implements MouseListener {
         this.player1turn = true;
         this.selection1=0;
         this.selection2=0;
+        this.randomAi1 = new RandomAI();
+        this.randomAi2 = new RandomAI();
     }
 
 
@@ -91,7 +94,7 @@ public class Board extends JPanel implements MouseListener {
             g.drawString("user",370,360);
 
             g.fillRect(350,380,10,10);
-            g.drawString("ai",370,395);
+            g.drawString("random ai",370,395);
         }
 
         if (selection2==0)
@@ -105,7 +108,7 @@ public class Board extends JPanel implements MouseListener {
             g.drawString("user",370,510);
 
             g.fillRect(350,530,10,10);
-            g.drawString("ai",370,545);
+            g.drawString("random ai",370,545);
         }
 
 
@@ -144,11 +147,15 @@ public class Board extends JPanel implements MouseListener {
 
         if (player1turn && selection1==ai)
         {
+            Location move = randomAi1.generateRandomLocation();
+            board[move.getSheet()][move.getRow()][move.getCol()] = 'x';
             //generate random ai location
             //seperate location values and adjust board for 'x'
         }
         else if (!player1turn && selection2==ai)
         {
+            Location move = randomAi1.generateRandomLocation();
+            board[move.getSheet()][move.getRow()][move.getCol()] = 'o';
             //generate random ai location
             //seperate location values and adjust board for 'o'
         }
