@@ -146,6 +146,14 @@ public class Board extends JPanel implements MouseListener {
         {
             char winner = game.won();
 
+            if(game.checkTie()){
+                g.setColor(Color.green);
+                g.fillRect(350, 100, 200, 100);
+                g.setColor(Color.black);
+                g.drawString("There's a tie!", 370, 160);
+            }
+
+
             if(winner=='x')
             {
                 g.setColor(Color.green);
@@ -161,6 +169,8 @@ public class Board extends JPanel implements MouseListener {
                 g.setColor(Color.black);
                 g.drawString("O won!", 370, 160);
             }
+
+
         }
 
     }

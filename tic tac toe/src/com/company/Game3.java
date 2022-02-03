@@ -28,6 +28,28 @@ public class Game3 {
         return true;
     }
 
+    public boolean checkTie(){
+        //if won returns n and board is full
+        boolean notFull = false;
+        for(int sheet = 0; sheet < 4; sheet++)
+        { //fills board w empty spaces
+            for(int row = 0; row < 4; row++)
+            {
+                for(int col = 0; col < 4; col++)
+                {
+                    if(board[sheet][row][col] != '-')
+                        notFull = true;
+                }
+            }
+        }
+
+        if(!notFull && won() == 'n')
+            return true;
+
+
+        return false;
+    }
+
     public char won(){
         if(rowWin()!='n')
             return rowWin();
