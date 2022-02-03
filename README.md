@@ -8,7 +8,7 @@ TATASHASHA is a multinational corporation started by two potatoes during the Gil
 
 
 <p align="center">
-  <img src="https://o.remove.bg/downloads/71d1d17a-5e62-4507-82b4-2c097d389d08/doge-dogge-strong-buff-meme-shitpost-nobackground-swole-doge-mammal-animal-wildlife-bear-transparent-png-1612726-removebg-preview.png" alt="the-doggo-everyone-likes"/>
+  <img src="https://github.com/shamiya829/tictactoe/blob/main/images/doge-dogge-strong-buff-meme-shitpost-nobackground-swole-doge-mammal-animal-wildlife-bear-transparent-png-1612726-removebg-preview.png?raw=true"/>
 </p>
 
 
