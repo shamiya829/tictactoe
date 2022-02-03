@@ -219,12 +219,12 @@ public class Board extends JPanel implements MouseListener {
             System.out.println("r: " +move.getRow());
             System.out.println("c: " +move.getCol());
             board[move.getSheet()][move.getRow()][move.getCol()] = 'o';
-            //System.out.print("AI MOVESSSS");
+            System.out.print("AI MOVESSSS");
             player1turn = true;
             //generate random ai location
             //seperate location values and adjust board for 'o'
         }
-        repaint();
+
     }
 
     @Override
@@ -302,7 +302,6 @@ public class Board extends JPanel implements MouseListener {
                                     if ((selection1 == person) && player1turn)
                                     {
                                         board[s][r][c] = 'x';
-                                        System.out.println("x placed");
                                         player1turn = false;
                                     }
                                     else
@@ -312,6 +311,7 @@ public class Board extends JPanel implements MouseListener {
                                         //System.out.println("o placed");
                                     }
                                    //player1turn = !player1turn;
+
                                 }
                             }
                             c++;
@@ -321,11 +321,11 @@ public class Board extends JPanel implements MouseListener {
                     s++;
                 }
             }
-            aimove();
+
         }
 
         System.out.println("\nout of loop");
-
+        aimove();
         repaint();
     }
 
