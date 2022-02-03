@@ -144,6 +144,7 @@ public class Game3 {
 
 
     public char diagWin(){
+
         //gets char value
         char pos = board[0][0][3];
         if (pos=='-') //if its empty
