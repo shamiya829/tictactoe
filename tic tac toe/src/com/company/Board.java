@@ -2,13 +2,15 @@ package com.company;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
 
-public class Board extends JPanel implements MouseListener {
+public class Board extends JPanel implements MouseListener, KeyListener {
 
     //to do: set up g font and write string to tell players who's turn it is
     //set up starting screen that lets you pick if u wanna play player v player or player v ai (adjust code for ai)
@@ -26,6 +28,7 @@ public class Board extends JPanel implements MouseListener {
     {
         setSize(600,975);
         addMouseListener(this);
+        addKeyListener(this);
 
         try
         {
@@ -370,4 +373,30 @@ public class Board extends JPanel implements MouseListener {
         }
     }
 
+    @Override
+    public void keyTyped(KeyEvent e)
+    {
+        char dir = e.getKeyChar();
+        if (dir =='r')
+        {
+            reset();
+            repaint();
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
+
+    public void addNotify()
+    {
+        super.addNotify();
+        requestFocus();
+    }
 }
