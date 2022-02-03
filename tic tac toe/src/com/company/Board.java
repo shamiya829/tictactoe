@@ -126,7 +126,14 @@ public class Board extends JPanel implements MouseListener {
         if (game.won()=='n') //no winner shows whos turn it is
         {
 
-            if (player1turn)
+            if(game.checkTie()){
+                g.setColor(Color.green);
+                g.fillRect(350, 100, 200, 100);
+                g.setColor(Color.black);
+                g.drawString("There's a tie!", 370, 160);
+            }
+
+            else if (player1turn)
             {
                 //draw string "player one (x) play your turn"
                 g.setColor(Color.cyan);
@@ -145,13 +152,6 @@ public class Board extends JPanel implements MouseListener {
         else //there is a winner
         {
             char winner = game.won();
-
-            if(game.checkTie()){
-                g.setColor(Color.green);
-                g.fillRect(350, 100, 200, 100);
-                g.setColor(Color.black);
-                g.drawString("There's a tie!", 370, 160);
-            }
 
 
             if(winner=='x')

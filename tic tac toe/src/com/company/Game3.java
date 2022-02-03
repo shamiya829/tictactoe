@@ -30,21 +30,28 @@ public class Game3 {
 
     public boolean checkTie(){
         //if won returns n and board is full
-        boolean notFull = false;
+        boolean full = false;
+        int num = 0;
         for(int sheet = 0; sheet < 4; sheet++)
         { //fills board w empty spaces
             for(int row = 0; row < 4; row++)
             {
                 for(int col = 0; col < 4; col++)
                 {
-                    if(board[sheet][row][col] != '-')
-                        notFull = true;
+                    if(board[sheet][row][col] != '-' && board[sheet][row][col] != ' ') {
+                        full = true;
+                        num++;
+                    }
+
                 }
             }
         }
 
-        if(!notFull && won() == 'n')
+        System.out.println(num + " " + won());
+        if(num == 64 && won() == 'n')
             return true;
+
+
 
 
         return false;
