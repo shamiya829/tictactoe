@@ -160,40 +160,37 @@ public class Game3 {
 
     public char sheetDiag1(){
         //check sheet diagonals
-        for(int sh = 0; sh < 4; sh++)
-        {
 
-            System.out.println("check \\" + board[sh][0][0] + " " + board[sh][1][1] + " " + board[sh][2][2] + " " + board[sh][3][3]);
+            System.out.println("check \\" + board[0][0][0] + " " + board[1][1][1] + " " + board[2][2][2] + " " + board[3][3][3]);
             // \check
 
-            if (board[sh][0][0]=='-')
+            if (board[0][0][0]=='-')
             {
                 return 'n';
             }
             else {
-                if ((board[sh][0][0] == board[sh][1][1]) && (board[sh][2][2] == board[sh][3][3]) && (board[sh][0][0] == board[sh][3][3])) {
-                    return board[sh][0][0];
+                if ((board[0][0][0] == board[1][1][1]) && (board[2][2][2] == board[3][3][3]) && (board[0][0][0] == board[3][3][3])) {
+                    return board[0][0][0];
                 }
             }
-        }
+
         return 'n';
     }
 
     public char sheetDiag2()
     {
-        for(int sh = 0; sh < 4; sh++)
-        {
-            System.out.println("check \\" + board[sh][0][0] + " " + board[sh][1][1] + " " + board[sh][2][2] + " " + board[sh][3][3]);
-                if (board[sh][3][0]  == '-')
+
+            System.out.println("check \\" + board[0][0][0] + " " + board[1][1][1] + " " + board[2][2][2] + " " + board[3][3][3]);
+                if (board[3][3][0]  == '-')
                 {
                     return 'n';
                 }
                 else {
-                    if ((board[sh][3][0] == board[sh][2][1]) && (board[sh][1][2] == board[sh][0][3]) && (board[sh][3][0] == board[sh][0][3])) {
-                        return board[sh][3][0];
+                    if ((board[3][3][0] == board[2][2][1]) && (board[1][1][2] == board[0][0][3]) && (board[3][3][0] == board[0][0][3])) {
+                        return board[3][3][0];
                     }
                 }
-        }
+
         return 'n';
     }
 
