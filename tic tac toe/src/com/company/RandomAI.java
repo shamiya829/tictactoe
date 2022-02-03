@@ -16,7 +16,8 @@ public class RandomAI extends Game3{
     Location ai = new Location(rSheet,rRow,rCol);
 
     public Location generateRandomLocation(){
-        while (board[rSheet][rRow][rCol] != '-' || board[rSheet][rRow][rCol] != ' ' ){
+        while (board[rSheet][rRow][rCol] != '-')
+        {
             rSheet = rand.nextInt((3) + 1) ;
             rRow = rand.nextInt((3) + 1) ;
             rCol = rand.nextInt((3) + 1) ;

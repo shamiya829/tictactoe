@@ -145,20 +145,7 @@ public class Board extends JPanel implements MouseListener {
             s++;
         }
 
-        if (player1turn && selection1==ai)
-        {
-            Location move = randomAi1.generateRandomLocation();
-            board[move.getSheet()][move.getRow()][move.getCol()] = 'x';
-            //generate random ai location
-            //seperate location values and adjust board for 'x'
-        }
-        else if (!player1turn && selection2==ai)
-        {
-            Location move = randomAi1.generateRandomLocation();
-            board[move.getSheet()][move.getRow()][move.getCol()] = 'o';
-            //generate random ai location
-            //seperate location values and adjust board for 'o'
-        }
+        aimove();
 
         if (game.won()=='n') //no winner shows whos turn it is
         {
@@ -212,6 +199,27 @@ public class Board extends JPanel implements MouseListener {
 
     }
 
+    public void aimove()
+    {
+        if (player1turn && selection1==ai)
+        {
+            Location move = randomAi1.generateRandomLocation();
+            board[move.getSheet()][move.getRow()][move.getCol()] = 'x';
+            player1turn = !player1turn;
+            //generate random ai location
+            //seperate location values and adjust board for 'x'
+        }
+
+        else if (!player1turn && selection2==ai)
+        {
+            Location move = randomAi1.generateRandomLocation();
+            board[move.getSheet()][move.getRow()][move.getCol()] = 'o';
+            player1turn = !player1turn;
+            //generate random ai location
+            //seperate location values and adjust board for 'o'
+        }
+        repaint();
+    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -254,7 +262,7 @@ public class Board extends JPanel implements MouseListener {
 
         if (game.won()=='n')
         {
-            if ((player1turn&& selection1==person) || (!player1turn && selection2==person) ) //if x's turn is user input or o's turn is userinput do this. if it is not the persons
+            if ((player1turn&& selection1==person) || (!player1turn && selection2==person)) //if x's turn is user input or o's turn is userinput do this. if it is not the persons
             {
                 int s = 0, r = 0, c = 0;
                 for (int sheet = 50; sheet <= 950; sheet += 225) //will run through each box drawn onto board
@@ -301,7 +309,7 @@ public class Board extends JPanel implements MouseListener {
         }
 
         System.out.println("\nout of loop");
-        displayBoard(board);
+        //displayBoard(board);
         repaint();
     }
 
