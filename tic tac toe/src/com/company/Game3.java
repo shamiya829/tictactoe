@@ -79,6 +79,22 @@ public class Game3 {
         if(thruWin() != 'n')
             return thruWin();
 
+        if(sideWins() != 'n')
+            return sideWins();
+
+        return 'n';
+    }
+
+    public char sideWins(){
+
+        if(board[0][0][0] != '-' && board[0][0][0] == board[1][0][1] && board[1][0][1] == board[2][0][2] && board[2][0][2] == board[3][0][3] && board[0][0][0] == board[3][0][3])
+            return board[0][0][0];
+        if(board[0][0][0] != '-' && board[0][0][0] == board[1][1][0] && board[1][1][0] == board[2][2][0] && board[2][2][0] == board[3][3][0] && board[0][0][0] == board[3][3][0])
+            return board[0][0][0];
+        if(board[0][3][0] != '-' && board[0][3][0] == board[1][3][1] && board[1][3][1] == board[2][3][2] && board[2][3][2] == board[3][3][3] && board[0][3][0] == board[3][3][3])
+            return board[0][3][0];
+        if(board[0][0][3] != '-' && board[0][0][3] == board[1][1][3] && board[1][1][3] == board[2][2][3] && board[2][2][3] == board[3][3][3] && board[0][0][3] == board[3][3][3])
+            return board[0][0][3];
         return 'n';
     }
 
@@ -193,6 +209,8 @@ public class Game3 {
 
         return 'n';
     }
+
+
 
 
 
