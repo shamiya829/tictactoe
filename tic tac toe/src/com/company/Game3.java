@@ -162,6 +162,7 @@ public class Game3 {
         //check sheet diagonals
         for(int sh = 0; sh < 4; sh++)
         {
+
             System.out.println("check \\" + board[sh][0][0] + " " + board[sh][1][1] + " " + board[sh][2][2] + " " + board[sh][3][3]);
             // \check
 
