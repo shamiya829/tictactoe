@@ -115,6 +115,7 @@ public class Board extends JPanel implements MouseListener {
         //let the pick a player for each, change ifs to check if no winner and turn == 'x' 'o' if the selection turn is ai run that class
         //if its a player run that if, if turn== 'x' (player
 
+        System.out.println("\n\nplayer x turn: " + player1turn);
         int s=0,r=0,c=0; //used to check array values
         for (int sheet = 50; sheet <= 950; sheet += 225) //will run through each box drawn onto board
         {
@@ -145,7 +146,10 @@ public class Board extends JPanel implements MouseListener {
             s++;
         }
 
-        aimove();
+       /* if ((game.won()=='n') && selection1!=0 && selection2!=0) {
+            System.out.print("loops ai win");
+            aimove();
+        }*/
 
         if (game.won()=='n') //no winner shows whos turn it is
         {
@@ -177,7 +181,6 @@ public class Board extends JPanel implements MouseListener {
         {
             char winner = game.won();
 
-
             if(winner=='x')
             {
                 g.setColor(Color.green);
@@ -201,25 +204,27 @@ public class Board extends JPanel implements MouseListener {
 
     public void aimove()
     {
-        if (player1turn && selection1==ai)
+        if (selection1==ai)
         {
             Location move = randomAi1.generateRandomLocation();
             board[move.getSheet()][move.getRow()][move.getCol()] = 'x';
-            player1turn = !player1turn;
+            player1turn = false;
             //generate random ai location
             //seperate location values and adjust board for 'x'
         }
-
-        else if (!player1turn && selection2==ai)
+        else if (selection2==ai)
         {
             Location move = randomAi1.generateRandomLocation();
+            System.out.println("s: " +move.getSheet());
+            System.out.println("r: " +move.getRow());
+            System.out.println("c: " +move.getCol());
             board[move.getSheet()][move.getRow()][move.getCol()] = 'o';
-            player1turn = !player1turn;
+            //System.out.print("AI MOVESSSS");
+            player1turn = true;
             //generate random ai location
             //seperate location values and adjust board for 'o'
         }
         repaint();
-
     }
 
     @Override
@@ -230,6 +235,7 @@ public class Board extends JPanel implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) //use this one
     {
+        System.out.print("player one turn: " + player1turn);
         int x = e.getX();
         int y = e.getY();
 
@@ -260,44 +266,52 @@ public class Board extends JPanel implements MouseListener {
                 selection2 = ai;
             }
         }
-
-        if (game.won()=='n')
+       // System.out.println("game won: " + game.won());
+        else if (game.won()=='n')
         {
             if ((player1turn&& selection1==person) || (!player1turn && selection2==person)) //if x's turn is user input or o's turn is userinput do this. if it is not the persons
             {
+
                 int s = 0, r = 0, c = 0;
                 for (int sheet = 50; sheet <= 950; sheet += 225) //will run through each box drawn onto board
                 {
                     r = 0;
-                    System.out.println("S : " + s);
-                    System.out.println("going through sheet");
+                    //System.out.println("S : " + s);
+                    //System.out.println("going through sheet");
 
                     if (s > 3)
                         break;
 
-                    for (int row = sheet; row <= sheet + 200; row += 50) {
+                    for (int row = sheet; row <= sheet + 200; row += 50)
+                    {
                         c = 0;
-                        System.out.println("going through row number: " + r + " on sheet: " + s);
+                        //System.out.println("going through row number: " + r + " on sheet: " + s);
 
                         if (r > 3)
                             break;
 
-                        for (int col = 100; col <= 300; col += 50) {
-                            System.out.println("going through col");
+                        for (int col = 100; col <= 300; col += 50)
+                        {
+                           // System.out.println("going through col");
                             if (c > 3)
                                 break;
                             if ((x >= col && x <= col + 50) && (y >= row && y <= row + 50)) //if you clicked the box
                             {
-                                if (board[s][r][c] == '-') {
-                                    if (player1turn) {
+                                if (board[s][r][c] == '-')
+                                {
+                                    if ((selection1 == person) && player1turn)
+                                    {
                                         board[s][r][c] = 'x';
                                         System.out.println("x placed");
-                                        player1turn = !player1turn;
-                                    } else {
-                                        board[s][r][c] = 'o';
-                                        player1turn = !player1turn;
-                                        System.out.println("o placed");
+                                        player1turn = false;
                                     }
+                                    else
+                                    {
+                                        board[s][r][c] = 'o';
+                                        player1turn = true;
+                                        //System.out.println("o placed");
+                                    }
+                                   //player1turn = !player1turn;
                                 }
                             }
                             c++;
@@ -307,10 +321,11 @@ public class Board extends JPanel implements MouseListener {
                     s++;
                 }
             }
+            aimove();
         }
 
         System.out.println("\nout of loop");
-        //displayBoard(board);
+
         repaint();
     }
 

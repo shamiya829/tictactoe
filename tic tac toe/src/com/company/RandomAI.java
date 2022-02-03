@@ -9,18 +9,19 @@ public class RandomAI extends Game3{
 
     Random rand= new Random();
 
-    int rSheet = rand.nextInt((3) + 1) ;
-    int rRow = rand.nextInt((3) + 1) ;
-    int rCol = rand.nextInt((3) + 1) ;
+    int rSheet = (int)(Math.random()*(3-0+1)+0);
+    int rRow = (int)(Math.random()*(3-0+1)+0);
+    int rCol = (int)(Math.random()*(3-0+1)+0);
 
-    Location ai = new Location(rSheet,rRow,rCol);
+    Location ai = new Location(rCol,rRow,rSheet);
 
     public Location generateRandomLocation(){
         while (board[rSheet][rRow][rCol] != '-')
         {
-            rSheet = rand.nextInt((3) + 1) ;
-            rRow = rand.nextInt((3) + 1) ;
-            rCol = rand.nextInt((3) + 1) ;
+            System.out.println("loops");
+            rSheet = (int)(Math.random()*(3-0+1)+0);
+            rRow = (int)(Math.random()*(3-0+1)+0);
+            rCol = (int)(Math.random()*(3-0+1)+0);
         }
 
         ai.setSheet(rSheet);
