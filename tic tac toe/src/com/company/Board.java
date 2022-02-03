@@ -219,6 +219,7 @@ public class Board extends JPanel implements MouseListener {
             //seperate location values and adjust board for 'o'
         }
         repaint();
+
     }
 
     @Override
