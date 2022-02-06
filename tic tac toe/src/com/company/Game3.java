@@ -47,7 +47,7 @@ public class Game3 {
             }
         }
 
-        System.out.println(num + " " + won());
+        //System.out.println(num + " " + won());
         if(num == 64 && won() == 'n')
             return true;
 
@@ -101,7 +101,7 @@ public class Game3 {
             }
         }
 
-            System.out.println(val + " " + nextCh + " " + nnCh + " " + nnnCh);
+            //System.out.println(val + " " + nextCh + " " + nnCh + " " + nnnCh);
         if((val == nextCh && nextCh == nnCh && nnCh == nnnCh) && val!= ' ')
             return val;
         return 'n';
@@ -163,7 +163,7 @@ public class Game3 {
         for(int sh = 0; sh < 4; sh++)
         {
 
-            System.out.println("check \\" + board[sh][0][0] + " " + board[sh][1][1] + " " + board[sh][2][2] + " " + board[sh][3][3]);
+            //System.out.println("check \\" + board[sh][0][0] + " " + board[sh][1][1] + " " + board[sh][2][2] + " " + board[sh][3][3]);
             // \check
 
             if (board[sh][0][0]=='-')
@@ -183,7 +183,7 @@ public class Game3 {
     {
         for(int sh = 0; sh < 4; sh++)
         {
-            System.out.println("check \\" + board[sh][0][0] + " " + board[sh][1][1] + " " + board[sh][2][2] + " " + board[sh][3][3]);
+            //System.out.println("check \\" + board[sh][0][0] + " " + board[sh][1][1] + " " + board[sh][2][2] + " " + board[sh][3][3]);
                 if (board[sh][3][0]  == '-')
                 {
                     return 'n';

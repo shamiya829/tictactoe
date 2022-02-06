@@ -119,105 +119,51 @@ public class Board extends JPanel implements MouseListener, KeyListener {
         //let the pick a player for each, change ifs to check if no winner and turn == 'x' 'o' if the selection turn is ai run that class
         //if its a player run that if, if turn== 'x' (player
 
-        System.out.println("\n\nplayer x turn: " + player1turn);
-        int s=0,r=0,c=0; //used to check array values
-        for (int sheet = 50; sheet <= 950; sheet += 225) //will run through each box drawn onto board
-        {
-            r = 0;
-            if (s > 3)
-                break;
+        //System.out.println("\n\nplayer x turn: " + player1turn);
 
-            for (int row = sheet; row <= sheet + 200; row += 50) {
-                c = 0;
-                if (r > 3)
-                    break;
-                for (int col = 100; col <= 300; col += 50) {
-                    if (c > 3)
-                        break;
-                    if (board[s][r][c] != '-') {
-                        if (board[s][r][c] == 'x') {
-                            g.drawImage(x, col + 1, row + 1, null);
+        paintboard(g);
 
-                        } else {
-                            g.drawImage(o, col + 1, row + 1, null);
-                        }
 
-                    }
-                    c++;
-                }
-                r++;
-            }
-            s++;
-        }
-        if (selection1 == ai && selection2 == ai)
+       // System.out.println("\n\nEnter how h")
+
+
+        if (selection1 == ai && selection2 ==ai)
         {
             Scanner keyboard = new Scanner(System.in);
 
-            System.out.println("\n\nEnter how many games you want the ais to play: ");
-            int gamenum = keyboard.nextInt();
-            System.out.println("\n\nEnter how many seconds you want the ai to wait: ");
+            System.out.println("Enter how many games you want played?: ");
+            int gamesplaying = keyboard.nextInt();
+            System.out.println("Enter how many seconds to wait?: ");
             int delaytime = keyboard.nextInt();
-            int currentgame = 0;
 
-            while (currentgame <= gamenum)
+
+            int i=0; //the current game number that is being played byt he ais
+            while(i<=gamesplaying)
             {
-                try {
-                    Thread.sleep(delaytime);
-                } catch (InterruptedException m) {
-                    m.printStackTrace();
-                }
-
-                if (player1turn && game.won() == 'n') {
+                if (player1turn && game.won() == 'n')
+                {
                     aigamexmove();
+                    paintboard(g);
+                    try {
+                        Thread.sleep(delaytime);
+                    } catch (InterruptedException m) {
+                        m.printStackTrace();
+                    }
                 }
                 else if (game.won() == 'n')
-                    aigameomove();
-
-                if (game.won()!='n')
                 {
-                    currentgame++;
-                    if(game.checkTie()){
-                        g.setColor(Color.green);
-                        g.fillRect(350, 100, 200, 100);
-                        g.setColor(Color.black);
-                        g.drawString("There's a tie!", 370, 160);
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException m) {
-                            m.printStackTrace();
-                        }
-                        reset();
-                        }
-                    char winner = game.won();
-
-                    if(winner=='x')
-                    {
-                        g.setColor(Color.green);
-                        g.fillRect(350, 100, 200, 100);
-                        g.setColor(Color.black);
-                        g.drawString("X won!", 370, 160);
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException m) {
-                            m.printStackTrace();
-                        }
-                        reset();
-                    }
-
-                    if(winner=='o')
-                    {
-                        g.setColor(Color.green);
-                        g.fillRect(350, 100, 200, 100);
-                        g.setColor(Color.black);
-                        g.drawString("O won!", 370, 160);
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException m) {
-                            m.printStackTrace();
-                        }
-                        reset();
+                    aigameomove();
+                    paintboard(g);
+                    try {
+                        Thread.sleep(delaytime);
+                    } catch (InterruptedException m) {
+                        m.printStackTrace();
                     }
                 }
+                displayBoard(board);
+
+                if (game.won()!='n')
+                    i++;
             }
         }
        /* if ((game.won()=='n') && selection1!=0 && selection2!=0) {
@@ -239,8 +185,6 @@ public class Board extends JPanel implements MouseListener, KeyListener {
                     m.printStackTrace();
                 }
                 reset();
-
-
             }
 
             else if (player1turn)
@@ -295,19 +239,65 @@ public class Board extends JPanel implements MouseListener, KeyListener {
 
     }
 
+    Location move;
+
+    public void paintboard(Graphics g)
+    {
+        int s=0,r=0,c=0; //used to check array values
+        for (int sheet = 50; sheet <= 950; sheet += 225) //will run through each box drawn onto board
+        {
+            r = 0;
+            if (s > 3)
+                break;
+
+            for (int row = sheet; row <= sheet + 200; row += 50) {
+                c = 0;
+                if (r > 3)
+                    break;
+                for (int col = 100; col <= 300; col += 50) {
+                    if (c > 3)
+                        break;
+                    if (board[s][r][c] != '-') {
+                        if (board[s][r][c] == 'x') {
+                            g.drawImage(x, col + 1, row + 1, null);
+
+                        } else {
+                            g.drawImage(o, col + 1, row + 1, null);
+                        }
+
+                    }
+                    c++;
+                }
+                r++;
+            }
+            s++;
+        }
+    }
+
+
     public void aigamexmove()
     {
-        Location move;
+        System.out.println("making new move x");
         move = randomAi1.generateRandomLocation();
+
+        //System.out.println("sheet: "+move.getSheet()+" row: " + move.getRow()+" col: " + move.getCol() );
+
+        if (board[move.getSheet()][move.getRow()][move.getCol()]=='o')
+            move= randomAi1.generateRandomLocation();
+
         board[move.getSheet()][move.getRow()][move.getCol()] = 'x';
+
         player1turn = false;
+
         repaint();
     }
 
     public void aigameomove()
     {
-        Location move;
+        System.out.println("making new move o");
         move = randomAi2.generateRandomLocation();
+        if (board[move.getSheet()][move.getRow()][move.getCol()]=='x')
+            move= randomAi1.generateRandomLocation();
         board[move.getSheet()][move.getRow()][move.getCol()] = 'o';
         player1turn = true;
         repaint();
@@ -317,7 +307,6 @@ public class Board extends JPanel implements MouseListener, KeyListener {
 
     public void aimove()
     {
-
         if (selection1==ai && selection2!=0)
         {
             Location move = randomAi1.generateRandomLocation();
@@ -343,13 +332,12 @@ public class Board extends JPanel implements MouseListener, KeyListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
     }
 
     @Override
     public void mousePressed(MouseEvent e) //use this one
     {
-        System.out.print("player one turn: " + player1turn);
+        //System.out.print("player one turn: " + player1turn);
         int x = e.getX();
         int y = e.getY();
 
