@@ -161,6 +161,9 @@ public class Board extends JPanel implements MouseListener, KeyListener {
 
         if (selection1 == ai && selection2 ==ai)
         {
+            g.setColor(Color.black);
+            g.fillRect(350,450,200,100);
+
             Scanner keyboard = new Scanner(System.in);
 
             System.out.println("Enter how many games you want played?: ");
