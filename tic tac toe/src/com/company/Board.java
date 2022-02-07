@@ -263,12 +263,12 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
                 g.drawImage(buffer, 0, 0, null);
             }
 
-            try {
+            /*try {
                 Thread.sleep(3000);
             } catch (InterruptedException m) {
                 m.printStackTrace();
             }
-            reset();
+            reset();*/
         }
         g.drawImage(buffer, 0, 0, null);
     }
