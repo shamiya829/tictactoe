@@ -78,7 +78,34 @@ public class Game3 {
 
         if(thruWin() != 'n')
             return thruWin();
+        if(sideWins() != 'n')
+            return sideWins();
 
+        return 'n';
+    }
+
+    public char sideWins(){
+
+        for(int r = 0; r < 4; r++) {
+            if (board[0][r][0] != '-' && board[0][r][0] == board[1][r][1] && board[1][r][1] == board[2][r][2] && board[2][r][2] == board[3][r][3] && board[0][r][0] == board[3][r][3])
+                return board[0][r][0];
+        }
+
+        for(int c = 0; c < 4; c++) {
+            if (board[0][0][c] != '-' && board[0][0][c] == board[1][1][c] && board[1][1][c] == board[2][2][c] && board[2][2][c] == board[3][3][c] && board[0][0][c] == board[3][3][c])
+                return board[0][0][c];
+        }
+
+
+        for(int r = 0; r < 4; r++) {
+            if(board[0][r][0] != '-' && board[0][r][0] == board[1][r][1] && board[1][r][1] == board[2][r][2] && board[2][r][2] == board[3][r][3] && board[0][r][0] == board[3][r][3])
+                return board[0][r][0];
+        }
+
+        for(int c = 0; c < 4; c++) {
+            if (board[0][0][c] != '-' && board[0][0][c] == board[1][1][c] && board[1][1][c] == board[2][2][c] && board[2][2][c] == board[3][3][c] && board[0][0][c] == board[3][3][c])
+                return board[0][0][c];
+        }
         return 'n';
     }
 
@@ -160,40 +187,38 @@ public class Game3 {
 
     public char sheetDiag1(){
         //check sheet diagonals
-        for(int sh = 0; sh < 4; sh++)
-        {
+
 
             //System.out.println("check \\" + board[sh][0][0] + " " + board[sh][1][1] + " " + board[sh][2][2] + " " + board[sh][3][3]);
             // \check
 
-            if (board[sh][0][0]=='-')
+            if (board[0][0][0]=='-')
             {
                 return 'n';
             }
             else {
-                if ((board[sh][0][0] == board[sh][1][1]) && (board[sh][2][2] == board[sh][3][3]) && (board[sh][0][0] == board[sh][3][3])) {
-                    return board[sh][0][0];
+                if ((board[0][0][0] == board[1][1][1]) && (board[2][2][2] == board[3][3][3]) && (board[0][0][0] == board[3][3][3])) {
+                    return board[0][0][0];
                 }
             }
-        }
+
         return 'n';
     }
 
     public char sheetDiag2()
     {
-        for(int sh = 0; sh < 4; sh++)
-        {
+
             //System.out.println("check \\" + board[sh][0][0] + " " + board[sh][1][1] + " " + board[sh][2][2] + " " + board[sh][3][3]);
-                if (board[sh][3][0]  == '-')
+                if (board[3][3][0]  == '-')
                 {
                     return 'n';
                 }
                 else {
-                    if ((board[sh][3][0] == board[sh][2][1]) && (board[sh][1][2] == board[sh][0][3]) && (board[sh][3][0] == board[sh][0][3])) {
-                        return board[sh][3][0];
+                    if ((board[3][3][0] == board[2][2][1]) && (board[1][1][2] == board[0][0][3]) && (board[3][3][0] == board[0][0][3])) {
+                        return board[3][3][0];
                     }
                 }
-        }
+
         return 'n';
     }
 
