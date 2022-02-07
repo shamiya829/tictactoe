@@ -26,6 +26,7 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
     public int delaytime;
     int currentgamerunning=0;
     int gamesplaying =999;
+    int delaytimewon;
 
     Scanner keyboard = new Scanner(System.in);
 
@@ -63,12 +64,12 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
         this.player2 = new Player("player2",'o');
         this.player1turn = true;
         this.selection1=0;
-        this.selection2=0;
+        this.selection2=0; //make sure selection stays the same after ai games
         this.randomAi1 = new RandomAI();
         this.randomAi2 = new RandomAI();
         this.currentgamerunning=0;
         this.gamesplaying =999;
-
+        this.delaytimewon=0;
         //repaint();
     }
 
@@ -84,6 +85,11 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
                 gamesplaying = keyboard.nextInt();
                 System.out.println("Enter how many seconds to wait (in milliseconds)?: ");
                 delaytime = keyboard.nextInt();
+                if (gamesplaying>1) {
+                    System.out.println("Enter how many seconds to wait after a game(in milliseconds)?: ");
+                    delaytimewon = keyboard.nextInt();
+                }
+
             }
 
 
@@ -97,8 +103,15 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
                     //paint board
                 }
 
-                if (game.won()!='n') {
-                    currentgamerunning++;
+                if (game.won()!='n')  //if someone won
+                {
+                    currentgamerunning++; //change number of games won
+                    try {
+                        Thread.sleep(delaytimewon);
+                    } catch (InterruptedException m) {
+                        m.printStackTrace();
+                    } //sleep to see board
+                    reset(); //reset game
                 }
 
                 displayBoard(board);
@@ -283,8 +296,12 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
 
         //System.out.println("sheet: "+move.getSheet()+" row: " + move.getRow()+" col: " + move.getCol() );
 
-        if (board[move.getSheet()][move.getRow()][move.getCol()]!='-')
-            move= randomAi1.generateRandomLocation();
+        if (board[move.getSheet()][move.getRow()][move.getCol()]!='-') {
+            move = randomAi1.generateRandomLocation();
+            if (board[move.getSheet()][move.getRow()][move.getCol()]!='-') {
+                move = randomAi1.generateRandomLocation();
+            }
+        }
 
         board[move.getSheet()][move.getRow()][move.getCol()] = 'x';
 
@@ -296,8 +313,12 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
     {
         System.out.println("making new move o");
         move = randomAi2.generateRandomLocation();
-        if (board[move.getSheet()][move.getRow()][move.getCol()]!='-')
-            move= randomAi1.generateRandomLocation();
+        if (board[move.getSheet()][move.getRow()][move.getCol()]!='-') {
+            move = randomAi1.generateRandomLocation();
+            if (board[move.getSheet()][move.getRow()][move.getCol()]!='-') {
+                move = randomAi1.generateRandomLocation();
+            }
+        }
         board[move.getSheet()][move.getRow()][move.getCol()] = 'o';
         player1turn = true;
     }
@@ -339,7 +360,7 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
             //generate random ai location
             //seperate location values and adjust board for 'o'
         }
-        repaint();
+        //repaint();
     }
 
     @Override
