@@ -121,8 +121,40 @@ public class Board extends JPanel implements MouseListener, KeyListener {
 
         //System.out.println("\n\nplayer x turn: " + player1turn);
 
-        paintboard(g);
+        int s=0,r=0,c=0; //used to check array values
+        for (int sheet = 50; sheet <= 950; sheet += 225) //will run through each box drawn onto board
+        {
 
+            r = 0;
+            if (s > 3)
+                break;
+
+            for (int row = sheet; row <= sheet + 200; row += 50) {
+                c = 0;
+                if (r > 3)
+                    break;
+                for (int col = 100; col <= 300; col += 50) {
+                    if (c > 3)
+                        break;
+                    if (board[s][r][c] != '-')
+                    {
+                        if (board[s][r][c] == 'x')
+                        {
+                            System.out.print("x painted");
+                            g.drawImage(x, col + 1, row + 1, null);
+                        }
+                        else
+                        {
+                            System.out.print("o painted");
+                            g.drawImage(o, col + 1, row + 1, null);
+                        }
+                    }
+                    c++;
+                }
+                r++;
+            }
+            s++;
+        }
 
        // System.out.println("\n\nEnter how h")
 
@@ -142,8 +174,40 @@ public class Board extends JPanel implements MouseListener, KeyListener {
             {
                 if (player1turn && game.won() == 'n')
                 {
+                    s=0;r=0;c=0; //used to check array values
+                    {
+                        for (int sheet = 50; sheet <= 950; sheet += 225) //will run through each box drawn onto board
+                        {
+
+                            r = 0;
+                            if (s > 3)
+                                break;
+
+                            for (int row = sheet; row <= sheet + 200; row += 50) {
+                                c = 0;
+                                if (r > 3)
+                                    break;
+                                for (int col = 100; col <= 300; col += 50) {
+                                    if (c > 3)
+                                        break;
+                                    if (board[s][r][c] != '-') {
+                                        if (board[s][r][c] == 'x') {
+                                            System.out.println("x painted");
+                                            g.drawImage(x, col + 1, row + 1, null);
+                                        } else {
+                                            System.out.println("o painted");
+                                            g.drawImage(o, col + 1, row + 1, null);
+                                        }
+                                    }
+                                    c++;
+                                }
+                                r++;
+                            }
+                            s++;
+                        }
+                    }  //printing board for loops
+
                     aigamexmove();
-                    paintboard(g);
                     try {
                         Thread.sleep(delaytime);
                     } catch (InterruptedException m) {
@@ -152,13 +216,46 @@ public class Board extends JPanel implements MouseListener, KeyListener {
                 }
                 else if (game.won() == 'n')
                 {
-                    aigameomove();
-                    paintboard(g);
+                    s=0;r=0;c=0; //used to check array values
+                    {
+                    for (int sheet = 50; sheet <= 950; sheet += 225) //will run through each box drawn onto board
+                    {
+                        r = 0;
+                        if (s > 3)
+                            break;
+
+                        for (int row = sheet; row <= sheet + 200; row += 50) {
+                            c = 0;
+                            if (r > 3)
+                                break;
+                            for (int col = 100; col <= 300; col += 50) {
+                                if (c > 3)
+                                    break;
+                                if (board[s][r][c] != '-')
+                                {
+                                    if (board[s][r][c] == 'x')
+                                    {
+                                        System.out.print("x painted");
+                                        g.drawImage(x, col + 1, row + 1, null);
+                                    }
+                                    else
+                                    {
+                                        System.out.print("o painted");
+                                        g.drawImage(o, col + 1, row + 1, null);
+                                    }
+                                }
+                                c++;
+                            }
+                            r++;
+                        }
+                        s++;
+                    }} //printing board for loops.
                     try {
                         Thread.sleep(delaytime);
                     } catch (InterruptedException m) {
                         m.printStackTrace();
                     }
+                    aigameomove();
                 }
                 displayBoard(board);
 
@@ -243,35 +340,8 @@ public class Board extends JPanel implements MouseListener, KeyListener {
 
     public void paintboard(Graphics g)
     {
-        int s=0,r=0,c=0; //used to check array values
-        for (int sheet = 50; sheet <= 950; sheet += 225) //will run through each box drawn onto board
-        {
-            r = 0;
-            if (s > 3)
-                break;
+        System.out.println("painting");
 
-            for (int row = sheet; row <= sheet + 200; row += 50) {
-                c = 0;
-                if (r > 3)
-                    break;
-                for (int col = 100; col <= 300; col += 50) {
-                    if (c > 3)
-                        break;
-                    if (board[s][r][c] != '-') {
-                        if (board[s][r][c] == 'x') {
-                            g.drawImage(x, col + 1, row + 1, null);
-
-                        } else {
-                            g.drawImage(o, col + 1, row + 1, null);
-                        }
-
-                    }
-                    c++;
-                }
-                r++;
-            }
-            s++;
-        }
     }
 
 
@@ -289,7 +359,6 @@ public class Board extends JPanel implements MouseListener, KeyListener {
 
         player1turn = false;
 
-        repaint();
     }
 
     public void aigameomove()
@@ -300,12 +369,11 @@ public class Board extends JPanel implements MouseListener, KeyListener {
             move= randomAi1.generateRandomLocation();
         board[move.getSheet()][move.getRow()][move.getCol()] = 'o';
         player1turn = true;
-        repaint();
     }
 
 
 
-    public void aimove()
+    public void aimove() //ai move when playing against user
     {
         if (selection1==ai && selection2!=0)
         {
