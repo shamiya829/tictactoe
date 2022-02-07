@@ -234,7 +234,11 @@ public class Game3 {
                 return 'n';
             }
             //diagonal from top right to bottom left
-            if ((board[sh][0][3] == board[sh][1][2]) && (board[sh][2][1] == board[sh][3][0]) && (board[sh][0][3] == board[sh][3][0])) {
+            if ((board[sh][0][3] == board[sh][1][2]) && (board[sh][1][2] == board[sh][2][1]) && (board[sh][2][1] == board[sh][3][0] && board[0][3] == board[3][0])) {
+                return pos;
+            }
+
+            if ((board[1][0][3] == board[1][1][2]) && (board[1][1][2] == board[1][2][1]) && (board[1][2][1] == board[1][3][0])) {
                 return pos;
             }
         }
@@ -252,7 +256,7 @@ public class Game3 {
                 return 'n';
             }
 
-            if (board[sh][0][0] == board[sh][1][1] && board[sh][2][2] == board[sh][3][3] && board[sh][0][0] == board[sh][3][3]) {
+            if (board[sh][0][0] == board[sh][1][1] && board[sh][1][1] == board[sh][2][2] && board[sh][2][2] == board[sh][3][3] && board[sh][0][0] == board[sh][3][3]) {
                 return pos;
             }
         }
