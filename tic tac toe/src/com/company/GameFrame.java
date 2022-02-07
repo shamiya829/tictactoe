@@ -22,6 +22,7 @@ public class GameFrame extends JFrame{
         setLayout(null);
         pack();
         setVisible(true);
+        p.runAIRandomGame();
     }
 
 }

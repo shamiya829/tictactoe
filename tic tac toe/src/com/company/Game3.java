@@ -57,29 +57,51 @@ public class Game3 {
         return false;
     }
 
-    public char won(){
-        if(rowWin()!='n')
+    public char won()
+    {
+        if(rowWin()!='n') {
+            System.out.println("row win");
             return rowWin();
+        }
 
-        if(sheetDiag1() != 'n')
+        if(sheetDiag1() != 'n') {
+            System.out.println("sheet diag 1 win");
             return sheetDiag1();
+        }
 
-                if(sheetDiag2() != 'n')
-            return sheetDiag2();
+        if(sheetDiag2() != 'n') {
+            System.out.println("sheet diag 2 win");
+                return sheetDiag2();
+            }
 
         if (colWin()!='n')
+        {
+            System.out.println("col win");
             return colWin();
+        }
 
         if (firstdiagWin()!='n')
+        {
+            System.out.println("first diag win");
             return firstdiagWin();
+        }
 
         if (seconddiagWin()!='n')
+        {
+            System.out.println("second diag win");
             return seconddiagWin();
+        }
 
         if(thruWin() != 'n')
+        {
+            System.out.println("thru win");
             return thruWin();
+        }
         if(sideWins() != 'n')
+        {
+            System.out.println("side win");
             return sideWins();
+        }
 
         return 'n';
     }
@@ -185,9 +207,9 @@ public class Game3 {
         return 'n';
     }
 
-    public char sheetDiag1(){
+    public char sheetDiag1() //works
+    {
         //check sheet diagonals
-
 
             //System.out.println("check \\" + board[sh][0][0] + " " + board[sh][1][1] + " " + board[sh][2][2] + " " + board[sh][3][3]);
             // \check
@@ -205,9 +227,8 @@ public class Game3 {
         return 'n';
     }
 
-    public char sheetDiag2()
+    public char sheetDiag2() //works
     {
-
             //System.out.println("check \\" + board[sh][0][0] + " " + board[sh][1][1] + " " + board[sh][2][2] + " " + board[sh][3][3]);
                 if (board[3][3][0]  == '-')
                 {
@@ -225,22 +246,23 @@ public class Game3 {
 
 
     public char firstdiagWin(){
-
+        char pos = ' ';
         //gets char value
-        for(int sh = 0; sh < 4; sh++) {
-            char pos = board[sh][0][3];
+        for(int sh = 0; sh < 4; sh++)
+        {
+            pos = board[sh][0][3];
             if (pos == '-') //if its empty
             {
-                return 'n';
+                pos = 'n';
             }
             //diagonal from top right to bottom left
-            if ((board[sh][0][3] == board[sh][1][2]) && (board[sh][1][2] == board[sh][2][1]) && (board[sh][2][1] == board[sh][3][0] && board[0][3] == board[3][0])) {
-                return pos;
+            if ((board[sh][0][3] == board[sh][1][2]) && (board[sh][1][2] == board[sh][2][1]) && (board[sh][2][1] == board[sh][3][0] && board[0][3] == board[3][0])&& board[sh][0][3]!='-') {
+                return board[sh][0][3];
             }
 
-            if ((board[1][0][3] == board[1][1][2]) && (board[1][1][2] == board[1][2][1]) && (board[1][2][1] == board[1][3][0])) {
+            /*if ((board[1][0][3] == board[1][1][2]) && (board[1][1][2] == board[1][2][1]) && (board[1][2][1] == board[1][3][0])) {
                 return pos;
-            }
+            }*/
         }
         //checking second diagonal from top left to bottom right
 
@@ -249,15 +271,19 @@ public class Game3 {
 
     public char seconddiagWin()
     {
-        for(int sh = 0; sh < 4; sh++) {
-            char pos = board[sh][0][0];
-            if (pos == '-') //if its empty
+        char pos = 'n';
+        for(int sh = 0; sh < 4; sh++)
+        {
+            pos = board[sh][0][0];
+            if (pos == '-' || pos == ' ') //if its empty
             {
-                return 'n';
+                //System.out.println("\npos is blank");
+                pos= 'n';
             }
 
-            if (board[sh][0][0] == board[sh][1][1] && board[sh][1][1] == board[sh][2][2] && board[sh][2][2] == board[sh][3][3] && board[sh][0][0] == board[sh][3][3]) {
-                return pos;
+            if (((board[sh][0][0] == board[sh][1][1]) && (board[sh][1][1] == board[sh][2][2]) && (board[sh][2][2] == board[sh][3][3]) && (board[sh][0][0] == board[sh][3][3])) && board[sh][0][0]!='-') {
+                //System.out.println("\n\nboard value: " + board[sh][0][0]);
+                return board[sh][0][0];
             }
         }
         return 'n';

@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
 
-public class Board extends JPanel implements MouseListener, KeyListener {
+public class Board extends JPanel implements MouseListener, KeyListener,Runnable {
 
     //to do: set up g font and write string to tell players who's turn it is
     //set up starting screen that lets you pick if u wanna play player v player or player v ai (adjust code for ai)
@@ -23,6 +23,11 @@ public class Board extends JPanel implements MouseListener, KeyListener {
     int selection1,selection2;
     public final int person=1,ai=2;
     RandomAI randomAi1,randomAi2;
+    public int delaytime;
+    int currentgamerunning=0;
+    int gamesplaying =999;
+
+    Scanner keyboard = new Scanner(System.in);
 
     BufferedImage buffer,x,o;
     Board()
@@ -46,6 +51,8 @@ public class Board extends JPanel implements MouseListener, KeyListener {
             e.printStackTrace();
         }
         reset();
+        Thread t = new Thread(this);
+        t.start();
     }
 
     public void reset()
@@ -59,7 +66,45 @@ public class Board extends JPanel implements MouseListener, KeyListener {
         this.selection2=0;
         this.randomAi1 = new RandomAI();
         this.randomAi2 = new RandomAI();
+        this.currentgamerunning=0;
+        this.gamesplaying =999;
+
+        //repaint();
     }
+
+
+    public void runAIRandomGame()
+    {
+        if (selection1 == ai && selection2 ==ai)
+        {
+
+            if (gamesplaying == 999)
+            {
+                System.out.println("Enter how many games you want played?: ");
+                gamesplaying = keyboard.nextInt();
+                System.out.println("Enter how many seconds to wait (in milliseconds)?: ");
+                delaytime = keyboard.nextInt();
+            }
+
+
+            if (currentgamerunning> gamesplaying)
+                return;
+
+                if (game.won() == 'n')
+                {
+                    aimove();
+                    System.out.println("RANDOM AI MOVING: " + player1turn);
+                    //paint board
+                }
+
+                if (game.won()!='n') {
+                    currentgamerunning++;
+                }
+
+                displayBoard(board);
+            }
+        }
+
 
 
     public void paint(Graphics g)
@@ -140,12 +185,12 @@ public class Board extends JPanel implements MouseListener, KeyListener {
                     {
                         if (board[s][r][c] == 'x')
                         {
-                            System.out.print("x painted");
+                            //System.out.print("x painted");
                             b.drawImage(x, col + 1, row + 1, null);
                         }
                         else
                         {
-                            System.out.print("o painted");
+                            //System.out.print("o painted");
                             b.drawImage(o, col + 1, row + 1, null);
                         }
                     }
@@ -159,71 +204,6 @@ public class Board extends JPanel implements MouseListener, KeyListener {
        // System.out.println("\n\nEnter how h")
 
 
-        if (selection1 == ai && selection2 ==ai)
-        {
-            b.setColor(Color.black);
-            b.fillRect(350,450,200,100);
-
-            Scanner keyboard = new Scanner(System.in);
-
-            System.out.println("Enter how many games you want played?: ");
-            int gamesplaying = keyboard.nextInt();
-            System.out.println("Enter how many seconds to wait?: ");
-            int delaytime = keyboard.nextInt();
-
-
-            int i=0; //the current game number that is being played byt he ais
-            while(i<=gamesplaying)
-            {
-                if (game.won() == 'n') {
-
-                    aimove();
-                    System.out.println("RANDOM AI MOVING: " + player1turn);
-
-
-                    //paint board
-                    int sh=0,ro=0,co=0; //used to check array values
-                    for (int sheet = 50; sheet <= 950; sheet += 225) //will run through each box drawn onto board
-                    {
-                        ro = 0;
-                        if (sh > 3)
-                            break;
-
-                        for (int row = sheet; row <= sheet + 200; row += 50) {
-                            co = 0;
-                            if (ro > 3)
-                                break;
-                            for (int col = 100; col <= 300; col += 50) {
-                                if (co > 3)
-                                    break;
-                                if (board[sh][ro][co] != '-') {
-                                    if (board[sh][ro][co] == 'x') {
-                                        b.drawImage(x, col + 1, row + 1, null);
-
-                                    } else {
-                                        b.drawImage(o, col + 1, row + 1, null);
-                                    }
-
-                                }
-                                co++;
-                            }
-                            ro++;
-                        }
-                        sh++;
-                    }
-
-                    //paintboard ends here
-
-                }
-
-
-                if (game.won()!='n') {
-                    i++;
-                }
-
-                displayBoard(board);
-            }
-        }
        /* if ((game.won()=='n') && selection1!=0 && selection2!=0) {
             System.out.print("loops ai win");
             aimove();
@@ -288,17 +268,12 @@ public class Board extends JPanel implements MouseListener, KeyListener {
             } catch (InterruptedException m) {
                 m.printStackTrace();
             }
-
+            reset();
         }
         g.drawImage(buffer, 0, 0, null);
     }
 
     Location move;
-
-    public void paintboard(Graphics b)
-    {
-        //paused code replaced in paint (main one)
-    }
 
 
     public void aigamexmove()
@@ -341,6 +316,10 @@ public class Board extends JPanel implements MouseListener, KeyListener {
         else if (selection1==ai && selection2!=0)
         {
             Location move = randomAi1.generateRandomLocation();
+
+            if (board[move.getSheet()][move.getRow()][move.getCol()]!='-')
+                move= randomAi1.generateRandomLocation();
+
             board[move.getSheet()][move.getRow()][move.getCol()] = 'x';
             player1turn = false;
             //generate random ai location
@@ -352,6 +331,8 @@ public class Board extends JPanel implements MouseListener, KeyListener {
             System.out.println("s: " +move.getSheet());
             System.out.println("r: " +move.getRow());
             System.out.println("c: " +move.getCol());
+            if (board[move.getSheet()][move.getRow()][move.getCol()]!='-')
+                move= randomAi2.generateRandomLocation();
             board[move.getSheet()][move.getRow()][move.getCol()] = 'o';
             System.out.print("AI MOVESSSS");
             player1turn = true;
@@ -459,11 +440,11 @@ public class Board extends JPanel implements MouseListener, KeyListener {
 
         System.out.println("\nout of loop");
 
-        if (!player1turn && selection2 == ai)
+        if (!(player1turn && selection2 == ai) && selection1 == person)
         {
             aimove();
         }
-        else if (player1turn && selection1 == ai)
+        else if (player1turn && selection1 == ai && selection2 == person)
         {
             aimove();
         }
@@ -529,5 +510,49 @@ public class Board extends JPanel implements MouseListener, KeyListener {
     {
         super.addNotify();
         requestFocus();
+    }
+
+
+    private final int updatesPerSecond = 50;
+    private long updateCount;
+
+    @Override
+    public void run ()
+    {
+        int waitToUpdate = (1000/updatesPerSecond);
+        long startTime = System.nanoTime();
+
+        while(true)
+        {
+            boolean shouldRepaint = false;
+            long currentTime = System.nanoTime();
+            long updatesNeeded = (((currentTime-startTime)/1000000))/ waitToUpdate;
+
+            for (long x = updateCount; x < updatesNeeded; x++)
+            {
+                //update();
+                shouldRepaint = true;
+                updateCount++;
+            }
+
+            if (shouldRepaint) {
+                runAIRandomGame();
+                repaint();
+                try {
+                    Thread.sleep(delaytime);
+                } catch (InterruptedException m) {
+                    m.printStackTrace();
+                }
+            }
+
+            try
+            {
+                Thread.sleep(5);
+            }
+            catch (Exception e)
+            {
+                System.out.print("Error sleeping in run method: " + e.getMessage());
+            }
+        }
     }
 }
