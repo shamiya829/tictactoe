@@ -43,6 +43,7 @@ public class Pillowtown extends Game3{
     }
 
 
+
     public Location generateRandomLocation()
     {
 
