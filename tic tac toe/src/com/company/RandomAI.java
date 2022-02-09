@@ -20,6 +20,7 @@ public class RandomAI extends Game3{
             rSheet = (int) (Math.random()*(3-0+1)+0);
             rRow = (int) (Math.random()*(3-0+1)+0);
             rCol = (int) (Math.random()*(3-0+1)+0);
+
         }
         return new Location(rSheet, rRow, rCol);
     }
