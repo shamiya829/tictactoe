@@ -19,8 +19,9 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
     Player player1,player2;
     boolean player1turn;
     int selection1,selection2;
-    public final int person=1,ai=2;
+    public final int person=1,ai=2,pillow=3;
     RandomAI randomAi1,randomAi2;
+    Pillowtown pillowtownx,pillowtowno;
     public int delaytime;
     int currentgamerunning=0;
     int gamesplaying =999;
@@ -62,7 +63,7 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
         this.player2 = new Player("player2",'o');
         this.player1turn = true;
 
-        if (selection1!=ai&&selection2!=ai || ((selection1==ai && selection2==ai) && currentgamerunning==gamesplaying)) //if its not ai v ai reset choices or if it is an ai and ur on the last game, then reset
+        if ((((selection1==ai && selection2==ai) || (selection1==pillow && selection2==pillow)) && currentgamerunning==gamesplaying) || selection1!=ai&&selection2!=ai) //if its not ai v ai reset choices or if it is an ai and ur on the last game, then reset
         {
             this.selection1 = 0;
             this.selection2 = 0;
@@ -79,6 +80,8 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
         //make sure selection stays the same after ai games
         this.randomAi1 = new RandomAI();
         this.randomAi2 = new RandomAI();
+        this.pillowtownx = new Pillowtown('x');
+        this.pillowtowno = new Pillowtown('o');
         //repaint();
     }
 
@@ -131,6 +134,14 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
             }
         }
 
+        public void runPillowTown()
+        {
+            if(selection1==pillow && selection2==pillow)
+            {
+                //ai v ai
+            }
+        }
+
 
 
     public void paint(Graphics g)
@@ -161,7 +172,7 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
         if (selection1==0) //if they havnt chosen who to be the first player
         {
             b.setColor(Color.gray);
-            b.fillRect(350,300,200,100);
+            b.fillRect(350,300,200,145);
             b.setColor(Color.black);
             b.drawString("pick 1st player: ",350,330);
 
@@ -169,13 +180,16 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
             b.drawString("user",370,360);
 
             b.fillRect(350,380,10,10);
-            b.drawString("random ai",370,395);
+            b.drawString("random ai",370,390);
+
+            b.fillRect(350,410,10,10);
+            b.drawString("pillowtown",370,425);
         }
 
         if (selection2==0)
         {
             b.setColor(Color.gray);
-            b.fillRect(350,450,200,100);
+            b.fillRect(350,450,200,145);
             b.setColor(Color.black);
             b.drawString("pick 2nd player: ",350,480);
 
@@ -184,6 +198,9 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
 
             b.fillRect(350,530,10,10);
             b.drawString("random ai",370,545);
+
+            b.fillRect(350,560,10,10);
+            b.drawString("pillowtown",370,580);
         }
 
 
@@ -303,18 +320,24 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
         move = randomAi1.generateRandomLocation();
 
         //System.out.println("sheet: "+move.getSheet()+" row: " + move.getRow()+" col: " + move.getCol() );
-
-        if (board[move.getSheet()][move.getRow()][move.getCol()]!='-') {
-            move = randomAi1.generateRandomLocation();
-            if (board[move.getSheet()][move.getRow()][move.getCol()]!='-') {
+        if (selection1==ai)
+        {
+            if (board[move.getSheet()][move.getRow()][move.getCol()] != '-') {
                 move = randomAi1.generateRandomLocation();
-                if (board[move.getSheet()][move.getRow()][move.getCol()]!='-') {
+                if (board[move.getSheet()][move.getRow()][move.getCol()] != '-') {
                     move = randomAi1.generateRandomLocation();
-                    if (board[move.getSheet()][move.getRow()][move.getCol()]!='-') {
+                    if (board[move.getSheet()][move.getRow()][move.getCol()] != '-') {
                         move = randomAi1.generateRandomLocation();
+                        if (board[move.getSheet()][move.getRow()][move.getCol()] != '-') {
+                            move = randomAi1.generateRandomLocation();
+                        }
                     }
                 }
             }
+        }
+        else
+        {
+            move = pillowtownx.bestMove();
         }
 
         board[move.getSheet()][move.getRow()][move.getCol()] = 'x';
@@ -326,19 +349,27 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
     public void aigameomove()
     {
         System.out.println("making new move o");
-        move = randomAi2.generateRandomLocation();
 
-        if (board[move.getSheet()][move.getRow()][move.getCol()]!='-') {
-            move = randomAi1.generateRandomLocation();
-            if (board[move.getSheet()][move.getRow()][move.getCol()]!='-') {
+        if (selection2==ai)
+        {
+            move = randomAi2.generateRandomLocation();
+
+            if (board[move.getSheet()][move.getRow()][move.getCol()] != '-') {
                 move = randomAi1.generateRandomLocation();
-                if (board[move.getSheet()][move.getRow()][move.getCol()]!='-') {
+                if (board[move.getSheet()][move.getRow()][move.getCol()] != '-') {
                     move = randomAi1.generateRandomLocation();
-                    if (board[move.getSheet()][move.getRow()][move.getCol()]!='-') {
+                    if (board[move.getSheet()][move.getRow()][move.getCol()] != '-') {
                         move = randomAi1.generateRandomLocation();
+                        if (board[move.getSheet()][move.getRow()][move.getCol()] != '-') {
+                            move = randomAi1.generateRandomLocation();
+                        }
                     }
                 }
             }
+        }
+        else
+        {
+             move = pillowtowno.bestMove();
         }
 
         board[move.getSheet()][move.getRow()][move.getCol()] = 'o';
@@ -350,7 +381,7 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
     public void aimove() //ai move when playing against user
     {
 
-        if(selection1==ai && selection2==ai){
+        if((selection1==ai && selection2==ai) || selection1==pillow && selection2==pillow){
             if(player1turn)
                 aigamexmove();
             else
@@ -411,6 +442,11 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
             {
                 selection1 = ai;
             }
+            else if ((x>=350&&x<=360) && (y>=410&&y<=420))
+            {
+                selection1 = pillow;
+            }
+
         }
         if (selection2==0)
         {
@@ -422,6 +458,11 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
             {
                 selection2 = ai;
             }
+            else if ((x>=350&&x<=360) && (y>=560&&y<=570))
+            {
+                selection1 = pillow;
+            }
+
         }
        // System.out.println("game won: " + game.won());
         else if (game.won()=='n')
