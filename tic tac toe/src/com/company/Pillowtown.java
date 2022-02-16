@@ -154,7 +154,7 @@ public class Pillowtown extends Game3{
              }
         }
 
-
+        System.out.println("best move");
 
         return location;
     }

@@ -369,6 +369,7 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
         }
         else
         {
+            System.out.println("pillow best move called");
              move = pillowtowno.bestMove();
         }
 
@@ -381,13 +382,25 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
     public void aimove() //ai move when playing against user
     {
 
-        if((selection1==ai && selection2==ai) || selection1==pillow && selection2==pillow){
+        if (player1turn && (selection1==ai || selection2 == pillow))
+            aigamexmove();
+        else if (selection2==ai || selection2 == pillow)
+            aigameomove();
+        /*if((selection1==ai && selection2==ai) || (selection1==pillow && selection2==pillow))
+        {
+            System.out.println("IF WORKS");
             if(player1turn)
+            {
                 aigamexmove();
+            }
+
             else
+            {
+                System.out.println("calling ai move o");
                 aigameomove();
-        }
-        else if (selection1==ai && selection2!=0)
+            }
+        }/*
+       /* else if (selection1==ai && selection2!=0)
         {
             Location move = randomAi1.generateRandomLocation();
 
@@ -413,7 +426,7 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
             //generate random ai location
             //seperate location values and adjust board for 'o'
         }
-        //repaint();
+        //repaint();*/
     }
 
     @Override
@@ -460,7 +473,7 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
             }
             else if ((x>=350&&x<=360) && (y>=560&&y<=570))
             {
-                selection1 = pillow;
+                selection2 = pillow;
             }
 
         }
@@ -526,6 +539,7 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
 
         if (!(player1turn && (selection2 == ai || selection2 == pillow)) && selection1 == person)
         {
+            System.out.print("selection 2 pillow");
             aimove();
         }
         else if (player1turn && (selection1 == ai || selection2 == pillow) && selection2 == person)
