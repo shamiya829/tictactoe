@@ -24,27 +24,27 @@ public class Pillowtown extends Game3{
 
     public ArrayList<Location> check2s() {
         ArrayList<Location> arr = new ArrayList<>();
-        if (board[prevMove.getSheet() - 1][prevMove.getRow()][prevMove.getCol()] == '-') {
+        if (prevMove.getSheet() > 0 && board[prevMove.getSheet() - 1][prevMove.getRow()][prevMove.getCol()] == '-') {
             arr.add(new Location(prevMove.getSheet() - 1,  prevMove.getRow(), prevMove.getCol()));
         }
 
-        if (board[prevMove.getSheet() + 1][prevMove.getRow()][prevMove.getCol()] == '-') {
+        if (prevMove.getSheet() < 3 && board[prevMove.getSheet() + 1][prevMove.getRow()][prevMove.getCol()] == '-') {
             arr.add(new Location(prevMove.getSheet() + 1,  prevMove.getRow(), prevMove.getCol()));
         }
 
-        if (board[prevMove.getSheet()][prevMove.getRow() - 1][prevMove.getCol()] == '-') {
+        if (prevMove.getRow() > 0 && board[prevMove.getSheet()][prevMove.getRow() - 1][prevMove.getCol()] == '-') {
             arr.add(new Location(prevMove.getSheet(),  prevMove.getRow() - 1, prevMove.getCol()));
         }
 
-        if (board[prevMove.getSheet()][prevMove.getRow() + 1][prevMove.getCol()] == '-') {
+        if (prevMove.getRow() < 3 && board[prevMove.getSheet()][prevMove.getRow() + 1][prevMove.getCol()] == '-') {
             arr.add(new Location(prevMove.getSheet(),  prevMove.getRow() + 1, prevMove.getCol()));
         }
 
-        if (board[prevMove.getSheet()][prevMove.getRow()][prevMove.getCol() - 1] == '-') {
+        if (prevMove.getCol() > 0 && board[prevMove.getSheet()][prevMove.getRow()][prevMove.getCol() - 1] == '-') {
             arr.add(new Location(prevMove.getSheet(),  prevMove.getRow(), prevMove.getCol() - 1));
         }
 
-        if (board[prevMove.getSheet()][prevMove.getRow()][prevMove.getCol()] == '-') {
+        if (prevMove.getCol() < 3 && board[prevMove.getSheet()][prevMove.getRow()][prevMove.getCol()] == '-') {
             arr.add(new Location(prevMove.getSheet(),  prevMove.getRow(), prevMove.getCol() + 1));
         }
         return arr;
@@ -53,27 +53,27 @@ public class Pillowtown extends Game3{
     public ArrayList<Location> check3s() {
         ArrayList<Location> arr = new ArrayList<>();
         if(twoInRow){
-            if (board[prevMove.getSheet() - 1][prevMove.getRow()][prevMove.getCol()] == '-') {
+            if (prevMove.getSheet() > 0 && board[prevMove.getSheet() - 1][prevMove.getRow()][prevMove.getCol()] == '-') {
                 arr.add(new Location(prevMove.getSheet() - 1,  prevMove.getRow(), prevMove.getCol()));
             }
 
-            if (board[prevMove.getSheet() + 1][prevMove.getRow()][prevMove.getCol()] == '-') {
+            if (prevMove.getSheet() < 3 && board[prevMove.getSheet() + 1][prevMove.getRow()][prevMove.getCol()] == '-') {
                 arr.add(new Location(prevMove.getSheet() + 1,  prevMove.getRow(), prevMove.getCol()));
             }
 
-            if (board[prevMove.getSheet()][prevMove.getRow() - 1][prevMove.getCol()] == '-') {
+            if (prevMove.getRow() > 0 && board[prevMove.getSheet()][prevMove.getRow() - 1][prevMove.getCol()] == '-') {
                 arr.add(new Location(prevMove.getSheet(),  prevMove.getRow() - 1, prevMove.getCol()));
             }
 
-            if (board[prevMove.getSheet()][prevMove.getRow() + 1][prevMove.getCol()] == '-') {
+            if (prevMove.getRow() < 3 && board[prevMove.getSheet()][prevMove.getRow() + 1][prevMove.getCol()] == '-') {
                 arr.add(new Location(prevMove.getSheet(),  prevMove.getRow() + 1, prevMove.getCol()));
             }
 
-            if (board[prevMove.getSheet()][prevMove.getRow()][prevMove.getCol() - 1] == '-') {
+            if (prevMove.getCol() > 0 && board[prevMove.getSheet()][prevMove.getRow()][prevMove.getCol() - 1] == '-') {
                 arr.add(new Location(prevMove.getSheet(),  prevMove.getRow(), prevMove.getCol() - 1));
             }
 
-            if (board[prevMove.getSheet()][prevMove.getRow()][prevMove.getCol()] == '-') {
+            if (prevMove.getCol() < 3 && board[prevMove.getSheet()][prevMove.getRow()][prevMove.getCol()] == '-') {
                 arr.add(new Location(prevMove.getSheet(),  prevMove.getRow(), prevMove.getCol() + 1));
             }
         }
@@ -84,27 +84,27 @@ public class Pillowtown extends Game3{
     public ArrayList<Location> check4s() {
         ArrayList<Location> arr = new ArrayList<>();
         if(threeInRow){
-            if (board[prevMove.getSheet() - 1][prevMove.getRow()][prevMove.getCol()] == '-') {
+            if (prevMove.getSheet() > 0 && board[prevMove.getSheet() - 1][prevMove.getRow()][prevMove.getCol()] == '-') {
                 arr.add(new Location(prevMove.getSheet() - 1,  prevMove.getRow(), prevMove.getCol()));
             }
 
-            if (board[prevMove.getSheet() + 1][prevMove.getRow()][prevMove.getCol()] == '-') {
+            if (prevMove.getSheet() < 3 && board[prevMove.getSheet() + 1][prevMove.getRow()][prevMove.getCol()] == '-') {
                 arr.add(new Location(prevMove.getSheet() + 1,  prevMove.getRow(), prevMove.getCol()));
             }
 
-            if (board[prevMove.getSheet()][prevMove.getRow() - 1][prevMove.getCol()] == '-') {
+            if (prevMove.getRow() > 0 && board[prevMove.getSheet()][prevMove.getRow() - 1][prevMove.getCol()] == '-') {
                 arr.add(new Location(prevMove.getSheet(),  prevMove.getRow() - 1, prevMove.getCol()));
             }
 
-            if (board[prevMove.getSheet()][prevMove.getRow() + 1][prevMove.getCol()] == '-') {
+            if (prevMove.getRow() < 3 && board[prevMove.getSheet()][prevMove.getRow() + 1][prevMove.getCol()] == '-') {
                 arr.add(new Location(prevMove.getSheet(),  prevMove.getRow() + 1, prevMove.getCol()));
             }
 
-            if (board[prevMove.getSheet()][prevMove.getRow()][prevMove.getCol() - 1] == '-') {
+            if (prevMove.getCol() > 0 && board[prevMove.getSheet()][prevMove.getRow()][prevMove.getCol() - 1] == '-') {
                 arr.add(new Location(prevMove.getSheet(),  prevMove.getRow(), prevMove.getCol() - 1));
             }
 
-            if (board[prevMove.getSheet()][prevMove.getRow()][prevMove.getCol()] == '-') {
+            if (prevMove.getCol() < 3 && board[prevMove.getSheet()][prevMove.getRow()][prevMove.getCol()] == '-') {
                 arr.add(new Location(prevMove.getSheet(),  prevMove.getRow(), prevMove.getCol() + 1));
             }
         }
