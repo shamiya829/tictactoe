@@ -88,7 +88,7 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
 
     public void runAIRandomGame()
     {
-        if (selection1 == ai && selection2 ==ai)
+        if ((selection1 == ai && selection2 ==ai) || (selection1 == pillow && selection2 == pillow))
         {
 
             if (gamesplaying == 999)
