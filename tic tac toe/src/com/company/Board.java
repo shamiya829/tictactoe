@@ -63,7 +63,9 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
         this.player2 = new Player("player2",'o');
         this.player1turn = true;
 
-        if ((((selection1==ai && selection2==ai) || (selection1==pillow && selection2==pillow)) && currentgamerunning==gamesplaying) || selection1!=ai&&selection2!=ai) //if its not ai v ai reset choices or if it is an ai and ur on the last game, then reset
+        if ((((selection1==ai && selection2==ai) || (selection1==pillow && selection2==pillow)) && currentgamerunning==gamesplaying)
+                || ((selection1!=ai&&selection2!=ai) || selection1!=pillow&&selection2!=pillow) )
+            //if its not ai v ai reset choices or if it is an ai and ur on the last game, then reset
         {
             this.selection1 = 0;
             this.selection2 = 0;
