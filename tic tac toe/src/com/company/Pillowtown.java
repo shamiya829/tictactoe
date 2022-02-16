@@ -150,7 +150,7 @@ public class Pillowtown extends Game3{
                 return check2s().get(0);
             }
              if(check2s().size() > 1) {
-                 return check2s().get((int) (Math.random() * (check2s().size() - 0 + 1) + 0));
+                 return check2s().get((int) (Math.random() * (check2s().size() - 0 + 1) + 0)); //array out of bound index here
              }
         }
 
