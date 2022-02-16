@@ -524,11 +524,11 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
 
         System.out.println("\nout of loop");
 
-        if (!(player1turn && selection2 == ai) && selection1 == person)
+        if (!(player1turn && (selection2 == ai || selection2 == pillow)) && selection1 == person)
         {
             aimove();
         }
-        else if (player1turn && selection1 == ai && selection2 == person)
+        else if (player1turn && (selection1 == ai || selection2 == pillow) && selection2 == person)
         {
             aimove();
         }
