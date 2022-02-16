@@ -6,6 +6,10 @@ public class Main {
 
     public static void main(String[] args)
     {
+
+        //Tavishee Shishulakr/Mr.Tully/4th Period
+        //Shamiya Lin/Mr. Tully/4th Period
+
         Game3 game = new Game3();
         char[][][] board = game.getBoard();
         //hi
@@ -71,8 +75,6 @@ public class Main {
             }
         }*/
 
-        //Tavishee Shishulakr/Mr.Tully/4th Period
-        //Shamiya Lin/Mr. Tully/4th Period
     }
 
     public static void displayBoard(char[][][] board)
