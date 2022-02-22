@@ -147,6 +147,7 @@ public class Pillowtown extends Game3{
 
         else if (!check2s().isEmpty()) //meaning 2nd move
         {
+            System.out.println("check2s runnig");
             return check2s().get(0);
         }
         else {
