@@ -118,30 +118,45 @@ public class Pillowtown extends Game3{
             if(check4s().size() == 0){
                 threeInRow = false;
             }
-            if(check4s().size() == 1) {
+            else if(check4s().size() == 1) {
+                System.out.println("check 4 size 1");
                 return check4s().get(0);
             }
-            if(check4s().size() > 1) {
+            else if(check4s().size() > 1) {
                 return check4s().get((int) (Math.random() * (check4s().size() - 0 + 1) + 0));
             }
         }
 
         if(twoInRow == true){
-            threeInRow = true;
+            //because you will have three in a row after this move
 
             if(check3s().size() == 0){
                 twoInRow = false;
             }
-
-            if(check3s().size() == 1) {
+            else if(check3s().size() == 1) {
+                threeInRow = true;
+                System.out.println("check 3 size 1");
                 return check3s().get(0);
             }
-            if(check3s().size() > 1) {
+            else if(check3s().size() > 1) {
+                threeInRow = true;
+                System.out.println("check 3 more than 1");
                 return check3s().get((int) (Math.random() * (check3s().size() - 0 + 1) + 0));
             }
         }
 
-        if(twoInRow == false){
+        else if (!check2s().isEmpty()) //meaning 2nd move
+        {
+            return check2s().get(0);
+        }
+        else {
+            System.out.println("random location being generalted");
+            return generateRandomLocation();
+        }
+
+
+
+        /*if(twoInRow == false){
             twoInRow = true;
             if(check2s().size() == 0){
                 twoInRow = false;
@@ -150,9 +165,9 @@ public class Pillowtown extends Game3{
                 return check2s().get(0);
             }
              if(check2s().size() > 1) {
-                 return check2s().get((int) (Math.random() * (check2s().size() - 0 + 1) + 0)); //array out of bound index here
+
              }
-        }
+        }*/
 
         System.out.println("best move");
 
