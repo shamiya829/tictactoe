@@ -2,6 +2,19 @@ package com.company;
 
 public class BlanketFort extends Game3
 {
+    Location firstMove= generateRandomLocation();
+    int winType = 0; //going to store wintype for straight line
+
+
+    public Location getFirstMove() {
+        return firstMove;
+    }
+
+    public Location bestMove()
+    {
+
+    }
+
     public Location generateRandomLocation()
     {
 
