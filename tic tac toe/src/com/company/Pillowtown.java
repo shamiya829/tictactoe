@@ -10,6 +10,8 @@ public class Pillowtown extends Game3{
     Location prevMove = generateRandomLocation();
     boolean twoInRow = false;
     boolean threeInRow = false;
+    int moveNumber=0; //(used to check if its the first move)
+    Location firstmove = generateRandomLocation();
 
     Pillowtown(char name) {
         location = generateRandomLocation();
@@ -57,37 +59,38 @@ public class Pillowtown extends Game3{
         return arr;
     }
 
-    public ArrayList<Location> check3s() {
+    public ArrayList<Location> check3s(Location checking) {
         ArrayList<Location> arr = new ArrayList<>();
         arr.clear();
         if(twoInRow){
-            if (prevMove.getSheet() > 0 && board[prevMove.getSheet() - 1][prevMove.getRow()][prevMove.getCol()] == '-') {
-                arr.add(new Location(prevMove.getSheet() - 1,  prevMove.getRow(), prevMove.getCol()));
+            if (checking.getSheet() > 0 && board[checking.getSheet() - 1][checking.getRow()][checking.getCol()] == '-') {
+                arr.add(new Location(checking.getSheet() - 1,  checking.getRow(), checking.getCol()));
             }
 
-            if (prevMove.getSheet() < 3 && board[prevMove.getSheet() + 1][prevMove.getRow()][prevMove.getCol()] == '-') {
-                arr.add(new Location(prevMove.getSheet() + 1,  prevMove.getRow(), prevMove.getCol()));
+            if (checking.getSheet() < 3 && board[checking.getSheet() + 1][checking.getRow()][checking.getCol()] == '-') {
+                arr.add(new Location(checking.getSheet() + 1,  checking.getRow(), checking.getCol()));
             }
 
-            if (prevMove.getRow() > 0 && board[prevMove.getSheet()][prevMove.getRow() - 1][prevMove.getCol()] == '-') {
-                arr.add(new Location(prevMove.getSheet(),  prevMove.getRow() - 1, prevMove.getCol()));
+            if (checking.getRow() > 0 && board[checking.getSheet()][checking.getRow() - 1][checking.getCol()] == '-') {
+                arr.add(new Location(checking.getSheet(),  checking.getRow() - 1, checking.getCol()));
             }
 
-            if (prevMove.getRow() < 3 && board[prevMove.getSheet()][prevMove.getRow() + 1][prevMove.getCol()] == '-') {
-                arr.add(new Location(prevMove.getSheet(),  prevMove.getRow() + 1, prevMove.getCol()));
+            if (checking.getRow() < 3 && board[checking.getSheet()][checking.getRow() + 1][checking.getCol()] == '-') {
+                arr.add(new Location(checking.getSheet(),  checking.getRow() + 1, checking.getCol()));
             }
 
-            if (prevMove.getCol() > 0 && board[prevMove.getSheet()][prevMove.getRow()][prevMove.getCol() - 1] == '-') {
-                arr.add(new Location(prevMove.getSheet(),  prevMove.getRow(), prevMove.getCol() - 1));
+            if (checking.getCol() > 0 && board[checking.getSheet()][checking.getRow()][checking.getCol() - 1] == '-') {
+                arr.add(new Location(checking.getSheet(),  checking.getRow(), checking.getCol() - 1));
             }
 
-            if (prevMove.getCol() < 3 && board[prevMove.getSheet()][prevMove.getRow()][prevMove.getCol()] == '-') {
-                arr.add(new Location(prevMove.getSheet(),  prevMove.getRow(), prevMove.getCol() + 1));
+            if (checking.getCol() < 3 && board[checking.getSheet()][checking.getRow()][checking.getCol()] == '-') {
+                arr.add(new Location(checking.getSheet(),  checking.getRow(), checking.getCol() + 1));
             }
         }
 
         return arr;
     }
+
 
     public ArrayList<Location> check4s() {
         ArrayList<Location> arr = new ArrayList<>();
@@ -142,23 +145,32 @@ public class Pillowtown extends Game3{
         if(twoInRow == true){
             //because you will have three in a row after this move
 
-            if(check3s().size() == 0){
+            if(check3s(prevMove).size() == 0 && check3s(firstmove).size() == 0){
                 twoInRow = false;
+                generateRandomLocation();
             }
-            else if(check3s().size() == 1) {
+            else if(check3s(prevMove).size() == 1) {
                 threeInRow = true;
                 System.out.println("check 3 size 1");
-                Location adding = check3s().get(0);
+                Location adding = new Location (0,0,0);
+                if (check3s(prevMove).isEmpty()) {
+                    adding = check3s(firstmove).get(0);
+                }
+                else
+                {
+                    adding = check3s(prevMove).get(0);
+                }
                 prevMove = adding;
                 return adding;
             }
-            else if(check3s().size() > 1) {
+            else if(check3s(prevMove).size() > 1) {
                 threeInRow = true;
                 System.out.println("check 3 more than 1");
-                Location adding = check3s().get((int) (Math.random() * (check3s().size() - 0 + 1) + 0));
+                Location adding = check3s(prevMove).get((int) (Math.random() * (check3s(prevMove).size() - 0 + 1) + 0));
                 prevMove = adding;
                 return  adding;
             }
+            threeInRow = true;
         }
 
         else if (!check2s().isEmpty()) //meaning 2nd move
@@ -166,6 +178,7 @@ public class Pillowtown extends Game3{
             System.out.println("check2s runnig");
             Location adding = check2s().get(0);
             prevMove = adding;
+            twoInRow = true;
             System.out.println("s: "+check2s().get(0).getSheet()+ " r: " + check2s().get(0).getRow()+ " c: " + check2s().get(0).getCol());
             return adding;
         }
@@ -212,6 +225,10 @@ public class Pillowtown extends Game3{
         }
         Location adding = new Location(rSheet, rRow, rCol);
         prevMove = adding;
+        if (moveNumber == 0)
+        {
+            firstmove = adding;
+        }
         return adding;
     }
 
