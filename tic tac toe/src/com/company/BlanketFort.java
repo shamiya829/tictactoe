@@ -71,6 +71,90 @@ public class BlanketFort extends Game3
         return arr;
     }
 
+    public ArrayList<Location> colThruMoves()
+    {
+        ArrayList<Location> arr = new ArrayList<>();
+        int c = firstMove.getCol();
+
+        if (board[0][0][c] == '-')
+            arr.add(new Location(0,0,c));
+        if (board[1][1][c] == '-')
+            arr.add(new Location(1,1,c));
+        if (board[2][2][c] == '-')
+            arr.add(new Location(2,2,c));
+        if (board[3][3][c] == '-')
+            arr.add(new Location(3,3,c));
+
+        return arr;
+    }
+
+    public ArrayList<Location> backSlashDiagMove()
+    {
+        ArrayList<Location> arr = new ArrayList<>();
+        int s = firstMove.getSheet();
+
+        if (board[s][0][0] == '-')
+            arr.add(new Location(s,0,0));
+        if (board[s][1][1] == '-')
+            arr.add(new Location(s,1,1));
+        if (board[s][2][2] == '-')
+            arr.add(new Location(s,2,2));
+        if (board[s][3][3] == '-')
+            arr.add(new Location(s,3,3));
+
+        return arr;
+    }
+
+    public ArrayList<Location> frontSlashDiagMove()
+    {
+        ArrayList<Location> arr = new ArrayList<>();
+        int s = firstMove.getSheet();
+
+        if (board[s][0][3] == '-')
+            arr.add(new Location(s,0,0));
+        if (board[s][1][2] == '-')
+            arr.add(new Location(s,1,1));
+        if (board[s][2][1] == '-')
+            arr.add(new Location(s,2,2));
+        if (board[s][3][0] == '-')
+            arr.add(new Location(s,3,3));
+
+        return arr;
+    }
+
+    public ArrayList<Location> backSlashThruMove()
+    {
+        ArrayList<Location> arr = new ArrayList<>();
+        int s = 0;
+
+        if (board[s][0][0] == '-')
+            arr.add(new Location(s,0,0));
+        if (board[s+1][1][1] == '-')
+            arr.add(new Location(s,1,1));
+        if (board[s+2][2][2] == '-')
+            arr.add(new Location(s,2,2));
+        if (board[s+3][3][3] == '-')
+            arr.add(new Location(s,3,3));
+
+        return arr;
+    }
+
+    public ArrayList<Location> frontSlashThruMove()
+    {
+        ArrayList<Location> arr = new ArrayList<>();
+        int s = 0;
+
+        if (board[s][0][3] == '-')
+            arr.add(new Location(s,0,0));
+        if (board[s+1][1][2] == '-')
+            arr.add(new Location(s,1,1));
+        if (board[s+2][2][1] == '-')
+            arr.add(new Location(s,2,2));
+        if (board[s+3][3][0] == '-')
+            arr.add(new Location(s,3,3));
+
+        return arr;
+    }
 
     public Location getFirstMove() {
         return firstMove;

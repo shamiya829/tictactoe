@@ -125,10 +125,10 @@ public class Pillowtown extends Game3{
 
     public Location bestMove(){
 
-
         if(threeInRow == true){
             if(check4s().size() == 0){
                 threeInRow = false;
+                twoInRow = true;
             }
             else if(check4s().size() == 1) {
                 System.out.println("check 4 size 1");
@@ -140,6 +140,7 @@ public class Pillowtown extends Game3{
                 prevMove = adding;
                 return adding;
             }
+
         }
 
         if(twoInRow == true){
