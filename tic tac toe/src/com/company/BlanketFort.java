@@ -24,13 +24,13 @@ public class BlanketFort extends Game3
         int s = firstMove.getSheet();
         int r = firstMove.getRow();
 
-                if(board[s][r][0] != '-') //if the location in col 0 is avaliable, add it to arraylist (and so forth)
+                if(board[s][r][0] == '-') //if the location in col 0 is avaliable, add it to arraylist (and so forth)
                     arr.add(new Location (s,r,0));
-                if(board[s][r][1] != '-')
+                if(board[s][r][1] == '-')
                     arr.add(new Location (s,r,1));
-                if (board[s][r][2] != '-')
+                if (board[s][r][2] == '-')
                     arr.add(new Location (s,r,2));
-                if (board[s][r][3] != '-' )
+                if (board[s][r][3] == '-' )
                     arr.add(new Location (s,r,3));
         return arr;
     }
@@ -41,17 +41,26 @@ public class BlanketFort extends Game3
         int s = firstMove.getSheet();
         int c = firstMove.getCol();
 
-        if(board[s][0][c] != '-') //if the location in col 0 is avaliable, add it to arraylist (and so forth)
+        if(board[s][0][c] == '-') //if the location in col 0 is avaliable, add it to arraylist (and so forth)
             arr.add(new Location (s,0,c));
-        if(board[s][1][c] != '-')
+        if(board[s][1][c] == '-')
             arr.add(new Location (s,1,c));
-        if (board[s][2][c] != '-')
+        if (board[s][2][c] == '-')
             arr.add(new Location (s,2,c));
-        if (board[s][3][c] != '-' )
+        if (board[s][3][c] == '-' )
             arr.add(new Location (s,3,c));
         return arr;
     }
 
+    public ArrayList<Location> rowThruMoves()
+    {
+        ArrayList<Location> arr = new ArrayList<>();
+        int r = firstMove.getRow();
+
+        if (board[0][r][0] )
+
+        return arr;
+    }
 
 
     public Location getFirstMove() {
