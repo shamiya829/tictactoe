@@ -15,6 +15,7 @@ public class BlanketFort extends Game3
     public final int frontslashdiag = 6;
     public final int backslashthru = 7;
     public final int frontslashthu =8;
+    char[][][] board = new char[3][3][3];
     char name = 'n';
 
     BlanketFort(char name)
@@ -22,6 +23,7 @@ public class BlanketFort extends Game3
         this.name = name;
         winType = (int)Math.floor(Math.random()*(8-1+1)+1); //will pick a certain wintype at random
         System.out.println("win tyep number: "+winType);
+        this.board = Board.getBoard();
     }
 
     public ArrayList<Location> rowMoves() //col values change to make a row win
@@ -78,7 +80,6 @@ public class BlanketFort extends Game3
 
     public ArrayList<Location> colThruMoves()
     {
-        char[][][] board = Board.getBoard();
         ArrayList<Location> arr = new ArrayList<>();
         int c = firstMove.getCol();
         int r = firstMove.getRow();
