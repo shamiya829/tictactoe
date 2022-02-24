@@ -14,7 +14,7 @@ import java.net.URL;
 public class Board extends JPanel implements MouseListener, KeyListener,Runnable {
 
 
-    char[][][] board;
+    public static char[][][] board;
     Game3 game;
     Player player1,player2;
     boolean player1turn;
@@ -371,10 +371,10 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
         }
         else
         {
-            System.out.println("pillow best move called");
+            System.out.println("pillow best move called\n\n");
              move = pillowtowno.bestMove();
         }
-
+        displayBoard(board);
         board[move.getSheet()][move.getRow()][move.getCol()] = 'o';
         player1turn = true;
     }
@@ -541,7 +541,7 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
 
         if (!(player1turn && (selection2 == ai || selection2 == pillow)) && selection1 == person)
         {
-            System.out.print("selection 2 pillow");
+            System.out.println("selection 2 pillow");
             aimove();
         }
         else if (player1turn && (selection1 == ai || selection2 == pillow) && selection2 == person)
@@ -550,6 +550,10 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
         }
 
         repaint();
+    }
+
+    public static char[][][] getBoard() {
+        return board;
     }
 
     @Override

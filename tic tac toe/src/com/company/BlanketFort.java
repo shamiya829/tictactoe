@@ -5,7 +5,8 @@ import java.util.ArrayList;
 public class BlanketFort extends Game3
 {
     Location firstMove= generateRandomLocation();
-    int winType = 0; //going to store wintype for straight line
+    int movenumber = 0;
+    int winType = 4; //going to store wintype for straight line
     public final int row = 1;
     public final int col = 2;
     public final int rowThru = 3;
@@ -19,7 +20,8 @@ public class BlanketFort extends Game3
     BlanketFort(char name)
     {
         this.name = name;
-        winType = (int)Math.floor(Math.random()*(8-1+1)+1); //will pick a certain wintype at random
+        //winType = (int)Math.floor(Math.random()*(8-1+1)+1); //will pick a certain wintype at random
+        System.out.println("win tyep number: "+winType);
     }
 
     public ArrayList<Location> rowMoves() //col values change to make a row win
@@ -45,7 +47,7 @@ public class BlanketFort extends Game3
         int s = firstMove.getSheet();
         int c = firstMove.getCol();
 
-        if(board[s][0][c] == '-') //if the location in col 0 is avaliable, add it to arraylist (and so forth)
+        if(board[s][0][c] != '-') //if the location in col 0 is avaliable, add it to arraylist (and so forth)
             arr.add(new Location (s,0,c));
         if(board[s][1][c] == '-')
             arr.add(new Location (s,1,c));
@@ -58,6 +60,7 @@ public class BlanketFort extends Game3
 
     public ArrayList<Location> rowThruMoves()
     {
+
         ArrayList<Location> arr = new ArrayList<>();
         int r = firstMove.getRow();
 
@@ -75,17 +78,23 @@ public class BlanketFort extends Game3
 
     public ArrayList<Location> colThruMoves()
     {
+        char[][][] board = Board.getBoard();
         ArrayList<Location> arr = new ArrayList<>();
         int c = firstMove.getCol();
+        int r = firstMove.getRow();
 
-        if (board[0][0][c] == '-')
-            arr.add(new Location(0,0,c));
-        if (board[1][1][c] == '-')
-            arr.add(new Location(1,1,c));
-        if (board[2][2][c] == '-')
-            arr.add(new Location(2,2,c));
-        if (board[3][3][c] == '-')
-            arr.add(new Location(3,3,c));
+        if (board[0][r][c] != 'x' && board[0][0][c] != 'o') {
+            System.out.println("added 0 sheet");
+            //System.out.println("\n\n");
+            arr.add(new Location(0, r, c));
+            //displayBoard(board);
+        }
+        if (board[0][r][c] != 'x' && board[0][0][c] != 'o')
+            arr.add(new Location(1,r,c));
+        if (board[0][r][c] != 'x' && board[0][0][c] != 'o')
+            arr.add(new Location(2,r,c));
+        if (board[0][r][c] != 'x' && board[0][0][c] != 'o')
+            arr.add(new Location(3,r,c));
 
         return arr;
     }
@@ -166,35 +175,43 @@ public class BlanketFort extends Game3
 
     public Location bestMove()
     {
-        if (winType == row)
+        if (movenumber ==0)
+        {
+            movenumber++;
+            return firstMove;
+        }
+        else if (winType == row)
         {
             return rowMoves().remove(0); // shouldnt replace on move, only adds moves to arraylist if they are avalibale spots
         }
-        if (winType == col)
+        else if (winType == col)
         {
             return colMoves().remove(0);
         }
-        if (winType == rowThru)
+        else if (winType == rowThru)
         {
             return rowThruMoves().remove(0);
         }
-        if (winType == colThru)
+        else if (winType == colThru)
         {
+            System.out.println("colthrough called");
+            Location removing  = colThruMoves().remove(0);
+            System.out.println("playing moves: " + removing.getSheet() + "r: " + removing.getRow() + "c:" + removing.getCol());
             return colThruMoves().remove(0);
         }
-        if (winType == backslashdiag)
+        else if (winType == backslashdiag)
         {
             return backSlashDiagMove().remove(0);
         }
-        if (winType == frontslashdiag)
+        else if (winType == frontslashdiag)
         {
             return frontSlashDiagMove().remove(0);
         }
-        if (winType == backslashthru)
+        else if (winType == backslashthru)
         {
             return backSlashThruMove().remove(0);
         }
-        if (winType == frontslashthu)
+        else if (winType == frontslashthu)
         {
             return frontSlashThruMove().remove(0);
         }
@@ -218,5 +235,22 @@ public class BlanketFort extends Game3
         }
         Location adding = new Location(rSheet, rRow, rCol);
         return adding;
+    }
+
+    public static void displayBoard(char[][][] board)
+    {
+        for (int i = 0; i < 4; i++) {
+
+            for (int j = 0; j < 4; j++) {
+
+                for (int k = 0; k < 4; k++) {
+
+                    System.out.print("[" + board[i][j][k] + "] ");
+                }
+
+                System.out.println();
+            }
+            System.out.println();
+        }
     }
 }
