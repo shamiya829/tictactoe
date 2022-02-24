@@ -15,18 +15,16 @@ public class BlanketFort extends Game3
 
     BlanketFort()
     {
-        winType = (int)Math.floor(Math.random()*(6-1+1)+1); //will pick a certain wintype
+        winType = (int)Math.floor(Math.random()*(6-1+1)+1); //will pick a certain wintype at random
     }
 
-    public ArrayList<Location> rowMoves()
+    public ArrayList<Location> rowMoves() //col values change to make a row win
     {
-        ArrayList<Location> arr = new ArrayList<>();
-        for(int s = 0; s < 4; s++)
-        {
-            for(int r = 0; r < 4; r++)
-            {
-                //x
-                if(board[s][r][0] != '-')
+        ArrayList<Location> arr = new ArrayList<>(); //arraylist of all values in the row of the first move
+        int s = firstMove.getSheet();
+        int r = firstMove.getRow();
+
+                if(board[s][r][0] != '-') //if the location in col 0 is avaliable, add it to arraylist (and so forth)
                     arr.add(new Location (s,r,0));
                 if(board[s][r][1] != '-')
                     arr.add(new Location (s,r,1));
@@ -34,9 +32,6 @@ public class BlanketFort extends Game3
                     arr.add(new Location (s,r,2));
                 if (board[s][r][3] != '-' )
                     arr.add(new Location (s,r,3));
-
-                }
-            }
         return arr;
     }
 
@@ -47,7 +42,25 @@ public class BlanketFort extends Game3
 
     public Location bestMove()
     {
-
+        if (winType == row)
+        {
+            return rowMoves().remove(0); // shouldnt replace on move, only adds moves to arraylist if they are avalibale spots
+        }
+        if (winType == col)
+        {
+        }
+        if (winType == rowThru)
+        {
+        }
+        if (winType == colThru)
+        {
+        }
+        if (winType == diagonalSheet)
+        {
+        }
+        if (winType == getDiagonalThruSheet)
+        {
+        }
     }
 
     public Location generateRandomLocation()
