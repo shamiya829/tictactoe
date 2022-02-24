@@ -21,7 +21,7 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
     int selection1,selection2;
     public final int person=1,ai=2,pillow=3;
     RandomAI randomAi1,randomAi2;
-    Pillowtown pillowtownx,pillowtowno;
+    BlanketFort pillowtownx,pillowtowno;
     public int delaytime;
     int currentgamerunning=0;
     int gamesplaying =999;
@@ -82,8 +82,8 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
         //make sure selection stays the same after ai games
         this.randomAi1 = new RandomAI();
         this.randomAi2 = new RandomAI();
-        this.pillowtownx = new Pillowtown('x');
-        this.pillowtowno = new Pillowtown('o');
+        this.pillowtownx = new BlanketFort('x');
+        this.pillowtowno = new BlanketFort('o');
         //repaint();
     }
 

@@ -12,9 +12,11 @@ public class BlanketFort extends Game3
     public final int colThru = 4;
     public final int diagonalSheet = 5;
     public final int getDiagonalThruSheet = 6;
+    char name = 'n';
 
-    BlanketFort()
+    BlanketFort(char name)
     {
+        this.name = name;
         winType = (int)Math.floor(Math.random()*(6-1+1)+1); //will pick a certain wintype at random
     }
 
@@ -57,7 +59,14 @@ public class BlanketFort extends Game3
         ArrayList<Location> arr = new ArrayList<>();
         int r = firstMove.getRow();
 
-        if (board[0][r][0] )
+        if (board[0][r][0] == '-')
+            arr.add(new Location(0,r,0));
+        if (board[1][r][1] == '-')
+            arr.add(new Location(1,r,1));
+        if (board[2][r][2] == '-')
+            arr.add(new Location(2,r,2));
+        if (board[3][r][3] == '-')
+            arr.add(new Location(3,r,3));
 
         return arr;
     }
@@ -66,6 +75,8 @@ public class BlanketFort extends Game3
     public Location getFirstMove() {
         return firstMove;
     }
+
+
 
     public Location bestMove()
     {
@@ -79,6 +90,7 @@ public class BlanketFort extends Game3
         }
         if (winType == rowThru)
         {
+            return rowThruMoves().remove(0);
         }
         if (winType == colThru)
         {
@@ -89,6 +101,8 @@ public class BlanketFort extends Game3
         if (winType == getDiagonalThruSheet)
         {
         }
+
+        return generateRandomLocation(); //shouldnt even get here - added in because java yelling at me
     }
 
     public Location generateRandomLocation()
