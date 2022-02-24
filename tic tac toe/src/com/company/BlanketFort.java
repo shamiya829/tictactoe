@@ -6,7 +6,7 @@ public class BlanketFort extends Game3
 {
     Location firstMove= generateRandomLocation();
     int movenumber = 0;
-    int winType = 4; //going to store wintype for straight line
+    int winType = 0; //going to store wintype for straight line
     public final int row = 1;
     public final int col = 2;
     public final int rowThru = 3;
@@ -20,7 +20,7 @@ public class BlanketFort extends Game3
     BlanketFort(char name)
     {
         this.name = name;
-        //winType = (int)Math.floor(Math.random()*(8-1+1)+1); //will pick a certain wintype at random
+        winType = (int)Math.floor(Math.random()*(8-1+1)+1); //will pick a certain wintype at random
         System.out.println("win tyep number: "+winType);
     }
 
