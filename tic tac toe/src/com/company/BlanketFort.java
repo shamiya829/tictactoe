@@ -35,6 +35,24 @@ public class BlanketFort extends Game3
         return arr;
     }
 
+    public ArrayList<Location> colMoves()
+    {
+        ArrayList<Location> arr = new ArrayList<>();
+        int s = firstMove.getSheet();
+        int c = firstMove.getCol();
+
+        if(board[s][0][c] != '-') //if the location in col 0 is avaliable, add it to arraylist (and so forth)
+            arr.add(new Location (s,0,c));
+        if(board[s][1][c] != '-')
+            arr.add(new Location (s,1,c));
+        if (board[s][2][c] != '-')
+            arr.add(new Location (s,2,c));
+        if (board[s][3][c] != '-' )
+            arr.add(new Location (s,3,c));
+        return arr;
+    }
+
+
 
     public Location getFirstMove() {
         return firstMove;
@@ -48,6 +66,7 @@ public class BlanketFort extends Game3
         }
         if (winType == col)
         {
+            return colMoves().remove(0);
         }
         if (winType == rowThru)
         {
