@@ -142,7 +142,7 @@ public class BlanketFort extends Game3
     public ArrayList<Location> frontSlashThruMove()
     {
         ArrayList<Location> arr = new ArrayList<>();
-        int s = 0;
+        int s = firstMove.getSheet();
 
         if (board[s][0][3] == '-')
             arr.add(new Location(s,0,0));
