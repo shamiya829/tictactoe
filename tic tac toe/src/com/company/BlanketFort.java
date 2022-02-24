@@ -11,16 +11,15 @@ public class BlanketFort extends Game3
     public final int rowThru = 3;
     public final int colThru = 4;
     public final int backslashdiag = 5;
-    public final int getDiagonalThruSheet = 6;
-    public final int frontslashdiag = 7;
-    public final int backslashthru = 8;
-    public final int frontslashthu =9;
+    public final int frontslashdiag = 6;
+    public final int backslashthru = 7;
+    public final int frontslashthu =8;
     char name = 'n';
 
     BlanketFort(char name)
     {
         this.name = name;
-        winType = (int)Math.floor(Math.random()*(6-1+1)+1); //will pick a certain wintype at random
+        winType = (int)Math.floor(Math.random()*(8-1+1)+1); //will pick a certain wintype at random
     }
 
     public ArrayList<Location> rowMoves() //col values change to make a row win
