@@ -195,7 +195,7 @@ public class BlanketFort extends Game3
         {
             return backSlashThruMove().remove(0);
         }
-        if (winType == frontslashdiag)
+        if (winType == frontslashthu)
         {
             return frontSlashThruMove().remove(0);
         }
