@@ -6,7 +6,7 @@ public class BlanketFort extends Game3
 {
     Location firstMove= generateRandomLocation();
     int movenumber = 0;
-    int winType = 0; //going to store wintype for straight line
+    int winType = 4; //going to store wintype for straight line
     public final int row = 1;
     public final int col = 2;
     public final int rowThru = 3;
@@ -15,19 +15,18 @@ public class BlanketFort extends Game3
     public final int frontslashdiag = 6;
     public final int backslashthru = 7;
     public final int frontslashthu =8;
-    char[][][] board = new char[3][3][3];
     char name = 'n';
 
     BlanketFort(char name)
     {
         this.name = name;
-        winType = (int)Math.floor(Math.random()*(8-1+1)+1); //will pick a certain wintype at random
+        //winType = (int)Math.floor(Math.random()*(8-1+1)+1); //will pick a certain wintype at random
         System.out.println("win tyep number: "+winType);
-        this.board = Board.getBoard();
     }
 
     public ArrayList<Location> rowMoves() //col values change to make a row win
     {
+        char[][][] board = Board.getBoard();
         ArrayList<Location> arr = new ArrayList<>(); //arraylist of all values in the row of the first move
         int s = firstMove.getSheet();
         int r = firstMove.getRow();
@@ -45,6 +44,7 @@ public class BlanketFort extends Game3
 
     public ArrayList<Location> colMoves()
     {
+        char[][][] board = Board.getBoard();
         ArrayList<Location> arr = new ArrayList<>();
         int s = firstMove.getSheet();
         int c = firstMove.getCol();
@@ -62,7 +62,7 @@ public class BlanketFort extends Game3
 
     public ArrayList<Location> rowThruMoves()
     {
-
+        char[][][] board = Board.getBoard();
         ArrayList<Location> arr = new ArrayList<>();
         int r = firstMove.getRow();
 
@@ -80,21 +80,22 @@ public class BlanketFort extends Game3
 
     public ArrayList<Location> colThruMoves()
     {
+        char[][][] board = Board.getBoard();
         ArrayList<Location> arr = new ArrayList<>();
         int c = firstMove.getCol();
         int r = firstMove.getRow();
 
-        if (board[0][r][c] != 'x' && board[0][0][c] != 'o') {
+        if (board[0][r][c] != 'x' && board[0][r][c] != 'o') {
             System.out.println("added 0 sheet");
             //System.out.println("\n\n");
             arr.add(new Location(0, r, c));
             //displayBoard(board);
         }
-        if (board[0][r][c] != 'x' && board[0][0][c] != 'o')
+        if (board[1][r][c] != 'x' && board[1][r][c] != 'o')
             arr.add(new Location(1,r,c));
-        if (board[0][r][c] != 'x' && board[0][0][c] != 'o')
+        if (board[2][r][c] != 'x' && board[2][r][c] != 'o')
             arr.add(new Location(2,r,c));
-        if (board[0][r][c] != 'x' && board[0][0][c] != 'o')
+        if (board[3][r][c] != 'x' && board[3][r][c] != 'o')
             arr.add(new Location(3,r,c));
 
         return arr;
@@ -102,6 +103,7 @@ public class BlanketFort extends Game3
 
     public ArrayList<Location> backSlashDiagMove()
     {
+        char[][][] board = Board.getBoard();
         ArrayList<Location> arr = new ArrayList<>();
         int s = firstMove.getSheet();
 
@@ -119,6 +121,7 @@ public class BlanketFort extends Game3
 
     public ArrayList<Location> frontSlashDiagMove()
     {
+        char[][][] board = Board.getBoard();
         ArrayList<Location> arr = new ArrayList<>();
         int s = firstMove.getSheet();
 
@@ -136,6 +139,7 @@ public class BlanketFort extends Game3
 
     public ArrayList<Location> backSlashThruMove()
     {
+        char[][][] board = Board.getBoard();
         ArrayList<Location> arr = new ArrayList<>();
         int s = 0;
 
@@ -153,6 +157,7 @@ public class BlanketFort extends Game3
 
     public ArrayList<Location> frontSlashThruMove()
     {
+        char[][][] board = Board.getBoard();
         ArrayList<Location> arr = new ArrayList<>();
         int s = 0;
 
