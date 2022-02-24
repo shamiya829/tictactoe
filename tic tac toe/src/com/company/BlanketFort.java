@@ -10,8 +10,11 @@ public class BlanketFort extends Game3
     public final int col = 2;
     public final int rowThru = 3;
     public final int colThru = 4;
-    public final int diagonalSheet = 5;
+    public final int backslashdiag = 5;
     public final int getDiagonalThruSheet = 6;
+    public final int frontslashdiag = 7;
+    public final int backslashthru = 8;
+    public final int frontslashthu =9;
     char name = 'n';
 
     BlanketFort(char name)
@@ -178,12 +181,23 @@ public class BlanketFort extends Game3
         }
         if (winType == colThru)
         {
+            return colThruMoves().remove(0);
         }
-        if (winType == diagonalSheet)
+        if (winType == backslashdiag)
         {
+            return backSlashDiagMove().remove(0);
         }
-        if (winType == getDiagonalThruSheet)
+        if (winType == frontslashdiag)
         {
+            return frontSlashDiagMove().remove(0);
+        }
+        if (winType == backslashthru)
+        {
+            return backSlashThruMove().remove(0);
+        }
+        if (winType == frontslashdiag)
+        {
+            return frontSlashThruMove().remove(0);
         }
 
         return generateRandomLocation(); //shouldnt even get here - added in because java yelling at me
