@@ -6,7 +6,7 @@ public class BlanketFort extends Game3
 {
     Location firstMove= generateRandomLocation();
     int movenumber = 0;
-    int winType = 4; //going to store wintype for straight line
+    int winType = 7; //going to store wintype for straight line
     public final int row = 1;
     public final int col = 2;
     public final int rowThru = 3;
@@ -146,11 +146,11 @@ public class BlanketFort extends Game3
         if (board[s][0][0] == '-')
             arr.add(new Location(s,0,0));
         if (board[s+1][1][1] == '-')
-            arr.add(new Location(s,1,1));
+            arr.add(new Location(s+1,1,1));
         if (board[s+2][2][2] == '-')
-            arr.add(new Location(s,2,2));
+            arr.add(new Location(s+2,2,2));
         if (board[s+3][3][3] == '-')
-            arr.add(new Location(s,3,3));
+            arr.add(new Location(s+3,3,3));
 
         return arr;
     }
@@ -181,12 +181,12 @@ public class BlanketFort extends Game3
 
     public Location bestMove()
     {
-        if (movenumber ==0)
+        /*if (movenumber ==0)
         {
             movenumber++;
             return firstMove;
-        }
-        else if (winType == row)
+        }*/
+        if (winType == row)
         {
             return rowMoves().remove(0); // shouldnt replace on move, only adds moves to arraylist if they are avalibale spots
         }
