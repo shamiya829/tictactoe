@@ -6,14 +6,14 @@ public class BlanketFort extends Game3
 {
     Location firstMove= generateRandomLocation();
     int movenumber = 0;
-    int winType = 7; //going to store wintype for straight line
-    public final int row = 1;
-    public final int col = 2;
+    int winType = 3; //going to store wintype for straight line
+    public final int row = 1; //works
+    public final int col = 2; //works
     public final int rowThru = 3;
-    public final int colThru = 4;
+    public final int colThru = 4; //works
     public final int backslashdiag = 5;
     public final int frontslashdiag = 6;
-    public final int backslashthru = 7;
+    public final int backslashthru = 7; //works
     public final int frontslashthu =8;
     char name = 'n';
 
@@ -49,7 +49,7 @@ public class BlanketFort extends Game3
         int s = firstMove.getSheet();
         int c = firstMove.getCol();
 
-        if(board[s][0][c] != '-') //if the location in col 0 is avaliable, add it to arraylist (and so forth)
+        if(board[s][0][c] == '-') //if the location in col 0 is avaliable, add it to arraylist (and so forth)
             arr.add(new Location (s,0,c));
         if(board[s][1][c] == '-')
             arr.add(new Location (s,1,c));
@@ -186,40 +186,44 @@ public class BlanketFort extends Game3
             movenumber++;
             return firstMove;
         }*/
-        if (winType == row)
+        if (winType == row && !rowMoves().isEmpty())
         {
             return rowMoves().remove(0); // shouldnt replace on move, only adds moves to arraylist if they are avalibale spots
         }
-        else if (winType == col)
+        else if (winType == col && !colMoves().isEmpty())
         {
             return colMoves().remove(0);
         }
-        else if (winType == rowThru)
+        else if (winType == rowThru && !rowThruMoves().isEmpty())
         {
             return rowThruMoves().remove(0);
         }
-        else if (winType == colThru)
+        else if (winType == colThru && !colThruMoves().isEmpty())
         {
-            System.out.println("colthrough called");
+            //System.out.println("colthrough called");
             Location removing  = colThruMoves().remove(0);
-            System.out.println("playing moves: " + removing.getSheet() + "r: " + removing.getRow() + "c:" + removing.getCol());
+            //System.out.println("playing moves: " + removing.getSheet() + "r: " + removing.getRow() + "c:" + removing.getCol());
             return colThruMoves().remove(0);
         }
-        else if (winType == backslashdiag)
+        else if (winType == backslashdiag && !backSlashDiagMove().isEmpty())
         {
             return backSlashDiagMove().remove(0);
         }
-        else if (winType == frontslashdiag)
+        else if (winType == frontslashdiag &&  !frontSlashDiagMove().isEmpty())
         {
             return frontSlashDiagMove().remove(0);
         }
-        else if (winType == backslashthru)
+        else if (winType == backslashthru && !backSlashThruMove().isEmpty())
         {
             return backSlashThruMove().remove(0);
         }
-        else if (winType == frontslashthu)
+        else if (winType == frontslashthu && !frontSlashThruMove().isEmpty())
         {
             return frontSlashThruMove().remove(0);
+        }
+        else
+        {
+            winType = (int)Math.floor(Math.random()*(8-1+1)+1);
         }
 
         return generateRandomLocation(); //shouldnt even get here - added in because java yelling at me
