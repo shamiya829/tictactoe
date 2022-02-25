@@ -6,12 +6,12 @@ public class BlanketFort extends Game3
 {
     Location firstMove= generateRandomLocation();
     int movenumber = 0;
-    int winType = 3; //going to store wintype for straight line
+    int winType = 6; //going to store wintype for straight line
     public final int row = 1; //works
     public final int col = 2; //works
-    public final int rowThru = 3;
+    public final int rowThru = 3; //wprks
     public final int colThru = 4; //works
-    public final int backslashdiag = 5;
+    public final int backslashdiag = 5; //works
     public final int frontslashdiag = 6;
     public final int backslashthru = 7; //works
     public final int frontslashthu =8;
@@ -126,13 +126,13 @@ public class BlanketFort extends Game3
         int s = firstMove.getSheet();
 
         if (board[s][0][3] == '-')
-            arr.add(new Location(s,0,0));
+            arr.add(new Location(s,0,3));
         if (board[s][1][2] == '-')
-            arr.add(new Location(s,1,1));
+            arr.add(new Location(s,1,2));
         if (board[s][2][1] == '-')
-            arr.add(new Location(s,2,2));
+            arr.add(new Location(s,2,1));
         if (board[s][3][0] == '-')
-            arr.add(new Location(s,3,3));
+            arr.add(new Location(s,3,0));
 
         return arr;
     }
