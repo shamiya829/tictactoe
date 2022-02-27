@@ -264,32 +264,28 @@ public class BlanketFort extends Game3
         //col through
         for (int c=0;c<4;c++)
         {
-            for (int r=0;r<4;r++)
-            {
-                if (board[0][r][c] != '-') {
-                    System.out.println("board 0 r c count plus " + board[0][r][c]);
+                if (board[0][0][c] != '-') {
+                    System.out.println("board 0 r c count plus " + board[0][0][c]);
                     count++;
                 }
-                if (board[1][r][c] != '-') {
-                    System.out.println("board 1 r c count plus " + board[1][r][c]);
+                if (board[1][1][c] != '-') {
+                    System.out.println("board 1 r c count plus " + board[1][1][c]);
                     count++;
                 }
-                if (board[2][r][c] != '-') {
-                    System.out.println("board 2 r c count plus " + board[2][r][c]);
+                if (board[2][2][c] != '-') {
+                    System.out.println("board 2 r c count plus " + board[2][2][c]);
                     count++;
                 }
-                if (board[3][r][c] != '-') {
-                    System.out.println("board 3 r c count plus " + board[3][r][c]);
+                if (board[3][3][c] != '-') {
+                    System.out.println("board 3 r c count plus " + board[3][3][c]);
                     count++;
                 }
 
                 if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
                 {
                     System.out.println(" col thoruhg count was 3");
-                    colThruForce(r,c);
+                    colThruForce(c);
                 }
-
-            }
             count =0;
         }
 
@@ -347,19 +343,19 @@ public class BlanketFort extends Game3
         return new Location (0,0,0);
     }
 
-    public Location colThruForce(int r,int c)
+    public Location colThruForce(int c)
     {
         char[][][] board = Board.getBoard();
 
-        if (board[0][r][c] == '-') {
-            return (new Location(0, r, c));
+        if (board[0][0][c] == '-') {
+            return (new Location(0, 0, c));
         }
-        if (board[1][r][c] == '-')
-            return(new Location(1,r,c));
-        if (board[2][r][c] == '-')
-            return(new Location(2,r,c));
-        if (board[3][r][c] == '-')
-            return (new Location(3,r,c));
+        if (board[1][1][c] == '-')
+            return(new Location(1,1,c));
+        if (board[2][2][c] == '-')
+            return(new Location(2,2,c));
+        if (board[3][3][c] == '-')
+            return (new Location(3,3,c));
 
         return new Location (0,0,0);
     }
@@ -389,9 +385,6 @@ public class BlanketFort extends Game3
         }
         else if (winType == colThru && !colThruMoves().isEmpty())
         {
-            //System.out.println("colthrough called");
-            Location removing  = colThruMoves().remove(0);
-            //System.out.println("playing moves: " + removing.getSheet() + "r: " + removing.getRow() + "c:" + removing.getCol());
             return colThruMoves().remove(0);
         }
         else if (winType == backslashdiag && !backSlashDiagMove().isEmpty())
