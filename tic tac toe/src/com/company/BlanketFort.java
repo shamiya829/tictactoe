@@ -20,7 +20,7 @@ public class BlanketFort extends Game3
     BlanketFort(char name)
     {
         this.name = name;
-        //winType = (int)Math.floor(Math.random()*(8-1+1)+1); //will pick a certain wintype at random
+        winType = (int)Math.floor(Math.random()*(8-1+1)+1); //will pick a certain wintype at random
         System.out.println("win tyep number: "+winType);
     }
 
@@ -173,19 +173,76 @@ public class BlanketFort extends Game3
         return arr;
     }
 
-    public Location getFirstMove() {
-        return firstMove;
+    public Location forceMove()
+    {
+        char[][][] board = Board.getBoard();
+        int count = 0;
+        //row force win
+        for (int s = 0; s < 4; s++) //will go thoruhg and check every row for a 3 in a row
+        {
+            for (int r = 0; r < 4; r++ )
+            {
+                if (board[s][r][0] != '-') //if the space is taken, makes sure ai doesnt miss any wins too
+                {
+                    count++;
+                    System.out.println("board s r 0 count plus " + board[s][r][0]);
+                }
+                if (board[s][r][1] != '-') {
+                    System.out.println("board s r 1 count plus "+board[s][r][1]);
+                    count++;
+                }
+                if (board[s][r][2] != '-') {
+                    System.out.println("board s r 2 count plus " + board[s][r][2]);
+                    count++;
+                }
+                if (board[s][r][3] != '-') {
+                    System.out.println("board s r 3 count plus "+ board[s][r][3]);
+                    count++;
+                }
+
+                if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
+                {
+                    System.out.println("count was 3");
+                    return rowForce(s,r);
+                }
+                count =0; //reset count after every row to make sure not double counting in a sheet
+                System.out.println(" count reset ");
+            }
+        }
+
+        System.out.println("default location forcemove");
+        return new Location (999,999,999); //default in case there is no force moves to take, number used in best move
+
+
     }
+
+    public Location rowForce(int s, int r) //will check for the open spot and play there
+    {
+        char[][][] board = Board.getBoard();
+        if (board[s][r][0] == '-') //if the location in col 0 is avaliable, add it to arraylist (and so forth)
+            return new Location (s,r,0);
+        if (board[s][r][1] == '-')
+            return new Location (s,r,1);
+        if (board[s][r][2] == '-')
+            return new Location (s,r,2);
+        if (board[s][r][3] == '-')
+            return new Location (s,r,3);
+
+        System.out.println("default location rowforce");
+        return new Location (0,0,0); //if for some reason doesnt work itll play in 000
+    }
+
 
 
 
     public Location bestMove()
     {
-        /*if (movenumber ==0)
+        if (forceMove().getRow() != 999) //if default move (meaning no force moves to take)
         {
-            movenumber++;
-            return firstMove;
-        }*/
+            System.out.println("entered froce move");
+            return  forceMove();
+        }
+
         if (winType == row && !rowMoves().isEmpty())
         {
             return rowMoves().remove(0); // shouldnt replace on move, only adds moves to arraylist if they are avalibale spots
@@ -223,7 +280,7 @@ public class BlanketFort extends Game3
         }
         else
         {
-            winType = (int)Math.floor(Math.random()*(8-1+1)+1);
+            winType = (int)Math.floor(Math.random()*(8-1+1)+1); //reset the win type if you are blocked (mening ur arraylist in that wintype in empty)
         }
 
         return generateRandomLocation(); //shouldnt even get here - added in because java yelling at me
