@@ -16,12 +16,18 @@ public class BlanketFort extends Game3
     public final int backslashthru = 7; //works
     public final int frontslashthu =8;
     char name = 'n';
+    char opponentName = 'n';
 
     BlanketFort(char name)
     {
         this.name = name;
         winType = (int)Math.floor(Math.random()*(8-1+1)+1); //will pick a certain wintype at random
         System.out.println("win tyep number: "+winType);
+
+        if (name == 'o')
+            opponentName = 'x';
+        else
+            opponentName = 'o';
     }
 
     public ArrayList<Location> rowMoves() //col values change to make a row win
@@ -170,7 +176,7 @@ public class BlanketFort extends Game3
         return arr;
     }
 
-    public Location forceMove()
+    public Location forceMove(char value) //will only check for it;s opponents char, so that it doesnt move by accdient when situtation look like (eg. xx-o; shouldnt play there)
     {
         char[][][] board = Board.getBoard();
         int count = 0;
@@ -179,20 +185,23 @@ public class BlanketFort extends Game3
         {
             for (int r = 0; r < 4; r++ )
             {
-                if (board[s][r][0] != '-') //if the space is taken, makes sure ai doesnt miss any wins too
+                if (board[s][r][0] == value) //if the space is taken, makes sure ai doesnt miss any wins too
                 {
                     count++;
                     System.out.println("board s r 0 count plus " + board[s][r][0]);
                 }
-                if (board[s][r][1] != '-') {
+                if (board[s][r][1] == value )
+                {
                     System.out.println("board s r 1 count plus "+board[s][r][1]);
                     count++;
                 }
-                if (board[s][r][2] != '-') {
+                if (board[s][r][2] == value)
+                {
                     System.out.println("board s r 2 count plus " + board[s][r][2]);
                     count++;
                 }
-                if (board[s][r][3] != '-') {
+                if (board[s][r][3] == value)
+                {
                     System.out.println("board s r 3 count plus "+ board[s][r][3]);
                     count++;
                 }
@@ -212,20 +221,20 @@ public class BlanketFort extends Game3
         {
             for (int c = 0; c < 4; c++ )
             {
-                if (board[s][0][c] != '-')
+                if (board[s][0][c]  == value)
                 {
                     count++;
                     System.out.println(" col board s r 0 count plus " + board[s][0][c]);
                 }
-                if (board[s][1][c] != '-') {
+                if (board[s][1][c]  == value) {
                     System.out.println(" col board s r 1 count plus "+board[s][1][c]);
                     count++;
                 }
-                if (board[s][2][c] != '-') {
+                if (board[s][2][c]  == value) {
                     System.out.println(" col board s r 2 count plus " + board[s][2][c]);
                     count++;
                 }
-                if (board[s][3][c] != '-') {
+                if (board[s][3][c] == value) {
                     System.out.println(" col board s r 3 count plus "+ board[s][3][c]);
                     count++;
                 }
@@ -243,13 +252,13 @@ public class BlanketFort extends Game3
         //row through checks
         for (int r = 0; r < 4; r++ )
         {
-            if (board[0][r][0] != '-')
+            if (board[0][r][0]  == value)
                 count++;
-            if (board[1][r][1] != '-')
+            if (board[1][r][1]  == value)
                 count++;
-            if (board[2][r][2] != '-')
+            if (board[2][r][2]  == value)
                 count++;
-            if (board[3][r][3] != '-')
+            if (board[3][r][3] == value)
                 count++;
 
             if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
@@ -265,19 +274,19 @@ public class BlanketFort extends Game3
         //col through
         for (int c=0;c<4;c++)
         {
-                if (board[0][0][c] != '-') {
+                if (board[0][0][c] == value) {
                     System.out.println("board 0 0 c count plus " + board[0][0][c]);
                     count++;
                 }
-                if (board[1][1][c] != '-') {
+                if (board[1][1][c] == value) {
                     System.out.println("board 1 1 c count plus " + board[1][1][c]);
                     count++;
                 }
-                if (board[2][2][c] != '-') {
+                if (board[2][2][c] == value) {
                     System.out.println("board 2 2 c count plus " + board[2][2][c]);
                     count++;
                 }
-                if (board[3][3][c] != '-') {
+                if (board[3][3][c] == value) {
                     System.out.println("board 3 3 c count plus " + board[3][3][c]);
                     count++;
                 }
@@ -290,10 +299,27 @@ public class BlanketFort extends Game3
             count =0;
         }
 
+        for (int s = 0; s<4; s++)
+        {
+            if (board[s][0][0] == value)
+                count++;
+            if (board[s][1][1] == value)
+                count++;
+            if (board[s][2][2] == value)
+                count++;
+            if (board[s][3][3] == value)
+                count++;
+
+            if (count == 3)
+            {
+                return backslashDiagForce(s);
+            }
+
+            count = 0;
+        }
+
         System.out.println("default location forcemove");
         return new Location (999,999,999); //default in case there is no force moves to take, number used in best move
-
-
     }
 
     public Location rowForce(int s, int r) //will check for the open spot and play there
@@ -309,7 +335,7 @@ public class BlanketFort extends Game3
             return new Location (s,r,3);
 
         System.out.println("default location rowforce");
-        return new Location (0,0,0); //if for some reason doesnt work itll play in 000
+        return null; //if for some reason doesnt work itll play in 000
     }
 
     public Location colForce(int s, int c)
@@ -325,7 +351,8 @@ public class BlanketFort extends Game3
         if (board[s][3][c] == '-' )
             return new Location (s,3,c);
 
-        return new Location (0,0,0); //if for some reason doesnt work itll play in 000
+        System.out.println("col force default");
+        return null; //if for some reason doesnt work itll play in 000
     }
 
     public Location rowThruForce(int r)
@@ -341,7 +368,7 @@ public class BlanketFort extends Game3
         if (board[3][r][3] == '-')
             return(new Location(3,r,3));
 
-        return new Location (0,0,0);
+        return null;
     }
 
     public Location colThruForce(int c)
@@ -358,7 +385,23 @@ public class BlanketFort extends Game3
         if (board[3][3][c] == '-')
             return (new Location(3,3,c));
 
-        return new Location (0,0,0);
+        return null;
+    }
+
+    public Location backslashDiagForce(int s)
+    {
+        char[][][] board = Board.getBoard();
+
+        if (board[s][0][0] == '-')
+            return(new Location(s,0,0));
+        if (board[s][1][1] == '-')
+            return (new Location(s,1,1));
+        if (board[s][2][2] == '-')
+            return(new Location(s,2,2));
+        if (board[s][3][3] == '-')
+            return(new Location(s,3,3));
+
+        return null;
     }
 
 
@@ -366,12 +409,11 @@ public class BlanketFort extends Game3
 
     public Location bestMove()
     {
-        if (forceMove().getRow() != 999) //if default move (meaning no force moves to take)
+        if (forceMove(opponentName) != null &&forceMove(opponentName).getRow() != 999) //if default move (meaning no force moves to take)
         {
             System.out.println("entered froce move");
-            return  forceMove();
+            return  forceMove(opponentName);
         }
-
         if (winType == row && !rowMoves().isEmpty())
         {
             return rowMoves().remove(0); // shouldnt replace on move, only adds moves to arraylist if they are avalibale spots
