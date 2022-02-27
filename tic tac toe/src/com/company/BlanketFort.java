@@ -236,7 +236,7 @@ public class BlanketFort extends Game3
                     return colForce(s,c);
                 }
                 count =0; //reset count after every row to make sure not double counting in a sheet
-                System.out.println(" count reset col ");
+                //System.out.println(" count reset col ");
             }
         }
 
@@ -261,30 +261,31 @@ public class BlanketFort extends Game3
             //System.out.println(" count reset col ");
         }
 
+        count = 0;
         //col through
         for (int c=0;c<4;c++)
         {
                 if (board[0][0][c] != '-') {
-                    System.out.println("board 0 r c count plus " + board[0][0][c]);
+                    System.out.println("board 0 0 c count plus " + board[0][0][c]);
                     count++;
                 }
                 if (board[1][1][c] != '-') {
-                    System.out.println("board 1 r c count plus " + board[1][1][c]);
+                    System.out.println("board 1 1 c count plus " + board[1][1][c]);
                     count++;
                 }
                 if (board[2][2][c] != '-') {
-                    System.out.println("board 2 r c count plus " + board[2][2][c]);
+                    System.out.println("board 2 2 c count plus " + board[2][2][c]);
                     count++;
                 }
                 if (board[3][3][c] != '-') {
-                    System.out.println("board 3 r c count plus " + board[3][3][c]);
+                    System.out.println("board 3 3 c count plus " + board[3][3][c]);
                     count++;
                 }
 
                 if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
                 {
                     System.out.println(" col thoruhg count was 3");
-                    colThruForce(c);
+                    return colThruForce(c);
                 }
             count =0;
         }
