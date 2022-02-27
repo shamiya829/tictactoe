@@ -203,7 +203,7 @@ public class BlanketFort extends Game3
                     return rowForce(s,r);
                 }
                 count =0; //reset count after every row to make sure not double counting in a sheet
-                System.out.println(" count reset ");
+                //System.out.println(" count reset ");
             }
         }
 
@@ -254,11 +254,11 @@ public class BlanketFort extends Game3
 
             if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
             {
-                System.out.println(" col count was 3");
+                //System.out.println(" col count was 3");
                 return rowThruForce(r);
             }
             count =0; //reset count after every row to make sure not double counting in a sheet
-            System.out.println(" count reset col ");
+            //System.out.println(" count reset col ");
         }
 
         //col through
@@ -267,14 +267,21 @@ public class BlanketFort extends Game3
             for (int r=0;r<4;r++)
             {
                 if (board[0][r][c] != '-') {
+                    System.out.println("board 0 r c count plus " + board[0][r][c]);
                     count++;
                 }
-                if (board[1][r][c] != '-')
+                if (board[1][r][c] != '-') {
+                    System.out.println("board 1 r c count plus " + board[1][r][c]);
                     count++;
-                if (board[2][r][c] != '-')
+                }
+                if (board[2][r][c] != '-') {
+                    System.out.println("board 2 r c count plus " + board[2][r][c]);
                     count++;
-                if (board[3][r][c] != '-')
+                }
+                if (board[3][r][c] != '-') {
+                    System.out.println("board 3 r c count plus " + board[3][r][c]);
                     count++;
+                }
 
                 if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
                 {
@@ -406,6 +413,7 @@ public class BlanketFort extends Game3
         else
         {
             winType = (int)Math.floor(Math.random()*(8-1+1)+1); //reset the win type if you are blocked (mening ur arraylist in that wintype in empty)
+            bestMove();
         }
 
         return generateRandomLocation(); //shouldnt even get here - added in because java yelling at me
