@@ -86,10 +86,7 @@ public class BlanketFort extends Game3
         int r = firstMove.getRow();
 
         if (board[0][r][c] != 'x' && board[0][r][c] != 'o') {
-            System.out.println("added 0 sheet");
-            //System.out.println("\n\n");
             arr.add(new Location(0, r, c));
-            //displayBoard(board);
         }
         if (board[1][r][c] != 'x' && board[1][r][c] != 'o')
             arr.add(new Location(1,r,c));
@@ -210,6 +207,85 @@ public class BlanketFort extends Game3
             }
         }
 
+        //colsheet blocking from here
+        for (int s = 0; s < 4; s++)
+        {
+            for (int c = 0; c < 4; c++ )
+            {
+                if (board[s][0][c] != '-')
+                {
+                    count++;
+                    System.out.println(" col board s r 0 count plus " + board[s][0][c]);
+                }
+                if (board[s][1][c] != '-') {
+                    System.out.println(" col board s r 1 count plus "+board[s][1][c]);
+                    count++;
+                }
+                if (board[s][2][c] != '-') {
+                    System.out.println(" col board s r 2 count plus " + board[s][2][c]);
+                    count++;
+                }
+                if (board[s][3][c] != '-') {
+                    System.out.println(" col board s r 3 count plus "+ board[s][3][c]);
+                    count++;
+                }
+
+                if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
+                {
+                    System.out.println(" col count was 3");
+                    return colForce(s,c);
+                }
+                count =0; //reset count after every row to make sure not double counting in a sheet
+                System.out.println(" count reset col ");
+            }
+        }
+
+        //row through checks
+        for (int r = 0; r < 4; r++ )
+        {
+            if (board[0][r][0] != '-')
+                count++;
+            if (board[1][r][1] != '-')
+                count++;
+            if (board[2][r][2] != '-')
+                count++;
+            if (board[3][r][3] != '-')
+                count++;
+
+            if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
+            {
+                System.out.println(" col count was 3");
+                return rowThruForce(r);
+            }
+            count =0; //reset count after every row to make sure not double counting in a sheet
+            System.out.println(" count reset col ");
+        }
+
+        //col through
+        for (int c=0;c<4;c++)
+        {
+            for (int r=0;r<4;r++)
+            {
+                if (board[0][r][c] != '-') {
+                    count++;
+                }
+                if (board[1][r][c] != '-')
+                    count++;
+                if (board[2][r][c] != '-')
+                    count++;
+                if (board[3][r][c] != '-')
+                    count++;
+
+                if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
+                {
+                    System.out.println(" col thoruhg count was 3");
+                    colThruForce(r,c);
+                }
+
+            }
+            count =0;
+        }
+
         System.out.println("default location forcemove");
         return new Location (999,999,999); //default in case there is no force moves to take, number used in best move
 
@@ -230,6 +306,55 @@ public class BlanketFort extends Game3
 
         System.out.println("default location rowforce");
         return new Location (0,0,0); //if for some reason doesnt work itll play in 000
+    }
+
+    public Location colForce(int s, int c)
+    {
+        char[][][] board = Board.getBoard();
+
+        if(board[s][0][c] == '-') //if the location in col 0 is avaliable, add it to arraylist (and so forth)
+            return new Location (s,0,c);
+        if(board[s][1][c] == '-')
+            return new Location (s,1,c);
+        if (board[s][2][c] == '-')
+            return new Location (s,2,c);
+        if (board[s][3][c] == '-' )
+            return new Location (s,3,c);
+
+        return new Location (0,0,0); //if for some reason doesnt work itll play in 000
+    }
+
+    public Location rowThruForce(int r)
+    {
+        char[][][] board = Board.getBoard();
+
+        if (board[0][r][0] == '-')
+            return (new Location(0,r,0));
+        if (board[1][r][1] == '-')
+            return (new Location(1,r,1));
+        if (board[2][r][2] == '-')
+            return (new Location(2,r,2));
+        if (board[3][r][3] == '-')
+            return(new Location(3,r,3));
+
+        return new Location (0,0,0);
+    }
+
+    public Location colThruForce(int r,int c)
+    {
+        char[][][] board = Board.getBoard();
+
+        if (board[0][r][c] == '-') {
+            return (new Location(0, r, c));
+        }
+        if (board[1][r][c] == '-')
+            return(new Location(1,r,c));
+        if (board[2][r][c] == '-')
+            return(new Location(2,r,c));
+        if (board[3][r][c] == '-')
+            return (new Location(3,r,c));
+
+        return new Location (0,0,0);
     }
 
 
