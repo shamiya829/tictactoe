@@ -318,8 +318,27 @@ public class BlanketFort extends Game3
             count = 0;
         }
 
+        for (int s = 0; s<4; s++)
+        {
+            if (board[s][0][3] == value)
+                count++;
+            if (board[s][1][2] == value)
+                count++;
+            if (board[s][2][1] == value)
+                count++;
+            if (board[s][3][0] == value)
+                count++;
+
+            if (count == 3)
+            {
+                return frontSlashDiagForce(s);
+            }
+
+            count =0;
+        }
+
         System.out.println("default location forcemove");
-        return new Location (999,999,999); //default in case there is no force moves to take, number used in best move
+        return null; //default in case there is no force moves to take, number used in best move
     }
 
     public Location rowForce(int s, int r) //will check for the open spot and play there
@@ -404,6 +423,19 @@ public class BlanketFort extends Game3
         return null;
     }
 
+    public Location frontSlashDiagForce(int s)
+    {
+        if (board[s][0][3] == '-')
+            return (new Location(s,0,3));
+        if (board[s][1][2] == '-')
+            return(new Location(s,1,2));
+        if (board[s][2][1] == '-')
+            return(new Location(s,2,1));
+        if (board[s][3][0] == '-')
+            return(new Location(s,3,0));
+
+        return null;
+    }
 
 
 
