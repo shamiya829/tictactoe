@@ -7,7 +7,7 @@ public class Location
     int col;
 
     /** Sets x, y, z to the recieved values */
-    public Location(int sheet,int row,int col)
+    public Location(int col,int row,int sheet)
     {
         this.col    = col;
         this.row    = row;

@@ -37,14 +37,14 @@ public class BlanketFort extends Game3
         int s = firstMove.getSheet();
         int r = firstMove.getRow();
 
-                if(board[s][r][0] == '-') //if the location in col 0 is avaliable, add it to arraylist (and so forth)
-                    arr.add(new Location (s,r,0));
-                if(board[s][r][1] == '-')
-                    arr.add(new Location (s,r,1));
-                if (board[s][r][2] == '-')
-                    arr.add(new Location (s,r,2));
-                if (board[s][r][3] == '-' )
-                    arr.add(new Location (s,r,3));
+        if(board[s][r][0] == '-') //if the location in col 0 is avaliable, add it to arraylist (and so forth)
+            arr.add(new Location (0,r,s));
+        if(board[s][r][1] == '-')
+            arr.add(new Location (1,r,s));
+        if (board[s][r][2] == '-')
+            arr.add(new Location (2,r,s));
+        if (board[s][r][3] == '-' )
+            arr.add(new Location (3,r,s));
         return arr;
     }
 
@@ -56,13 +56,13 @@ public class BlanketFort extends Game3
         int c = firstMove.getCol();
 
         if(board[s][0][c] == '-') //if the location in col 0 is avaliable, add it to arraylist (and so forth)
-            arr.add(new Location (s,0,c));
+            arr.add(new Location (c,0,s));
         if(board[s][1][c] == '-')
-            arr.add(new Location (s,1,c));
+            arr.add(new Location (c,1,s));
         if (board[s][2][c] == '-')
-            arr.add(new Location (s,2,c));
+            arr.add(new Location (c,2,s));
         if (board[s][3][c] == '-' )
-            arr.add(new Location (s,3,c));
+            arr.add(new Location (c,3,s));
         return arr;
     }
 
@@ -92,14 +92,14 @@ public class BlanketFort extends Game3
         int r = firstMove.getRow();
 
         if (board[0][r][c] != 'x' && board[0][r][c] != 'o') {
-            arr.add(new Location(0, r, c));
+            arr.add(new Location(c, r, 0));
         }
         if (board[1][r][c] != 'x' && board[1][r][c] != 'o')
-            arr.add(new Location(1,r,c));
+            arr.add(new Location(c,r,1));
         if (board[2][r][c] != 'x' && board[2][r][c] != 'o')
-            arr.add(new Location(2,r,c));
+            arr.add(new Location(c,r,2));
         if (board[3][r][c] != 'x' && board[3][r][c] != 'o')
-            arr.add(new Location(3,r,c));
+            arr.add(new Location(c,r,3));
 
         return arr;
     }
@@ -111,13 +111,13 @@ public class BlanketFort extends Game3
         int s = firstMove.getSheet();
 
         if (board[s][0][0] == '-')
-            arr.add(new Location(s,0,0));
+            arr.add(new Location(0,0,s));
         if (board[s][1][1] == '-')
-            arr.add(new Location(s,1,1));
+            arr.add(new Location(1,1,s));
         if (board[s][2][2] == '-')
-            arr.add(new Location(s,2,2));
+            arr.add(new Location(2,2,s));
         if (board[s][3][3] == '-')
-            arr.add(new Location(s,3,3));
+            arr.add(new Location(3,3,s));
 
         return arr;
     }
@@ -129,31 +129,30 @@ public class BlanketFort extends Game3
         int s = firstMove.getSheet();
 
         if (board[s][0][3] == '-')
-            arr.add(new Location(s,0,3));
+            arr.add(new Location(3,0,s));
         if (board[s][1][2] == '-')
-            arr.add(new Location(s,1,2));
+            arr.add(new Location(2,1,s));
         if (board[s][2][1] == '-')
-            arr.add(new Location(s,2,1));
+            arr.add(new Location(1,2,s));
         if (board[s][3][0] == '-')
-            arr.add(new Location(s,3,0));
+            arr.add(new Location(0,3,s));
 
         return arr;
     }
 
     public ArrayList<Location> backSlashThruMove()
     {
-        char[][][] board = Board.getBoard();
         ArrayList<Location> arr = new ArrayList<>();
         int s = 0;
 
         if (board[s][0][0] == '-')
-            arr.add(new Location(s,0,0));
+            arr.add(new Location(0,0,s));
         if (board[s+1][1][1] == '-')
-            arr.add(new Location(s+1,1,1));
+            arr.add(new Location(1,1,s+1));
         if (board[s+2][2][2] == '-')
-            arr.add(new Location(s+2,2,2));
+            arr.add(new Location(2,2,s+2));
         if (board[s+3][3][3] == '-')
-            arr.add(new Location(s+3,3,3));
+            arr.add(new Location(3,3,s+3));
 
         return arr;
     }
@@ -165,13 +164,13 @@ public class BlanketFort extends Game3
         int s = 0;
 
         if (board[s][0][3] == '-')
-            arr.add(new Location(s,0,3));
+            arr.add(new Location(3,0,s));
         if (board[s+1][1][2] == '-')
-            arr.add(new Location(s+1,1,2));
+            arr.add(new Location(2,1,s+1));
         if (board[s+2][2][1] == '-')
-            arr.add(new Location(s+2,2,1));
+            arr.add(new Location(1,2,s+2));
         if (board[s+3][3][0] == '-')
-            arr.add(new Location(s+3,3,0));
+            arr.add(new Location(0,3,s+3));
 
         return arr;
     }
@@ -339,7 +338,7 @@ public class BlanketFort extends Game3
             count =0;
         }
 
-
+        //backslashth
         if (board[0][0][0] == value)
             count++;
         if (board[1][1][1] == value)
@@ -357,8 +356,6 @@ public class BlanketFort extends Game3
         count =0;
 
         //frontSlashThruMove
-
-
         if (board[0][0][3] == value)
             count++;
         if (board[0+1][1][2] == value)
@@ -394,7 +391,6 @@ public class BlanketFort extends Game3
                     System.out.println("thru called");
                     return thru(r,c);
                 }
-
                 count=0;
             }
         }
@@ -403,17 +399,34 @@ public class BlanketFort extends Game3
         return null; //default in case there is no force moves to take, number used in best move
     }
 
+    public Location frontSlashDiagForce(int s)
+    {
+        char[][][] board = Board.getBoard();
+
+        if (board[s][0][3] == '-')
+            return (new Location(3,0,s));
+        if (board[s][1][2] == '-')
+            return(new Location(2,1,s));
+        if (board[s][2][1] == '-')
+            return(new Location(1,2,s));
+        if (board[s][3][0] == '-')
+            return(new Location(0,3,s));
+
+        return null;
+    }
+
     public Location rowForce(int s, int r) //will check for the open spot and play there
     {
         char[][][] board = Board.getBoard();
+
         if (board[s][r][0] == '-') //if the location in col 0 is avaliable, add it to arraylist (and so forth)
-            return new Location (s,r,0);
+            return new Location (0,r,s);
         if (board[s][r][1] == '-')
-            return new Location (s,r,1);
+            return new Location (1,r,1);
         if (board[s][r][2] == '-')
-            return new Location (s,r,2);
+            return new Location (2,r,s);
         if (board[s][r][3] == '-')
-            return new Location (s,r,3);
+            return new Location (3,r,s);
 
         System.out.println("default location rowforce");
         return null; //if for some reason doesnt work itll play in 000
@@ -424,13 +437,13 @@ public class BlanketFort extends Game3
         char[][][] board = Board.getBoard();
 
         if(board[s][0][c] == '-') //if the location in col 0 is avaliable, add it to arraylist (and so forth)
-            return new Location (s,0,c);
+            return new Location (c,0,s);
         if(board[s][1][c] == '-')
-            return new Location (s,1,c);
+            return new Location (c,1,s);
         if (board[s][2][c] == '-')
-            return new Location (s,2,c);
+            return new Location (c,2,s);
         if (board[s][3][c] == '-' )
-            return new Location (s,3,c);
+            return new Location (c,3,s);
 
         System.out.println("col force default");
         return null; //if for some reason doesnt work itll play in 000
@@ -456,15 +469,17 @@ public class BlanketFort extends Game3
     {
         char[][][] board = Board.getBoard();
 
+        System.out.println("BOB LIKES BURGERS");
+
         if (board[0][0][c] == '-') {
-            return (new Location(0, 0, c));
+            return (new Location(c, 0, 0));
         }
         if (board[1][1][c] == '-')
-            return(new Location(1,1,c));
+            return(new Location(c,1,1));
         if (board[2][2][c] == '-')
-            return(new Location(2,2,c));
+            return(new Location(c,2,2));
         if (board[3][3][c] == '-')
-            return (new Location(3,3,c));
+            return (new Location(c,3,3));
 
         return null;
     }
@@ -474,29 +489,13 @@ public class BlanketFort extends Game3
         char[][][] board = Board.getBoard();
 
         if (board[s][0][0] == '-')
-            return(new Location(s,0,0));
+            return(new Location(0,0,s));
         if (board[s][1][1] == '-')
-            return (new Location(s,1,1));
+            return (new Location(1,1,s));
         if (board[s][2][2] == '-')
-            return(new Location(s,2,2));
+            return(new Location(2,2,s));
         if (board[s][3][3] == '-')
-            return(new Location(s,3,3));
-
-        return null;
-    }
-
-    public Location frontSlashDiagForce(int s)
-    {
-        char[][][] board = Board.getBoard();
-
-        if (board[s][0][3] == '-')
-            return (new Location(s,0,3));
-        if (board[s][1][2] == '-')
-            return(new Location(s,1,2));
-        if (board[s][2][1] == '-')
-            return(new Location(s,2,1));
-        if (board[s][3][0] == '-')
-            return(new Location(s,3,0));
+            return(new Location(3,3,s));
 
         return null;
     }
@@ -507,16 +506,17 @@ public class BlanketFort extends Game3
 
         int s= 0;
         if (board[s][0][0] == '-')
-            return (new Location(s,0,0));
+            return (new Location(0,0,s));
         if (board[s+1][1][1] == '-')
-            return(new Location(s+1,1,1));
+            return(new Location(1,1,s+1));
         if (board[s+2][2][2] == '-')
-            return(new Location(s+2,2,2));
+            return(new Location(2,2,s+2));
         if (board[s+3][3][3] == '-')
-            return(new Location(s+3,3,3));
+            return(new Location(3,3,s+3));
 
         return null;
     }
+
 
     public Location frontSlashThruForce()
     {
@@ -524,13 +524,13 @@ public class BlanketFort extends Game3
 
         int s= 0;
         if (board[s][0][3] == '-')
-            return(new Location(s,0,3));
+            return(new Location(3,0,s));
         if (board[s+1][1][2] == '-')
-            return(new Location(s+1,1,2));
+            return(new Location(2,1,s+1));
         if (board[s+2][2][1] == '-')
-            return(new Location(s+2,2,1));
+            return(new Location(1,2,s+2));
         if (board[s+3][3][0] == '-')
-            return(new Location(s+3,3,0));
+            return(new Location(0,3,s+3));
 
         return null;
     }
@@ -540,13 +540,13 @@ public class BlanketFort extends Game3
         char[][][] board = Board.getBoard();
 
         if (board[0][r][c] == '-')
-            return new Location (0,r,c);
+            return new Location (c,r,0);
         if (board[1][r][c] == '-')
-            return new Location (1,r,c);
+            return new Location (c,r,1);
         if (board[2][r][c] == '-')
-            return new Location (2,r,c);
+            return new Location (c,r,2);
         if (board[3][r][c] == '-')
-            return new Location (3,r,c);
+            return new Location (c,r,3);
 
         return null;
     }
@@ -558,6 +558,7 @@ public class BlanketFort extends Game3
             System.out.println("entered froce move");
             return  forceMove(opponentName);
         }
+
         if (winType == row && !rowMoves().isEmpty())
         {
             return rowMoves().remove(0); // shouldnt replace on move, only adds moves to arraylist if they are avalibale spots
