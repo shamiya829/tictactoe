@@ -271,6 +271,7 @@ public class BlanketFort extends Game3
         }
 
         count = 0;
+
         //col through
         for (int c=0;c<4;c++)
         {
@@ -298,7 +299,7 @@ public class BlanketFort extends Game3
                 }
             count =0;
         }
-
+        //back slash thou
         for (int s = 0; s<4; s++)
         {
             if (board[s][0][0] == value)
@@ -318,6 +319,7 @@ public class BlanketFort extends Game3
             count = 0;
         }
 
+        //front slash thu
         for (int s = 0; s<4; s++)
         {
             if (board[s][0][3] == value)
@@ -336,6 +338,43 @@ public class BlanketFort extends Game3
 
             count =0;
         }
+
+
+        if (board[0][0][0] == value)
+            count++;
+        if (board[1][1][1] == value)
+            count++;
+        if (board[2][2][2] == value)
+            count++;
+        if (board[3][3][3] == value)
+            count++;
+
+        if (count==3)
+        {
+            return backSlashThruForce();
+        }
+
+        count =0;
+
+        //frontSlashThruMove
+
+
+        if (board[0][0][3] == value)
+            count++;
+        if (board[0+1][1][2] == value)
+            count++;
+        if (board[0+2][2][1] == value)
+            count++;
+        if (board[0+3][3][0] == value)
+            count++;
+
+        if (count == 3)
+        {
+            return  frontSlashThruForce();
+        }
+
+        count =0;
+
 
         System.out.println("default location forcemove");
         return null; //default in case there is no force moves to take, number used in best move
@@ -425,6 +464,8 @@ public class BlanketFort extends Game3
 
     public Location frontSlashDiagForce(int s)
     {
+        char[][][] board = Board.getBoard();
+
         if (board[s][0][3] == '-')
             return (new Location(s,0,3));
         if (board[s][1][2] == '-')
@@ -436,6 +477,41 @@ public class BlanketFort extends Game3
 
         return null;
     }
+
+    public Location backSlashThruForce()
+    {
+        char[][][] board = Board.getBoard();
+
+        int s= 0;
+        if (board[s][0][0] == '-')
+            return (new Location(s,0,0));
+        if (board[s+1][1][1] == '-')
+            return(new Location(s+1,1,1));
+        if (board[s+2][2][2] == '-')
+            return(new Location(s+2,2,2));
+        if (board[s+3][3][3] == '-')
+            return(new Location(s+3,3,3));
+
+        return null;
+    }
+
+    public Location frontSlashThruForce()
+    {
+        char[][][] board = Board.getBoard();
+
+        int s= 0;
+        if (board[s][0][3] == '-')
+            return(new Location(s,0,3));
+        if (board[s+1][1][2] == '-')
+            return(new Location(s+1,1,2));
+        if (board[s+2][2][1] == '-')
+            return(new Location(s+2,2,1));
+        if (board[s+3][3][0] == '-')
+            return(new Location(s+3,3,0));
+
+        return null;
+    }
+
 
 
 
