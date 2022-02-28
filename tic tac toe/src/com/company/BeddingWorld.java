@@ -2,7 +2,7 @@ package com.company;
 
 import java.util.ArrayList;
 
-public class QuiltCity extends Game3
+public class BeddingWorld extends Game3
 {
     Location firstMove= generateRandomLocation();
     int movenumber = 0;
@@ -15,35 +15,29 @@ public class QuiltCity extends Game3
     public final int frontslashdiag = 6; //works
     public final int backslashthru = 7; //works
     public final int frontslashthu =8;
-    String name;
-    char letter;
+    char name = 'n';
     char opponentName = 'n';
-    char[][][] board1Ahead = new char [4][4][4];
-    char[][][] board2Ahead = new char [4][4][4];
 
-    QuiltCity(char letter)
+    Location prevMove = generateRandomLocation();
+    boolean twoInRow = false;
+    boolean threeInRow = false;
+
+
+    BeddingWorld(char name)
     {
-        for(int sheet=0; sheet < 4; sheet++)
-            for(int row=0; row < 4; row++)
-                for(int col=0; col < 4; col++)
-                {
-                    board[sheet][row][col] = '-';
-                }
+        this.name = name;
+        winType = (int)Math.floor(Math.random()*(8-1+1)+1); //will pick a certain wintype at random
+        System.out.println("win tyep number: "+winType);
 
-        firstMove = generateRandomLocation();
-        this.letter = letter;
-        name = "Quilt City (1.0 Version)";
-        //winType = (int)Math.floor(Math.random()*(8-1+1)+1); //will pick a certain wintype at random
-        System.out.println("win type number: "+winType);
-
-        if (letter == 'o')
+        if (name == 'o')
             opponentName = 'x';
         else
             opponentName = 'o';
     }
 
-    public ArrayList<Location> rowMoves(char[][][] board) //col values change to make a row win
+    public ArrayList<Location> rowMoves() //col values change to make a row win
     {
+        char[][][] board = Board.getBoard();
         ArrayList<Location> arr = new ArrayList<>(); //arraylist of all values in the row of the first move
         int s = firstMove.getSheet();
         int r = firstMove.getRow();
@@ -59,8 +53,9 @@ public class QuiltCity extends Game3
         return arr;
     }
 
-    public ArrayList<Location> colMoves(char[][][] board)
+    public ArrayList<Location> colMoves()
     {
+        char[][][] board = Board.getBoard();
         ArrayList<Location> arr = new ArrayList<>();
         int s = firstMove.getSheet();
         int c = firstMove.getCol();
@@ -76,8 +71,9 @@ public class QuiltCity extends Game3
         return arr;
     }
 
-    public ArrayList<Location> rowThruMoves(char[][][] board)
+    public ArrayList<Location> rowThruMoves()
     {
+        char[][][] board = Board.getBoard();
         ArrayList<Location> arr = new ArrayList<>();
         int r = firstMove.getRow();
 
@@ -93,8 +89,9 @@ public class QuiltCity extends Game3
         return arr;
     }
 
-    public ArrayList<Location> colThruMoves(char[][][] board)
+    public ArrayList<Location> colThruMoves()
     {
+        char[][][] board = Board.getBoard();
         ArrayList<Location> arr = new ArrayList<>();
         int c = firstMove.getCol();
         int r = firstMove.getRow();
@@ -112,8 +109,9 @@ public class QuiltCity extends Game3
         return arr;
     }
 
-    public ArrayList<Location> backSlashDiagMove(char[][][] board)
+    public ArrayList<Location> backSlashDiagMove()
     {
+        char[][][] board = Board.getBoard();
         ArrayList<Location> arr = new ArrayList<>();
         int s = firstMove.getSheet();
 
@@ -129,8 +127,9 @@ public class QuiltCity extends Game3
         return arr;
     }
 
-    public ArrayList<Location> frontSlashDiagMove(char[][][] board)
+    public ArrayList<Location> frontSlashDiagMove()
     {
+        char[][][] board = Board.getBoard();
         ArrayList<Location> arr = new ArrayList<>();
         int s = firstMove.getSheet();
 
@@ -146,7 +145,7 @@ public class QuiltCity extends Game3
         return arr;
     }
 
-    public ArrayList<Location> backSlashThruMove(char[][][] board)
+    public ArrayList<Location> backSlashThruMove()
     {
         ArrayList<Location> arr = new ArrayList<>();
         int s = 0;
@@ -163,8 +162,9 @@ public class QuiltCity extends Game3
         return arr;
     }
 
-    public ArrayList<Location> frontSlashThruMove(char[][][] board)
+    public ArrayList<Location> frontSlashThruMove()
     {
+        char[][][] board = Board.getBoard();
         ArrayList<Location> arr = new ArrayList<>();
         int s = 0;
 
@@ -180,8 +180,9 @@ public class QuiltCity extends Game3
         return arr;
     }
 
-    public Location forceMove(char value, char[][][] board) //will only check for it;s opponents char, so that it doesnt move by accdient when situtation look like (eg. xx-o; shouldnt play there)
+    public Location forceMove(char value) //will only check for it;s opponents char, so that it doesnt move by accdient when situtation look like (eg. xx-o; shouldnt play there)
     {
+        char[][][] board = Board.getBoard();
         int count = 0;
 
         //col through
@@ -207,7 +208,7 @@ public class QuiltCity extends Game3
             if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
             {
                 System.out.println(" col thoruhg count was 3");
-                return colThruForce(c, board);
+                return colThruForce(c);
             }
             count =0;
         }
@@ -242,7 +243,7 @@ public class QuiltCity extends Game3
                 if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
                 {
                     System.out.println("count was 3");
-                    return rowForce(s,r,board);
+                    return rowForce(s,r);
                 }
                 count =0; //reset count after every row to make sure not double counting in a sheet
                 //System.out.println(" count reset ");
@@ -275,7 +276,7 @@ public class QuiltCity extends Game3
                 if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
                 {
                     System.out.println(" col count was 3");
-                    return colForce(s,c,board);
+                    return colForce(s,c);
                 }
                 count =0; //reset count after every row to make sure not double counting in a sheet
                 //System.out.println(" count reset col ");
@@ -297,7 +298,7 @@ public class QuiltCity extends Game3
             if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
             {
                 //System.out.println(" col count was 3");
-                return rowThruForce(r,board);
+                return rowThruForce(r);
             }
             count =0; //reset count after every row to make sure not double counting in a sheet
             //System.out.println(" count reset col ");
@@ -328,7 +329,7 @@ public class QuiltCity extends Game3
             if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
             {
                 System.out.println(" col thoruhg count was 3");
-                return colThruForce(c, board);
+                return colThruForce(c);
             }
             count =0;
         }
@@ -346,7 +347,7 @@ public class QuiltCity extends Game3
 
             if (count == 3)
             {
-                return backslashDiagForce(s, board);
+                return backslashDiagForce(s);
             }
 
             count = 0;
@@ -366,7 +367,7 @@ public class QuiltCity extends Game3
 
             if (count == 3)
             {
-                return frontSlashDiagForce(s,board);
+                return frontSlashDiagForce(s);
             }
 
             count =0;
@@ -384,7 +385,7 @@ public class QuiltCity extends Game3
 
         if (count==3)
         {
-            return backSlashThruForce(board);
+            return backSlashThruForce();
         }
 
         count =0;
@@ -401,7 +402,7 @@ public class QuiltCity extends Game3
 
         if (count == 3)
         {
-            return  frontSlashThruForce(board);
+            return  frontSlashThruForce();
         }
 
         count =0;
@@ -423,7 +424,7 @@ public class QuiltCity extends Game3
                 if (count==3)
                 {
                     System.out.println("thru called");
-                    return thru(r,c,board);
+                    return thru(r,c);
                 }
                 count=0;
             }
@@ -433,8 +434,10 @@ public class QuiltCity extends Game3
         return null; //default in case there is no force moves to take, number used in best move
     }
 
-    public Location frontSlashDiagForce(int s, char[][][] board)
+    public Location frontSlashDiagForce(int s)
     {
+        char[][][] board = Board.getBoard();
+
         if (board[s][0][3] == '-')
             return (new Location(3,0,s));
         if (board[s][1][2] == '-')
@@ -447,8 +450,10 @@ public class QuiltCity extends Game3
         return null;
     }
 
-    public Location rowForce(int s, int r, char[][][] board) //will check for the open spot and play there
+    public Location rowForce(int s, int r) //will check for the open spot and play there
     {
+        char[][][] board = Board.getBoard();
+
         if (board[s][r][0] == '-') //if the location in col 0 is avaliable, add it to arraylist (and so forth)
             return new Location (0,r,s);
         if (board[s][r][1] == '-')
@@ -462,8 +467,10 @@ public class QuiltCity extends Game3
         return null; //if for some reason doesnt work itll play in 000
     }
 
-    public Location colForce(int s, int c, char[][][] board)
+    public Location colForce(int s, int c)
     {
+        char[][][] board = Board.getBoard();
+
         if(board[s][0][c] == '-') //if the location in col 0 is avaliable, add it to arraylist (and so forth)
             return new Location (c,0,s);
         if(board[s][1][c] == '-')
@@ -477,8 +484,10 @@ public class QuiltCity extends Game3
         return null; //if for some reason doesnt work itll play in 000
     }
 
-    public Location rowThruForce(int r, char[][][] board)
+    public Location rowThruForce(int r)
     {
+        char[][][] board = Board.getBoard();
+
         if (board[0][r][0] == '-')
             return (new Location(0,r,0));
         if (board[1][r][1] == '-')
@@ -491,8 +500,13 @@ public class QuiltCity extends Game3
         return null;
     }
 
-    public Location colThruForce(int c, char[][][] board)
+    public Location colThruForce(int c)
     {
+        System.out.println("BOB LIKES BURGERS");
+        char[][][] board = Board.getBoard();
+
+        System.out.println("BOB LIKES BURGERS");
+
         if (board[0][0][c] == '-') {
             return (new Location(c, 0, 0));
         }
@@ -506,8 +520,10 @@ public class QuiltCity extends Game3
         return null;
     }
 
-    public Location backslashDiagForce(int s, char[][][] board)
+    public Location backslashDiagForce(int s)
     {
+        char[][][] board = Board.getBoard();
+
         if (board[s][0][0] == '-')
             return(new Location(0,0,s));
         if (board[s][1][1] == '-')
@@ -520,8 +536,9 @@ public class QuiltCity extends Game3
         return null;
     }
 
-    public Location backSlashThruForce(char[][][] board )
+    public Location backSlashThruForce()
     {
+        char[][][] board = Board.getBoard();
 
         int s= 0;
         if (board[s][0][0] == '-')
@@ -537,8 +554,10 @@ public class QuiltCity extends Game3
     }
 
 
-    public Location frontSlashThruForce(char[][][] board)
+    public Location frontSlashThruForce()
     {
+        char[][][] board = Board.getBoard();
+
         int s= 0;
         if (board[s][0][3] == '-')
             return(new Location(3,0,s));
@@ -552,8 +571,10 @@ public class QuiltCity extends Game3
         return null;
     }
 
-    public Location thru(int r, int c, char[][][] board)
+    public Location thru(int r, int c)
     {
+        char[][][] board = Board.getBoard();
+
         if (board[0][r][c] == '-')
             return new Location (c,r,0);
         if (board[1][r][c] == '-')
@@ -566,57 +587,45 @@ public class QuiltCity extends Game3
         return null;
     }
 
-
     public Location bestMove()
     {
-        char[][][] boardB  = Board.getBoard();
-
-        for(int sheet=0; sheet < 4; sheet++)
-            for(int row=0; row < 4; row++)
-                for(int col=0; col < 4; col++)
-                {
-                    if(board[sheet][row][col] != '-')
-                        board1Ahead[sheet][row][col] = board[sheet][row][col];
-                }
-
-
-        if (forceMove(opponentName, board) != null &&forceMove(opponentName, board).getRow() != 999) //if default move (meaning no force moves to take)
+        if (forceMove(opponentName) != null &&forceMove(opponentName).getRow() != 999) //if default move (meaning no force moves to take)
         {
             System.out.println("entered froce move");
-            return  forceMove(opponentName, board);
+            return  forceMove(opponentName);
         }
 
-        if (winType == row && !rowMoves(board).isEmpty())
+        if (winType == row && !rowMoves().isEmpty())
         {
-            return rowMoves(board).remove(0); // shouldnt replace on move, only adds moves to arraylist if they are avalibale spots
+            return rowMoves().remove(0); // shouldnt replace on move, only adds moves to arraylist if they are avalibale spots
         }
-        else if (winType == col && !colMoves(board).isEmpty())
+        else if (winType == col && !colMoves().isEmpty())
         {
-            return colMoves(board).remove(0);
+            return colMoves().remove(0);
         }
-        else if (winType == rowThru && !rowThruMoves(board).isEmpty())
+        else if (winType == rowThru && !rowThruMoves().isEmpty())
         {
-            return rowThruMoves(board).remove(0);
+            return rowThruMoves().remove(0);
         }
-        else if (winType == colThru && !colThruMoves(board).isEmpty())
+        else if (winType == colThru && !colThruMoves().isEmpty())
         {
-            return colThruMoves(board).remove(0);
+            return colThruMoves().remove(0);
         }
-        else if (winType == backslashdiag && !backSlashDiagMove(board).isEmpty())
+        else if (winType == backslashdiag && !backSlashDiagMove().isEmpty())
         {
-            return backSlashDiagMove(board).remove(0);
+            return backSlashDiagMove().remove(0);
         }
-        else if (winType == frontslashdiag &&  !frontSlashDiagMove(board).isEmpty())
+        else if (winType == frontslashdiag &&  !frontSlashDiagMove().isEmpty())
         {
-            return frontSlashDiagMove(board).remove(0);
+            return frontSlashDiagMove().remove(0);
         }
-        else if (winType == backslashthru && !backSlashThruMove(board).isEmpty())
+        else if (winType == backslashthru && !backSlashThruMove().isEmpty())
         {
-            return backSlashThruMove(board).remove(0);
+            return backSlashThruMove().remove(0);
         }
-        else if (winType == frontslashthu && !frontSlashThruMove(board).isEmpty())
+        else if (winType == frontslashthu && !frontSlashThruMove().isEmpty())
         {
-            return frontSlashThruMove(board).remove(0);
+            return frontSlashThruMove().remove(0);
         }
         else
         {
@@ -625,6 +634,127 @@ public class QuiltCity extends Game3
         }
 
         return generateRandomLocation(); //shouldnt even get here - added in because java yelling at me
+    }
+
+
+    public int score =0;
+    public ArrayList<Location> oneAheadScores(Location prevMove) {
+        char[][][] board = Board.getBoard();
+        ArrayList<Integer> scores = new ArrayList<>();
+        char[][][] boardcopy = new char[4][4][4];
+
+        //copys the current board into a new copy
+        for (int i = 0; i < 4; i++) {
+
+            for (int j = 0; j < 4; j++) {
+
+                for (int k = 0; k < 4; k++) {
+
+                    score += check2s().size() * 2;
+                    score += check3s().size() * 3;
+                    scores.add(score);
+
+                    boardcopy[i][j][k] = board[i][j][k];
+                }
+            }
+        }
+
+       score = 0;
+
+        return null;
+
+    }
+
+
+    public ArrayList<Location> twoAheadScores(Location prevMove, char[][][] boardcopy) {
+
+        char[][][] twoaheadboard = new char[4][4][4];
+
+        //copys the current board into a new copy
+        for (int i = 0; i < 4; i++) {
+
+            for (int j = 0; j < 4; j++) {
+
+                for (int k = 0; k < 4; k++) {
+
+                    twoaheadboard[i][j][k] = boardcopy[i][j][k];
+                }
+            }
+        }
+
+        score += check2s().size() * 2;
+        score += check3s().size() * 3;
+
+        return null;
+
+    }
+
+
+    public ArrayList<Location> check2s() { // GO THORUHG AND SWITCH COL AND SHEETS
+        ArrayList<Location> arr = new ArrayList<>();
+        arr.clear();
+        if (prevMove.getSheet() > 0 && board[prevMove.getSheet() - 1][prevMove.getRow()][prevMove.getCol()] == '-') {
+            System.out.println("1");
+            arr.add(new Location(prevMove.getSheet() - 1,  prevMove.getRow(), prevMove.getCol()));
+        }
+
+        if (prevMove.getSheet() < 3 && board[prevMove.getSheet() + 1][prevMove.getRow()][prevMove.getCol()] == '-') {
+            System.out.println("2");
+            arr.add(new Location(prevMove.getSheet() + 1,  prevMove.getRow(), prevMove.getCol()));
+        }
+
+        if (prevMove.getRow() > 0 && board[prevMove.getSheet()][prevMove.getRow() - 1][prevMove.getCol()] == '-') {
+            System.out.println("3");
+            arr.add(new Location(prevMove.getSheet(),  prevMove.getRow() - 1, prevMove.getCol()));
+        }
+
+        if (prevMove.getRow() < 3 && board[prevMove.getSheet()][prevMove.getRow() + 1][prevMove.getCol()] == '-') {
+            System.out.println("4");
+            arr.add(new Location(prevMove.getSheet(),  prevMove.getRow() + 1, prevMove.getCol()));
+        }
+
+        if (prevMove.getCol() > 0 && board[prevMove.getSheet()][prevMove.getRow()][prevMove.getCol() - 1] == '-') {
+            System.out.println("5");
+            arr.add(new Location(prevMove.getSheet(),  prevMove.getRow(), prevMove.getCol() - 1));
+        }
+
+        if (prevMove.getCol() < 3 && board[prevMove.getSheet()][prevMove.getRow()][prevMove.getCol()] == '-') {
+            System.out.println("6");
+            arr.add(new Location(prevMove.getSheet(),  prevMove.getRow(), prevMove.getCol() + 1));
+        }
+        return arr;
+    }
+
+    public ArrayList<Location> check3s() {
+        ArrayList<Location> arr = new ArrayList<>();
+        arr.clear();
+        if(twoInRow){
+            if (prevMove.getSheet() > 0 && board[prevMove.getSheet() - 1][prevMove.getRow()][prevMove.getCol()] == '-') {
+                arr.add(new Location(prevMove.getSheet() - 1,  prevMove.getRow(), prevMove.getCol()));
+            }
+
+            if (prevMove.getSheet() < 3 && board[prevMove.getSheet() + 1][prevMove.getRow()][prevMove.getCol()] == '-') {
+                arr.add(new Location(prevMove.getSheet() + 1,  prevMove.getRow(), prevMove.getCol()));
+            }
+
+            if (prevMove.getRow() > 0 && board[prevMove.getSheet()][prevMove.getRow() - 1][prevMove.getCol()] == '-') {
+                arr.add(new Location(prevMove.getSheet(),  prevMove.getRow() - 1, prevMove.getCol()));
+            }
+
+            if (prevMove.getRow() < 3 && board[prevMove.getSheet()][prevMove.getRow() + 1][prevMove.getCol()] == '-') {
+                arr.add(new Location(prevMove.getSheet(),  prevMove.getRow() + 1, prevMove.getCol()));
+            }
+
+            if (prevMove.getCol() > 0 && board[prevMove.getSheet()][prevMove.getRow()][prevMove.getCol() - 1] == '-') {
+                arr.add(new Location(prevMove.getSheet(),  prevMove.getRow(), prevMove.getCol() - 1));
+            }
+
+            if (prevMove.getCol() < 3 && board[prevMove.getSheet()][prevMove.getRow()][prevMove.getCol()] == '-') {
+                arr.add(new Location(prevMove.getSheet(),  prevMove.getRow(), prevMove.getCol() + 1));
+            }
+        }
+
+        return arr;
     }
 
     public Location generateRandomLocation()
@@ -659,120 +789,6 @@ public class QuiltCity extends Game3
                 System.out.println();
             }
             System.out.println();
-        }
-    }
-
-
-    public void bestMoveOneAhead()
-    {
-        char[][][] boardB  = Board.getBoard();
-
-        if (forceMove(opponentName, board) != null &&forceMove(opponentName, board).getRow() != 999) //if default move (meaning no force moves to take)
-        {
-            System.out.println("entered froce move");
-            board1Ahead[forceMove(opponentName, board).getSheet()][forceMove(opponentName, board).getRow()][forceMove(opponentName, board).getCol()] = letter;
-
-        }
-
-        if (winType == row && !rowMoves(board).isEmpty())
-        {
-            board1Ahead[  rowMoves(board).remove(0).getSheet()][rowMoves(board).remove(0).getRow()][rowMoves(board).remove(0).getCol()] = letter;
-
-        }
-        else if (winType == col && !colMoves(board).isEmpty())
-        {
-            board1Ahead[  colMoves(board).remove(0).getSheet()][colMoves(board).remove(0).getRow()][colMoves(board).remove(0).getCol()] = letter;
-        }
-        else if (winType == rowThru && !rowThruMoves(board).isEmpty())
-        {
-            board1Ahead[  rowThruMoves(board).remove(0).getSheet()][rowThruMoves(board).remove(0).getRow()][rowThruMoves(board).remove(0).getCol()] = letter;
-        }
-        else if (winType == colThru && !colThruMoves(board).isEmpty())
-        {
-            board1Ahead[  colThruMoves(board).remove(0).getSheet()][colThruMoves(board).remove(0).getRow()][colThruMoves(board).remove(0).getCol()] = letter;
-        }
-        else if (winType == backslashdiag && !backSlashDiagMove(board).isEmpty())
-        {
-            board1Ahead[  backSlashDiagMove(board).remove(0).getSheet()][backSlashDiagMove(board).remove(0).getRow()][backSlashDiagMove(board).remove(0).getCol()] = letter;
-        }
-        else if (winType == frontslashdiag &&  !frontSlashDiagMove(board).isEmpty())
-        {
-            board1Ahead[  frontSlashDiagMove(board).remove(0).getSheet()][frontSlashDiagMove(board).remove(0).getRow()][frontSlashDiagMove(board).remove(0).getCol()] = letter;
-        }
-        else if (winType == backslashthru && !backSlashThruMove(board).isEmpty())
-        {
-            board1Ahead[  backSlashThruMove(board).remove(0).getSheet()][backSlashThruMove(board).remove(0).getRow()][backSlashThruMove(board).remove(0).getCol()] = letter;
-        }
-        else if (winType == frontslashthu && !frontSlashThruMove(board).isEmpty())
-        {
-            board1Ahead[frontSlashThruMove(board).remove(0).getSheet()][frontSlashThruMove(board).remove(0).getRow()][frontSlashThruMove(board).remove(0).getCol()] = letter;
-        }
-        else
-        {
-            winType = (int)Math.floor(Math.random()*(8-1+1)+1); //reset the win type if you are blocked (mening ur arraylist in that wintype in empty)
-            bestMove();
-            Location random = generateRandomLocation();
-            board1Ahead[random.getSheet()][random.getRow()][random.getCol()] = letter;
-        }
-    }
-
-    public void bestMoveTwoAhead()
-    {
-        //char[][][] boardB  = Board.getBoard();
-
-        for(int sheet=0; sheet < 4; sheet++)
-            for(int row=0; row < 4; row++)
-                for(int col=0; col < 4; col++)
-                {
-                    if(board1Ahead[sheet][row][col] != '-')
-                        board2Ahead[sheet][row][col] = board1Ahead[sheet][row][col];
-                }
-
-        if (forceMove(opponentName, board1Ahead) != null && forceMove(opponentName, board1Ahead).getRow() != 999) //if default move (meaning no force moves to take)
-        {
-            System.out.println("entered froce move");
-            board2Ahead[forceMove(opponentName, board1Ahead).getSheet()][forceMove(opponentName, board1Ahead).getRow()][forceMove(opponentName, board1Ahead).getCol()] = letter;
-        }
-
-        if (winType == row && !rowMoves(board).isEmpty())
-        {
-            board2Ahead[rowMoves(board).remove(0).getSheet()][rowMoves(board).remove(0).getRow()][rowMoves(board).remove(0).getCol()] = letter;
-        }
-        else if (winType == col && !colMoves(board).isEmpty())
-        {
-            board2Ahead[  colMoves(board).remove(0).getSheet()][colMoves(board).remove(0).getRow()][colMoves(board).remove(0).getCol()] = letter;
-        }
-        else if (winType == rowThru && !rowThruMoves(board).isEmpty())
-        {
-            board2Ahead[  rowThruMoves(board).remove(0).getSheet()][rowThruMoves(board).remove(0).getRow()][rowThruMoves(board).remove(0).getCol()] = letter;
-        }
-        else if (winType == colThru && !colThruMoves(board).isEmpty())
-        {
-            board2Ahead[  colThruMoves(board).remove(0).getSheet()][colThruMoves(board).remove(0).getRow()][colThruMoves(board).remove(0).getCol()] = letter;
-        }
-        else if (winType == backslashdiag && !backSlashDiagMove(board).isEmpty())
-        {
-            board2Ahead[backSlashDiagMove(board).remove(0).getSheet()][backSlashDiagMove(board).remove(0).getRow()][backSlashDiagMove(board).remove(0).getCol()] = letter;
-        }
-        else if (winType == frontslashdiag &&  !frontSlashDiagMove(board).isEmpty())
-        {
-            board2Ahead[frontSlashDiagMove(board).remove(0).getSheet()][frontSlashDiagMove(board).remove(0).getRow()][frontSlashDiagMove(board).remove(0).getCol()] = letter;
-        }
-        else if (winType == backslashthru && !backSlashThruMove(board).isEmpty())
-        {
-            board2Ahead[backSlashThruMove(board).remove(0).getSheet()][backSlashThruMove(board).remove(0).getRow()][backSlashThruMove(board).remove(0).getCol()] = letter;
-        }
-        else if (winType == frontslashthu && !frontSlashThruMove(board).isEmpty())
-        {
-            board2Ahead[frontSlashThruMove(board).remove(0).getSheet()][frontSlashThruMove(board).remove(0).getRow()][frontSlashThruMove(board).remove(0).getCol()] = letter;
-        }
-        else
-        {
-            winType = (int)Math.floor(Math.random()*(8-1+1)+1); //reset the win type if you are blocked (mening ur arraylist in that wintype in empty)
-            bestMove();
-            Location random = generateRandomLocation();
-            board2Ahead[random.getSheet()][random.getRow()][random.getCol()] = letter;
-
         }
     }
 }
