@@ -375,6 +375,29 @@ public class BlanketFort extends Game3
 
         count =0;
 
+        //col though same col diff row n sheet
+        for (int c=0;c<4;c++)
+        {
+            for (int r=0;r<4;r++)
+            {
+                if (board[0][r][c] == value)
+                    count++;
+                if (board[1][r][c] == value)
+                    count++;
+                if (board[2][r][c] == value)
+                    count++;
+                if (board[3][r][c] == value)
+                    count++;
+
+                if (count==3)
+                {
+                    System.out.println("thru called");
+                    return thru(r,c);
+                }
+
+                count=0;
+            }
+        }
 
         System.out.println("default location forcemove");
         return null; //default in case there is no force moves to take, number used in best move
@@ -512,8 +535,21 @@ public class BlanketFort extends Game3
         return null;
     }
 
+    public Location thru(int r, int c)
+    {
+        char[][][] board = Board.getBoard();
 
+        if (board[0][r][c] == '-')
+            return new Location (0,r,c);
+        if (board[1][r][c] == '-')
+            return new Location (1,r,c);
+        if (board[2][r][c] == '-')
+            return new Location (2,r,c);
+        if (board[3][r][c] == '-')
+            return new Location (3,r,c);
 
+        return null;
+    }
 
     public Location bestMove()
     {
