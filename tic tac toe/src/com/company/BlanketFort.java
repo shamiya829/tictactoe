@@ -600,6 +600,14 @@ public class BlanketFort extends Game3
     {
         char[][][] board = Board.getBoard();
 
+
+        if (forceMove(opponentName) != null && forceMove(opponentName).getRow() != 999) //if default move (meaning no force moves to take)
+        {
+            System.out.println("entered force move opponent");
+            prevMove = forceMove(opponentName);
+            return prevMove;
+        }
+
         //check if blocked
             if(blockedByOpponent ==  false){
                 int s = prevMove.getSheet();
@@ -684,12 +692,6 @@ public class BlanketFort extends Game3
 
 
        else {
-                if (forceMove(opponentName) != null && forceMove(opponentName).getRow() != 999) //if default move (meaning no force moves to take)
-                {
-                    System.out.println("entered force move opponent");
-                    prevMove = forceMove(opponentName);
-                    return prevMove;
-                }
 
                 if (first) {
                     first = false;
