@@ -117,6 +117,9 @@ public class Scores
         int c = checking.getCol();
         int count = 0;
 
+        if (board[s][0][0]!= board[s][r][c] && board[s][1][1]!=board[s][r][c] && board[s][2][2] != board[s][r][c] &&board[s][3][3] !=  board[s][r][c])
+            return 1; //same thing as count being 0
+
 
         if (board[s][0][0] == letter)
             count++;
@@ -133,7 +136,14 @@ public class Scores
 
     public int diagonalCountSheetForwardSlash() // / diagonal on each sheet
     {
+
         int s = checking.getSheet();
+        int r = checking.getRow();
+        int c = checking.getCol();
+
+        if (board[s][0][3]!= board[s][r][c] && board[s][1][2]!=board[s][r][c] && board[s][2][1] != board[s][r][c] &&board[s][3][0] !=  board[s][r][c])
+            return 1; //same thing as count being 0 (if this move cant even be a part of a diagonal, its not valid)
+
         int count =0;
         if (board[s][0][3] == letter)
             count++;
@@ -203,7 +213,14 @@ public class Scores
 
     public int specialDiagonalBackSlash() // \ diagonal
     {
-        int s= 0;
+        int s = checking.getSheet();
+        int r = checking.getRow();
+        int c = checking.getCol();
+
+        if (board[0][0][0]!= board[s][r][c] && board[1][1][1]!=board[s][r][c] && board[2][2][2] != board[s][r][c] &&board[3][3][3] !=  board[s][r][c])
+            return 1; //same thing as count being 0 (if this move cant even be a part of a diagonal, its not valid)
+
+        s= 0;
         int count =0;
         if (board[s][0][0] == letter)
             count++;
@@ -219,7 +236,14 @@ public class Scores
 
     public int specialDiagonalForwardSlash() // / diagonal
     {
-        int s= 0;
+
+        int s = checking.getSheet();
+        int r = checking.getRow();
+        int c = checking.getCol();
+
+        if (board[0][0][3]!= board[s][r][c] && board[1][1][2]!=board[s][r][c] && board[2][2][1] != board[s][r][c] &&board[3][3][0] !=  board[s][r][c])
+            return 1; //same thing as count being 0 (if this move cant even be a part of a diagonal, its not valid)
+        s= 0;
         int count = 0;
 
         if (board[s][0][3] == letter)

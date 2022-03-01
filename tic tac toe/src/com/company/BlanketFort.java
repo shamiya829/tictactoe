@@ -625,11 +625,15 @@ public class BlanketFort extends Game3
                             maxScore.setChecking(moveCheckScore.getChecking());
                             maxScore.setScore(moveCheckScore.getScore());
                         }
-                    }//does this work?
+                    }
                 }
             }
         }
-        return maxScore.getChecking(); //return the best move!
+        if (board[maxScore.getChecking().getSheet()][maxScore.getChecking().getRow()][maxScore.getChecking().getCol()]=='-')
+            return maxScore.checking;
+        else
+            return generateRandomLocation();
+        //return maxScore.getChecking(); //return the best move!
 
 
 
