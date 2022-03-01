@@ -593,59 +593,144 @@ public class BlanketFort extends Game3
         return null;
     }
 
-
+    Location prevMove = firstMove;
+    boolean blockedByOpponent = false;
 
     public Location bestMove()
     {
         char[][][] board = Board.getBoard();
 
-        if (forceMove(letter) != null && forceMove(letter).getRow() != 999) //if default move (meaning no force moves to take)
-        {
-            System.out.println("entered force move letter");
-            return forceMove(letter);
-        }
 
-        if (forceMove(opponentName) != null &&forceMove(opponentName).getRow() != 999) //if default move (meaning no force moves to take)
+        if (forceMove(opponentName) != null && forceMove(opponentName).getRow() != 999) //if default move (meaning no force moves to take)
         {
             System.out.println("entered force move opponent");
-            return  forceMove(opponentName);
+            prevMove = forceMove(opponentName);
+            return prevMove;
         }
 
-        if(first){
-            first = false;
-            return firstMove;
-        }
+        //check if blocked
+            if(blockedByOpponent ==  false){
+                int s = prevMove.getSheet();
+                int r = prevMove.getRow();
+                int c = prevMove.getCol();
+
+                //check if blocked in rowMoves
+                for(int col = 0; col < 4; col++)
+                    if(board[s][r][col] == opponentName)
+                        blockedByOpponent = true;
+
+                //check if blocked in colMoves
+                for(int row = 0; row < 4; row++)
+                    if(board[s][row][c] == opponentName)
+                        blockedByOpponent = true;
+
+                //check if blocked in rowThruMoves
+                for(int diag = 0; diag < 4; diag++)
+                    if(board[diag][r][diag] == opponentName)
+                        blockedByOpponent = true;
+
+                //check if blocked in colThruMoves
+                for(int she = 0; she < 4; she++)
+                    if(board[she][r][c] == opponentName)
+                        blockedByOpponent = true;
+
+                //check if blocked in backSlashDiagMove
+                for(int rc = 0; rc < 4; rc++)
+                    if(board[s][rc][rc] == opponentName)
+                        blockedByOpponent = true;
+
+                //check if blocked in frontSlashDiagMove
+                for(int rc = 0; rc < 4; rc++)
+                    if(board[s][rc][3 - rc] == opponentName)
+                        blockedByOpponent = true;
+
+                //check if blocked in backSlashThruMove
+                for(int rc = 0; rc < 4; rc++)
+                    if(board[rc][rc][rc] == opponentName)
+                        blockedByOpponent = true;
+
+                //check if blocked in frontSlashThruMove
+                for(int rc = 0; rc < 4; rc++)
+                    if(board[rc][rc][3 - rc] == opponentName)
+                        blockedByOpponent = true;
+
+
+            }
+
 
         Scores maxScore = new Scores(board,letter,new Location(0,0,0));
-        //System.out.println("max score: " + maxScore.getScore());
-        for(int sheet=0; sheet < 4; sheet++) //finds max score
-        {
-            for (int row = 0; row < 4; row++)
-            {
-                for (int col = 0; col < 4; col++)
-                {
-                    Scores moveCheckScore = new Scores(board,letter,new Location(col,row,sheet));
-                    //System.out.println("checking score: " + moveCheckScore.getScore());
 
-                    if (board[sheet][row][col] != 'x' && board[sheet][row][col] != 'o' )  //only check scores for open spots
-                    {
-                        if (moveCheckScore.getScore() >= maxScore.getScore())  //if the score of a spot is bigger than ur current max, make it the max
-                        {
-                            //System.out.println("checking set");
-                            maxScore.setChecking(moveCheckScore.getChecking());
-                            maxScore.setScore(moveCheckScore.getScore());
+            if(blockedByOpponent) {
+                for (int sheet = 0; sheet < 4; sheet++) //finds max score
+                {
+                    for (int row = 0; row < 4; row++) {
+                        for (int col = 0; col < 4; col++) {
+                            Scores moveCheckScore = new Scores(board, letter, new Location(col, row, sheet));
+                            //System.out.println("checking score: " + moveCheckScore.getScore());
+
+                            if (board[sheet][row][col] != 'x' && board[sheet][row][col] != 'o')  //only check scores for open spots
+                            {
+                                if (moveCheckScore.getScore() >= maxScore.getScore())  //if the score of a spot is bigger than ur current max, make it the max
+                                {
+                                    //System.out.println("checking set");
+                                    maxScore.setChecking(moveCheckScore.getChecking());
+                                    maxScore.setScore(moveCheckScore.getScore());
+                                }
+                            }//does this work?
                         }
-                    }//does this work?
+                    }
+                }
+                if (board[maxScore.getChecking().getSheet()][maxScore.getChecking().getRow()][maxScore.getChecking().getCol()] == '-') {
+                    //System.out.println("maxscore printing");
+                    board[maxScore.getChecking().getSheet()][maxScore.getChecking().getRow()][maxScore.getChecking().getCol()] = letter;
+
+                    prevMove = maxScore.getChecking();
+                    blockedByOpponent = false;
+                    return prevMove;
                 }
             }
-        }
-        if (board[maxScore.getChecking().getSheet()][maxScore.getChecking().getRow()][maxScore.getChecking().getCol()]=='-') {
-            //System.out.println("maxscore printing");
-            board[maxScore.getChecking().getSheet()][maxScore.getChecking().getRow()][maxScore.getChecking().getCol()] = letter;
-            return maxScore.getChecking();
-        }
 
-        return firstAvailableMove();
+
+       else {
+
+                if (first) {
+                    first = false;
+                    return firstMove;
+                }
+
+
+                //System.out.println("max score: " + maxScore.getScore());
+                for (int sheet = 0; sheet < 4; sheet++) //finds max score
+                {
+                    for (int row = 0; row < 4; row++) {
+                        for (int col = 0; col < 4; col++) {
+                            Scores moveCheckScore = new Scores(board, letter, new Location(col, row, sheet));
+                            //System.out.println("checking score: " + moveCheckScore.getScore());
+
+                            if (board[sheet][row][col] != 'x' && board[sheet][row][col] != 'o')  //only check scores for open spots
+                            {
+                                if (moveCheckScore.getScore() >= maxScore.getScore())  //if the score of a spot is bigger than ur current max, make it the max
+                                {
+                                    //System.out.println("checking set");
+                                    maxScore.setChecking(moveCheckScore.getChecking());
+                                    maxScore.setScore(moveCheckScore.getScore());
+                                }
+                            }//does this work?
+                        }
+                    }
+                }
+                if (board[maxScore.getChecking().getSheet()][maxScore.getChecking().getRow()][maxScore.getChecking().getCol()] == '-') {
+                    //System.out.println("maxscore printing");
+                    board[maxScore.getChecking().getSheet()][maxScore.getChecking().getRow()][maxScore.getChecking().getCol()] = letter;
+
+                    prevMove = maxScore.getChecking();
+
+                    return prevMove;
+                }
+            }
+                prevMove = firstAvailableMove();
+                return prevMove;
+
         //return maxScore.getChecking(); //return the best move!
 
 
