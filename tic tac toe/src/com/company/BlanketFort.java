@@ -179,6 +179,8 @@ public class BlanketFort extends Game3
 
     public Location forceMove(char value) //will only check for it;s opponents char, so that it doesnt move by accdient when situtation look like (eg. xx-o; shouldnt play there)
     {
+        char[][][] board = Board.getBoard();
+
         int count = 0;
 
         //col through
@@ -433,6 +435,8 @@ public class BlanketFort extends Game3
 
     public Location frontSlashDiagForce(int s)
     {
+        char[][][] board = Board.getBoard();
+
         //System.out.println("frontSlashDiagForce");
         if (board[s][0][3] == '-')
             return (new Location(3,0,s));
@@ -448,6 +452,8 @@ public class BlanketFort extends Game3
 
     public Location rowForce(int s, int r) //will check for the open spot and play there
     {
+        char[][][] board = Board.getBoard();
+
         //System.out.println("rowForce");
         if (board[s][r][0] == '-') //if the location in col 0 is avaliable, add it to arraylist (and so forth)
             return new Location (0,r,s);
@@ -464,6 +470,8 @@ public class BlanketFort extends Game3
 
     public Location colForce(int s, int c)
     {
+        char[][][] board = Board.getBoard();
+
         //System.out.println("colForce");
         if(board[s][0][c] == '-') //if the location in col 0 is avaliable, add it to arraylist (and so forth)
             return new Location (c,0,s);
@@ -480,6 +488,8 @@ public class BlanketFort extends Game3
 
     public Location rowThruForce(int r)
     {
+        char[][][] board = Board.getBoard();
+
         //System.out.println("rowThruForce");
         if (board[0][r][0] == '-')
             return (new Location(0,r,0));
@@ -495,6 +505,8 @@ public class BlanketFort extends Game3
 
     public Location colThruForce(int c)
     {
+        char[][][] board = Board.getBoard();
+
         //System.out.println("BOB LIKES BURGERS");
         //System.out.println("colThruForce");
         if (board[0][0][c] == '-') {
@@ -512,6 +524,8 @@ public class BlanketFort extends Game3
 
     public Location backslashDiagForce(int s)
     {
+        char[][][] board = Board.getBoard();
+
         //System.out.println("backslashDiagForce");
         if (board[s][0][0] == '-')
             return(new Location(0,0,s));
@@ -527,6 +541,8 @@ public class BlanketFort extends Game3
 
     public Location backSlashThruForce()
     {
+        char[][][] board = Board.getBoard();
+
         //System.out.println("backSlashThruForce");
         int s= 0;
         if (board[s][0][0] == '-')
@@ -544,6 +560,8 @@ public class BlanketFort extends Game3
 
     public Location frontSlashThruForce()
     {
+        char[][][] board = Board.getBoard();
+
         //System.out.println("frontSlashThruForce");
         int s= 0;
         if (board[s][0][3] == '-')
@@ -560,6 +578,8 @@ public class BlanketFort extends Game3
 
     public Location thru(int r, int c)
     {
+        char[][][] board = Board.getBoard();
+
         //System.out.println("thru");
         if (board[0][r][c] == '-')
             return new Location (c,r,0);
@@ -577,6 +597,8 @@ public class BlanketFort extends Game3
 
     public Location bestMove()
     {
+        char[][][] board = Board.getBoard();
+
         if (forceMove(letter) != null && forceMove(letter).getRow() != 999) //if default move (meaning no force moves to take)
         {
             System.out.println("entered force move letter");
