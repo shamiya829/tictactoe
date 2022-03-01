@@ -375,7 +375,7 @@ public class Board extends JPanel implements MouseListener, KeyListener,Runnable
              move = pillowtowno.bestMove();
         }
         System.out.println("\no move: s- " + move.getSheet() + " r- " + move.getRow() + " c- " + move.getCol() + "\n");
-        displayBoard(board);
+        //displayBoard(board);
         board[move.getSheet()][move.getRow()][move.getCol()] = 'o';
         player1turn = true;
     }

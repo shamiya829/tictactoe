@@ -15,16 +15,17 @@ public class BlanketFort extends Game3
     public final int frontslashdiag = 6; //works
     public final int backslashthru = 7; //works
     public final int frontslashthu =8;
-    char name = 'n';
+    char letter = 'n';
+    boolean first = true;
     char opponentName = 'n';
 
     BlanketFort(char name)
     {
-        this.name = name;
+        this.letter = name;
         winType = (int)Math.floor(Math.random()*(8-1+1)+1); //will pick a certain wintype at random
         System.out.println("win tyep number: "+winType);
 
-        if (name == 'o')
+        if (letter == 'o')
             opponentName = 'x';
         else
             opponentName = 'o';
@@ -184,25 +185,25 @@ public class BlanketFort extends Game3
         for (int c=0;c<4;c++)
         {
             if (board[0][0][c] != '-') {
-                System.out.println("board 0 r c count plus " + board[0][0][c]);
+                //System.out.println("board 0 r c count plus " + board[0][0][c]);
                 count++;
             }
             if (board[1][1][c] != '-') {
-                System.out.println("board 1 r c count plus " + board[1][1][c]);
+                //System.out.println("board 1 r c count plus " + board[1][1][c]);
                 count++;
             }
             if (board[2][2][c] != '-') {
-                System.out.println("board 2 r c count plus " + board[2][2][c]);
+                //System.out.println("board 2 r c count plus " + board[2][2][c]);
                 count++;
             }
             if (board[3][3][c] != '-') {
-                System.out.println("board 3 r c count plus " + board[3][3][c]);
+                //System.out.println("board 3 r c count plus " + board[3][3][c]);
                 count++;
             }
 
             if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
             {
-                System.out.println(" col thoruhg count was 3");
+                //System.out.println(" col thoruhg count was 3");
                 return colThruForce(c);
             }
             count =0;
@@ -217,27 +218,27 @@ public class BlanketFort extends Game3
                 if (board[s][r][0] == value) //if the space is taken, makes sure ai doesnt miss any wins too
                 {
                     count++;
-                    System.out.println("board s r 0 count plus " + board[s][r][0]);
+                    //System.out.println("board s r 0 count plus " + board[s][r][0]);
                 }
                 if (board[s][r][1] == value )
                 {
-                    System.out.println("board s r 1 count plus "+board[s][r][1]);
+                    //System.out.println("board s r 1 count plus "+board[s][r][1]);
                     count++;
                 }
                 if (board[s][r][2] == value)
                 {
-                    System.out.println("board s r 2 count plus " + board[s][r][2]);
+                   // System.out.println("board s r 2 count plus " + board[s][r][2]);
                     count++;
                 }
                 if (board[s][r][3] == value)
                 {
-                    System.out.println("board s r 3 count plus "+ board[s][r][3]);
+                    //System.out.println("board s r 3 count plus "+ board[s][r][3]);
                     count++;
                 }
 
                 if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
                 {
-                    System.out.println("count was 3");
+                    //System.out.println("count was 3");
                     return rowForce(s,r);
                 }
                 count =0; //reset count after every row to make sure not double counting in a sheet
@@ -253,24 +254,24 @@ public class BlanketFort extends Game3
                 if (board[s][0][c]  == value)
                 {
                     count++;
-                    System.out.println(" col board s r 0 count plus " + board[s][0][c]);
+                    //System.out.println(" col board s r 0 count plus " + board[s][0][c]);
                 }
                 if (board[s][1][c]  == value) {
-                    System.out.println(" col board s r 1 count plus "+board[s][1][c]);
+                    //System.out.println(" col board s r 1 count plus "+board[s][1][c]);
                     count++;
                 }
                 if (board[s][2][c]  == value) {
-                    System.out.println(" col board s r 2 count plus " + board[s][2][c]);
+                    //System.out.println(" col board s r 2 count plus " + board[s][2][c]);
                     count++;
                 }
                 if (board[s][3][c] == value) {
-                    System.out.println(" col board s r 3 count plus "+ board[s][3][c]);
+                    //System.out.println(" col board s r 3 count plus "+ board[s][3][c]);
                     count++;
                 }
 
                 if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
                 {
-                    System.out.println(" col count was 3");
+                  //  System.out.println(" col count was 3");
                     return colForce(s,c);
                 }
                 count =0; //reset count after every row to make sure not double counting in a sheet
@@ -305,25 +306,25 @@ public class BlanketFort extends Game3
         for (int c=0;c<4;c++)
         {
                 if (board[0][0][c] == value) {
-                    System.out.println("board 0 0 c count plus " + board[0][0][c]);
+                   // System.out.println("board 0 0 c count plus " + board[0][0][c]);
                     count++;
                 }
                 if (board[1][1][c] == value) {
-                    System.out.println("board 1 1 c count plus " + board[1][1][c]);
+                   // System.out.println("board 1 1 c count plus " + board[1][1][c]);
                     count++;
                 }
                 if (board[2][2][c] == value) {
-                    System.out.println("board 2 2 c count plus " + board[2][2][c]);
+                    //System.out.println("board 2 2 c count plus " + board[2][2][c]);
                     count++;
                 }
                 if (board[3][3][c] == value) {
-                    System.out.println("board 3 3 c count plus " + board[3][3][c]);
+                   // System.out.println("board 3 3 c count plus " + board[3][3][c]);
                     count++;
                 }
 
                 if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
                 {
-                    System.out.println(" col thoruhg count was 3");
+                    //System.out.println(" col thoruhg count was 3");
                     return colThruForce(c);
                 }
             count =0;
@@ -418,14 +419,14 @@ public class BlanketFort extends Game3
 
                 if (count==3)
                 {
-                    System.out.println("thru called");
+                    //System.out.println("thru called");
                     return thru(r,c);
                 }
                 count=0;
             }
         }
 
-        System.out.println("default location forcemove");
+       // System.out.println("default location forcemove");
         return null; //default in case there is no force moves to take, number used in best move
     }
 
@@ -458,7 +459,7 @@ public class BlanketFort extends Game3
         if (board[s][r][3] == '-')
             return new Location (3,r,s);
 
-        System.out.println("default location rowforce");
+        //System.out.println("default location rowforce");
         return null; //if for some reason doesnt work itll play in 000
     }
 
@@ -475,7 +476,7 @@ public class BlanketFort extends Game3
         if (board[s][3][c] == '-' )
             return new Location (c,3,s);
 
-        System.out.println("col force default");
+       // System.out.println("col force default");
         return null; //if for some reason doesnt work itll play in 000
     }
 
@@ -497,10 +498,10 @@ public class BlanketFort extends Game3
 
     public Location colThruForce(int c)
     {
-        System.out.println("BOB LIKES BURGERS");
+        //System.out.println("BOB LIKES BURGERS");
         char[][][] board = Board.getBoard();
 
-        System.out.println("BOB LIKES BURGERS");
+       // System.out.println("BOB LIKES BURGERS");
 
         if (board[0][0][c] == '-') {
             return (new Location(c, 0, 0));
@@ -584,12 +585,55 @@ public class BlanketFort extends Game3
 
     public Location bestMove()
     {
+        char[][][] board = Board.getBoard();
+
+        if (forceMove(letter) != null &&forceMove(letter).getRow() != 999) //if default move (meaning no force moves to take)
+        {
+            //	System.out.println("entered force move");
+            return  forceMove(letter);
+        }
+
         if (forceMove(opponentName) != null &&forceMove(opponentName).getRow() != 999) //if default move (meaning no force moves to take)
         {
-            System.out.println("entered froce move");
+            //	System.out.println("entered force move");
             return  forceMove(opponentName);
         }
 
+        if(first){
+            first = false;
+            return firstMove;
+        }
+
+        Scores maxScore = new Scores(board,letter,new Location(0,0,0));
+        System.out.println("max score: " + maxScore.getScore());
+        for(int sheet=0; sheet < 4; sheet++)
+        {
+            for (int row = 0; row < 4; row++)
+            {
+                for (int col = 0; col < 4; col++)
+                {
+                    Scores moveCheckScore = new Scores(board,letter,new Location(col,row,sheet));
+
+                    System.out.println("checking score: " + moveCheckScore.getScore());
+
+
+                    if (board[sheet][row][col] == '-')  //only check scores for open spots
+                    {
+                        if (moveCheckScore.getScore() > maxScore.getScore())  //if the score of a spot is bigger than ur current max, make it the max
+                        {
+                            System.out.println("checking set");
+                            maxScore.setChecking(moveCheckScore.getChecking());
+                            maxScore.setScore(moveCheckScore.getScore());
+                        }
+                    }//does this work?
+                }
+            }
+        }
+        return maxScore.getChecking(); //return the best move!
+
+
+
+        /*
         if (winType == row && !rowMoves().isEmpty())
         {
             return rowMoves().remove(0); // shouldnt replace on move, only adds moves to arraylist if they are avalibale spots
@@ -626,9 +670,9 @@ public class BlanketFort extends Game3
         {
             winType = (int)Math.floor(Math.random()*(8-1+1)+1); //reset the win type if you are blocked (mening ur arraylist in that wintype in empty)
             bestMove();
-        }
+        }*/
 
-        return generateRandomLocation(); //shouldnt even get here - added in because java yelling at me
+        //return generateRandomLocation(); //shouldnt even get here - added in because java yelling at me
     }
 
     public Location generateRandomLocation()
