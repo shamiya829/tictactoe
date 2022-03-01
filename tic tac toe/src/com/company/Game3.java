@@ -118,7 +118,6 @@ public class Game3 {
                 return board[0][0][c];
         }
 
-
         for(int r = 0; r < 4; r++) {
             if(board[0][r][0] != '-' && board[0][r][0] == board[1][r][1] && board[1][r][1] == board[2][r][2] && board[2][r][2] == board[3][r][3] && board[0][r][0] == board[3][r][3])
                 return board[0][r][0];

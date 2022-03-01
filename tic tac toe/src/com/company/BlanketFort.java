@@ -23,7 +23,20 @@ public class BlanketFort extends Game3
     {
         this.letter = name;
         winType = (int)Math.floor(Math.random()*(8-1+1)+1); //will pick a certain wintype at random
-        System.out.println("win tyep number: "+winType);
+        ArrayList<Location> arr = new ArrayList<>();
+        arr.add(new Location(1,1,1));
+        arr.add(new Location(2,1,1));
+        arr.add(new Location(1,2,1));
+        arr.add(new Location(2,2,1));
+
+        firstMove = arr.remove((int)Math.floor(Math.random()*(3-0+1)+0));
+
+        while (board[firstMove.getSheet()][firstMove.getRow()][firstMove.getCol()] != '-')
+        {
+            firstMove = arr.remove((int)Math.floor(Math.random()*(3-0+1)+0));
+        }
+
+        //System.out.println("win tyep number: "+winType);
 
         if (letter == 'o')
             opponentName = 'x';
@@ -176,27 +189,30 @@ public class BlanketFort extends Game3
         return arr;
     }
 
+
     public Location forceMove(char value) //will only check for it;s opponents char, so that it doesnt move by accdient when situtation look like (eg. xx-o; shouldnt play there)
     {
         char[][][] board = Board.getBoard();
+
+
         int count = 0;
 
         //col through
         for (int c=0;c<4;c++)
         {
-            if (board[0][0][c] != '-') {
+            if (board[0][0][c] ==value) {
                 //System.out.println("board 0 r c count plus " + board[0][0][c]);
                 count++;
             }
-            if (board[1][1][c] != '-') {
+            if (board[1][1][c] ==value) {
                 //System.out.println("board 1 r c count plus " + board[1][1][c]);
                 count++;
             }
-            if (board[2][2][c] != '-') {
+            if (board[2][2][c] ==value) {
                 //System.out.println("board 2 r c count plus " + board[2][2][c]);
                 count++;
             }
-            if (board[3][3][c] != '-') {
+            if (board[3][3][c] ==value) {
                 //System.out.println("board 3 r c count plus " + board[3][3][c]);
                 count++;
             }
@@ -204,7 +220,8 @@ public class BlanketFort extends Game3
             if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
             {
                 //System.out.println(" col thoruhg count was 3");
-                return colThruForce(c);
+                if (colThruForce(c)!=null)
+                    return colThruForce(c);
             }
             count =0;
         }
@@ -227,7 +244,7 @@ public class BlanketFort extends Game3
                 }
                 if (board[s][r][2] == value)
                 {
-                   // System.out.println("board s r 2 count plus " + board[s][r][2]);
+                    //System.out.println("board s r 2 count plus " + board[s][r][2]);
                     count++;
                 }
                 if (board[s][r][3] == value)
@@ -239,7 +256,8 @@ public class BlanketFort extends Game3
                 if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
                 {
                     //System.out.println("count was 3");
-                    return rowForce(s,r);
+                    if (rowForce(s,r)!=null)
+                        return rowForce(s,r);
                 }
                 count =0; //reset count after every row to make sure not double counting in a sheet
                 //System.out.println(" count reset ");
@@ -271,8 +289,10 @@ public class BlanketFort extends Game3
 
                 if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
                 {
-                  //  System.out.println(" col count was 3");
-                    return colForce(s,c);
+                    //System.out.println(" col count was 3");
+                    if (colForce(s,c) !=null) {
+                        return colForce(s, c);
+                    }
                 }
                 count =0; //reset count after every row to make sure not double counting in a sheet
                 //System.out.println(" count reset col ");
@@ -294,7 +314,8 @@ public class BlanketFort extends Game3
             if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
             {
                 //System.out.println(" col count was 3");
-                return rowThruForce(r);
+                if (rowThruForce(r)!=null)
+                    return rowThruForce(r);
             }
             count =0; //reset count after every row to make sure not double counting in a sheet
             //System.out.println(" count reset col ");
@@ -302,34 +323,54 @@ public class BlanketFort extends Game3
 
         count = 0;
 
+        //row through backwards checks
+        for(int r = 0; r < 4; r++) {
+                if (board[3][r][0] ==value)
+                    count++;
+                if ( board[2][r][1]==value)
+                    count++;
+                if (board[1][r][2] == value)
+                    count++;
+                if (board[0][r][3]==value)
+                    count++;
+
+                if (count==3 && rowthruBackwardsForce(r)!=null)
+                {
+                    return rowthruBackwardsForce(r);
+                }
+            count=0;
+        }
+
+        count = 0;
         //col through
         for (int c=0;c<4;c++)
         {
-                if (board[0][0][c] == value) {
-                   // System.out.println("board 0 0 c count plus " + board[0][0][c]);
-                    count++;
-                }
-                if (board[1][1][c] == value) {
-                   // System.out.println("board 1 1 c count plus " + board[1][1][c]);
-                    count++;
-                }
-                if (board[2][2][c] == value) {
-                    //System.out.println("board 2 2 c count plus " + board[2][2][c]);
-                    count++;
-                }
-                if (board[3][3][c] == value) {
-                   // System.out.println("board 3 3 c count plus " + board[3][3][c]);
-                    count++;
-                }
+            if (board[0][0][c] == value) {
+                //System.out.println("board 0 0 c count plus " + board[0][0][c]);
+                count++;
+            }
+            if (board[1][1][c] == value) {
+                //System.out.println("board 1 1 c count plus " + board[1][1][c]);
+                count++;
+            }
+            if (board[2][2][c] == value) {
+                //System.out.println("board 2 2 c count plus " + board[2][2][c]);
+                count++;
+            }
+            if (board[3][3][c] == value) {
+                //System.out.println("board 3 3 c count plus " + board[3][3][c]);
+                count++;
+            }
 
-                if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
-                {
-                    //System.out.println(" col thoruhg count was 3");
+            if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
+            {
+                //System.out.println(" col thoruhg count was 3");
+                if (colThruForce(c)!=null)
                     return colThruForce(c);
-                }
+            }
             count =0;
         }
-        //back slash thou
+
         for (int s = 0; s<4; s++)
         {
             if (board[s][0][0] == value)
@@ -343,13 +384,13 @@ public class BlanketFort extends Game3
 
             if (count == 3)
             {
-                return backslashDiagForce(s);
+                if (backslashDiagForce(s) != null)
+                    return backslashDiagForce(s);
             }
 
             count = 0;
         }
 
-        //front slash thu
         for (int s = 0; s<4; s++)
         {
             if (board[s][0][3] == value)
@@ -363,13 +404,15 @@ public class BlanketFort extends Game3
 
             if (count == 3)
             {
-                return frontSlashDiagForce(s);
+                if (frontSlashDiagForce(s)!=null)
+                    return frontSlashDiagForce(s);
             }
 
             count =0;
         }
 
-        //backslashth
+        count=0;
+        //back slash thru
         if (board[0][0][0] == value)
             count++;
         if (board[1][1][1] == value)
@@ -381,24 +424,26 @@ public class BlanketFort extends Game3
 
         if (count==3)
         {
-            return backSlashThruForce();
+            if (backSlashThruForce()!=null)
+                return backSlashThruForce();
         }
 
-        count =0;
-
+        count=0;
         //frontSlashThruMove
+
         if (board[0][0][3] == value)
             count++;
-        if (board[0+1][1][2] == value)
+        if (board[1][1][2] == value)
             count++;
-        if (board[0+2][2][1] == value)
+        if (board[2][2][1] == value)
             count++;
-        if (board[0+3][3][0] == value)
+        if (board[3][3][0] == value)
             count++;
 
         if (count == 3)
         {
-            return  frontSlashThruForce();
+            if (frontSlashThruForce() != null)
+                return  frontSlashThruForce();
         }
 
         count =0;
@@ -420,20 +465,22 @@ public class BlanketFort extends Game3
                 if (count==3)
                 {
                     //System.out.println("thru called");
-                    return thru(r,c);
+                    if (thru(r,c)!=null)
+                        return thru(r,c);
                 }
                 count=0;
             }
         }
 
-       // System.out.println("default location forcemove");
-        return null; //default in case there is no force moves to take, number used in best move
+        //System.out.println("default location forcemove");
+        return null; //default in case there is no force moves to take, number used in best move2
     }
 
     public Location frontSlashDiagForce(int s)
     {
         char[][][] board = Board.getBoard();
 
+        //System.out.println("frontSlashDiagForce");
         if (board[s][0][3] == '-')
             return (new Location(3,0,s));
         if (board[s][1][2] == '-')
@@ -446,14 +493,34 @@ public class BlanketFort extends Game3
         return null;
     }
 
+    public Location rowthruBackwardsForce(int r)
+    {
+        char[][][] board = Board.getBoard();
+
+        System.out.println("rowthruBackwardsForce");
+
+        if (board[3][r][0] =='-')
+            return(new Location(0,r,3));
+        if ( board[2][r][1]=='-')
+            return(new Location(1,r,2));
+        if (board[1][r][2] == '-')
+            return(new Location(2,r,1));
+        if (board[0][r][3]=='-')
+            return(new Location(3,r,0));
+
+        return null;
+    }
+
+
     public Location rowForce(int s, int r) //will check for the open spot and play there
     {
         char[][][] board = Board.getBoard();
 
+        //System.out.println("rowForce");
         if (board[s][r][0] == '-') //if the location in col 0 is avaliable, add it to arraylist (and so forth)
             return new Location (0,r,s);
         if (board[s][r][1] == '-')
-            return new Location (1,r,1);
+            return new Location (1,r,s);
         if (board[s][r][2] == '-')
             return new Location (2,r,s);
         if (board[s][r][3] == '-')
@@ -467,6 +534,7 @@ public class BlanketFort extends Game3
     {
         char[][][] board = Board.getBoard();
 
+        //System.out.println("colForce");
         if(board[s][0][c] == '-') //if the location in col 0 is avaliable, add it to arraylist (and so forth)
             return new Location (c,0,s);
         if(board[s][1][c] == '-')
@@ -476,7 +544,7 @@ public class BlanketFort extends Game3
         if (board[s][3][c] == '-' )
             return new Location (c,3,s);
 
-       // System.out.println("col force default");
+        //System.out.println("col force default");
         return null; //if for some reason doesnt work itll play in 000
     }
 
@@ -484,6 +552,7 @@ public class BlanketFort extends Game3
     {
         char[][][] board = Board.getBoard();
 
+        //System.out.println("rowThruForce");
         if (board[0][r][0] == '-')
             return (new Location(0,r,0));
         if (board[1][r][1] == '-')
@@ -498,11 +567,10 @@ public class BlanketFort extends Game3
 
     public Location colThruForce(int c)
     {
-        //System.out.println("BOB LIKES BURGERS");
         char[][][] board = Board.getBoard();
 
-       // System.out.println("BOB LIKES BURGERS");
-
+        //System.out.println("BOB LIKES BURGERS");
+        //System.out.println("colThruForce");
         if (board[0][0][c] == '-') {
             return (new Location(c, 0, 0));
         }
@@ -520,6 +588,7 @@ public class BlanketFort extends Game3
     {
         char[][][] board = Board.getBoard();
 
+        //System.out.println("backslashDiagForce");
         if (board[s][0][0] == '-')
             return(new Location(0,0,s));
         if (board[s][1][1] == '-')
@@ -536,6 +605,7 @@ public class BlanketFort extends Game3
     {
         char[][][] board = Board.getBoard();
 
+        //System.out.println("backSlashThruForce");
         int s= 0;
         if (board[s][0][0] == '-')
             return (new Location(0,0,s));
@@ -554,6 +624,7 @@ public class BlanketFort extends Game3
     {
         char[][][] board = Board.getBoard();
 
+        //System.out.println("frontSlashThruForce");
         int s= 0;
         if (board[s][0][3] == '-')
             return(new Location(3,0,s));
@@ -571,6 +642,7 @@ public class BlanketFort extends Game3
     {
         char[][][] board = Board.getBoard();
 
+        //System.out.println("thru");
         if (board[0][r][c] == '-')
             return new Location (c,r,0);
         if (board[1][r][c] == '-')
@@ -583,100 +655,213 @@ public class BlanketFort extends Game3
         return null;
     }
 
+    Location prevMove = firstMove;
+    boolean blockedByOpponent = false;
+
     public Location bestMove()
     {
         char[][][] board = Board.getBoard();
 
-        if (forceMove(letter) != null &&forceMove(letter).getRow() != 999) //if default move (meaning no force moves to take)
+
+        if (forceMove(opponentName) != null && forceMove(opponentName).getRow() != 999) //if default move (meaning no force moves to take)
         {
-            //	System.out.println("entered force move");
-            return  forceMove(letter);
+            System.out.println("entered force move opponent");
+            prevMove = forceMove(opponentName);
+            return prevMove;
         }
 
-        if (forceMove(opponentName) != null &&forceMove(opponentName).getRow() != 999) //if default move (meaning no force moves to take)
-        {
-            //	System.out.println("entered force move");
-            return  forceMove(opponentName);
-        }
+        //check if blocked
+            if(blockedByOpponent ==  false){
+                int s = prevMove.getSheet();
+                int r = prevMove.getRow();
+                int c = prevMove.getCol();
 
-        if(first){
-            first = false;
-            return firstMove;
-        }
+                //check if blocked in rowMoves
+                for(int col = 0; col < 4; col++)
+                    if(board[s][r][col] == opponentName)
+                        blockedByOpponent = true;
+
+                //check if blocked in colMoves
+                for(int row = 0; row < 4; row++)
+                    if(board[s][row][c] == opponentName)
+                        blockedByOpponent = true;
+
+                //check if blocked in rowThruMoves
+                for(int diag = 0; diag < 4; diag++)
+                    if(board[diag][r][diag] == opponentName)
+                        blockedByOpponent = true;
+
+                //check if blocked in colThruMoves
+                for(int she = 0; she < 4; she++)
+                    if(board[she][r][c] == opponentName)
+                        blockedByOpponent = true;
+
+                //check if blocked in backSlashDiagMove
+                for(int rc = 0; rc < 4; rc++)
+                    if(board[s][rc][rc] == opponentName)
+                        blockedByOpponent = true;
+
+                //check if blocked in frontSlashDiagMove
+                for(int rc = 0; rc < 4; rc++)
+                    if(board[s][rc][3 - rc] == opponentName)
+                        blockedByOpponent = true;
+
+                //check if blocked in backSlashThruMove
+                for(int rc = 0; rc < 4; rc++)
+                    if(board[rc][rc][rc] == opponentName)
+                        blockedByOpponent = true;
+
+                //check if blocked in frontSlashThruMove
+                for(int rc = 0; rc < 4; rc++)
+                    if(board[rc][rc][3 - rc] == opponentName)
+                        blockedByOpponent = true;
+
+
+            }
+
 
         Scores maxScore = new Scores(board,letter,new Location(0,0,0));
-        System.out.println("max score: " + maxScore.getScore());
-        for(int sheet=0; sheet < 4; sheet++)
-        {
-            for (int row = 0; row < 4; row++)
-            {
-                for (int col = 0; col < 4; col++)
+
+            if(blockedByOpponent) {
+                for (int sheet = 0; sheet < 4; sheet++) //finds max score
                 {
-                    Scores moveCheckScore = new Scores(board,letter,new Location(col,row,sheet));
+                    for (int row = 0; row < 4; row++) {
+                        for (int col = 0; col < 4; col++) {
+                            Scores moveCheckScore = new Scores(board, letter, new Location(col, row, sheet));
+                            //System.out.println("checking score: " + moveCheckScore.getScore());
 
-                    System.out.println("checking score: " + moveCheckScore.getScore());
-
-
-                    if (board[sheet][row][col] == '-')  //only check scores for open spots
-                    {
-                        if (moveCheckScore.getScore() > maxScore.getScore())  //if the score of a spot is bigger than ur current max, make it the max
-                        {
-                            System.out.println("checking set");
-                            maxScore.setChecking(moveCheckScore.getChecking());
-                            maxScore.setScore(moveCheckScore.getScore());
+                            if (board[sheet][row][col] != 'x' && board[sheet][row][col] != 'o')  //only check scores for open spots
+                            {
+                                if (moveCheckScore.getScore() >= maxScore.getScore())  //if the score of a spot is bigger than ur current max, make it the max
+                                {
+                                    //System.out.println("checking set");
+                                    maxScore.setChecking(moveCheckScore.getChecking());
+                                    maxScore.setScore(moveCheckScore.getScore());
+                                }
+                            }//does this work?
                         }
                     }
                 }
+                if (board[maxScore.getChecking().getSheet()][maxScore.getChecking().getRow()][maxScore.getChecking().getCol()] == '-') {
+                    //System.out.println("maxscore printing");
+                    board[maxScore.getChecking().getSheet()][maxScore.getChecking().getRow()][maxScore.getChecking().getCol()] = letter;
+
+                    prevMove = maxScore.getChecking();
+                    blockedByOpponent = false;
+                    return prevMove;
+                }
             }
-        }
-        if (board[maxScore.getChecking().getSheet()][maxScore.getChecking().getRow()][maxScore.getChecking().getCol()]=='-')
-            return maxScore.checking;
-        else
-            return generateRandomLocation();
+
+
+       else {
+
+                if (first) {
+                    first = false;
+                    return firstMove;
+                }
+
+
+                //System.out.println("max score: " + maxScore.getScore());
+                for (int sheet = 0; sheet < 4; sheet++) //finds max score
+                {
+                    for (int row = 0; row < 4; row++) {
+                        for (int col = 0; col < 4; col++) {
+                            Scores moveCheckScore = new Scores(board, letter, new Location(col, row, sheet));
+                            //System.out.println("checking score: " + moveCheckScore.getScore());
+
+                            if (board[sheet][row][col] != 'x' && board[sheet][row][col] != 'o')  //only check scores for open spots
+                            {
+                                if (moveCheckScore.getScore() >= maxScore.getScore())  //if the score of a spot is bigger than ur current max, make it the max
+                                {
+                                    //System.out.println("checking set");
+                                    maxScore.setChecking(moveCheckScore.getChecking());
+                                    maxScore.setScore(moveCheckScore.getScore());
+                                }
+                            }//does this work?
+                        }
+                    }
+                }
+                if (board[maxScore.getChecking().getSheet()][maxScore.getChecking().getRow()][maxScore.getChecking().getCol()] == '-') {
+                    //System.out.println("maxscore printing");
+                    board[maxScore.getChecking().getSheet()][maxScore.getChecking().getRow()][maxScore.getChecking().getCol()] = letter;
+
+                    prevMove = maxScore.getChecking();
+
+                    return prevMove;
+                }
+            }
+                prevMove = firstAvailableMove();
+                return prevMove;
+
         //return maxScore.getChecking(); //return the best move!
 
 
 
-        /*
-        if (winType == row && !rowMoves().isEmpty())
-        {
-            return rowMoves().remove(0); // shouldnt replace on move, only adds moves to arraylist if they are avalibale spots
-        }
-        else if (winType == col && !colMoves().isEmpty())
-        {
-            return colMoves().remove(0);
-        }
-        else if (winType == rowThru && !rowThruMoves().isEmpty())
-        {
-            return rowThruMoves().remove(0);
-        }
-        else if (winType == colThru && !colThruMoves().isEmpty())
-        {
-            return colThruMoves().remove(0);
-        }
-        else if (winType == backslashdiag && !backSlashDiagMove().isEmpty())
-        {
-            return backSlashDiagMove().remove(0);
-        }
-        else if (winType == frontslashdiag &&  !frontSlashDiagMove().isEmpty())
-        {
-            return frontSlashDiagMove().remove(0);
-        }
-        else if (winType == backslashthru && !backSlashThruMove().isEmpty())
-        {
-            return backSlashThruMove().remove(0);
-        }
-        else if (winType == frontslashthu && !frontSlashThruMove().isEmpty())
-        {
-            return frontSlashThruMove().remove(0);
-        }
-        else
-        {
-            winType = (int)Math.floor(Math.random()*(8-1+1)+1); //reset the win type if you are blocked (mening ur arraylist in that wintype in empty)
-            bestMove();
-        }*/
+		/*else if (winType == row && !rowMoves().isEmpty())
+		{
+			return rowMoves().remove(0); // shouldnt replace on move, only adds moves to arraylist if they are avalibale spots
+		}
+		else if (winType == col && !colMoves().isEmpty())
+		{
+			return colMoves().remove(0);
+		}
+		else if (winType == rowThru && !rowThruMoves().isEmpty())
+		{
+			return rowThruMoves().remove(0);
+		}
+		else if (winType == colThru && !colThruMoves().isEmpty())
+		{
+			return colThruMoves().remove(0);
+		}
+		else if (winType == backslashdiag && !backSlashDiagMove().isEmpty())
+		{
+			return backSlashDiagMove().remove(0);
+		}
+		else if (winType == frontslashdiag &&  !frontSlashDiagMove().isEmpty())
+		{
+			return frontSlashDiagMove().remove(0);
+		}
+		else if (winType == backslashthru && !backSlashThruMove().isEmpty())
+		{
+			return backSlashThruMove().remove(0);
+		}
+		else if (winType == frontslashthu && !frontSlashThruMove().isEmpty())
+		{
+			return frontSlashThruMove().remove(0);
+		}
+		else
+		{
+			winType = (int)Math.floor(Math.random()*(8-1+1)+1);//reset the win type if you are blocked (meaning ur arraylist in that wintype in empty)
+			winTypesUsed++;
 
-        //return generateRandomLocation(); //shouldnt even get here - added in because java yelling at me
+			if (winTypesUsed<=8)
+			{
+				bestMove();
+			}
+
+			else if (firstAvailableMove()!=null)
+				return generateRandomLocation();
+		}*/
+
+        //return firstAvailableMove(); //shouldnt even get here - added in because java yelling at me
+    }
+
+    public Location firstAvailableMove() {
+        //System.out.println("avliable");
+        for (int i = 0; i < 4; i++) {
+
+            for (int j = 0; j < 4; j++) {
+
+                for (int k = 0; k < 4; k++) {
+                    if (board[i][j][k] == '-')
+                    {
+                        board[i][j][k] = letter;
+                        return new Location(k, j, i);
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     public Location generateRandomLocation()
@@ -714,3 +899,294 @@ public class BlanketFort extends Game3
         }
     }
 }
+
+
+
+
+
+
+
+class Scores
+{
+    //will based on each win condition calculate how good each move is (higher the number the better the score) - used in
+    // blanketfort in order to determine the *best move* instead of defaulting to straight line
+    int score =0;
+    char [][][] board = new char[4][4][4];
+    char letter;
+    Location checking;
+
+    Scores(char [][][] b, char letter, Location checking)
+    {
+
+        for (int i = 0; i < 4; i++) {
+
+            for (int j = 0; j < 4; j++) {
+
+                for (int k = 0; k < 4; k++) {
+
+                    board[i][j][k] = b[i][j][k];
+                }
+            }
+        }
+
+        this.letter = letter;
+        this.checking = checking;
+        score = 0;
+    }
+
+    public int getScore()
+    {
+        //displayBoard(board);
+        score=colCount() +rowCount() + diagonalCountSheet()
+                +rowThruCount() +colThruCount()
+                +colSameThruCount() + specialDiagonalBackSlash()
+                +specialDiagonalForwardSlash() + diagonalCountSheetForwardSlash();
+
+        return score;
+    }
+
+    public Location getChecking() {
+        return checking;
+    }
+
+    public void setChecking(Location checking) {
+        this.checking = checking;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int colCount() //col same sheet upwards n downwards- goes up in the same sheet checking if it ever encounters itself, adds to score
+    {
+        int s = checking.getSheet();
+        int r = checking.getRow();
+        int c = checking.getCol();
+        int count = 0;
+
+        while (r>=0)
+        {
+            if (board[s][r][c] == letter)
+            {
+                count++;
+            }
+            r--;
+        }
+
+        r  = checking.getRow();
+        while (r<4)
+        {
+            if (board[s][r][c] == letter)
+            {
+                count++;
+            }
+            r++;
+        }
+        //System.out.println("col count score: " + (int)(Math.pow(3,count)));
+        return (int)(Math.pow(3,count));
+    }
+
+    public int rowCount () //check row left n right
+    {
+        int s = checking.getSheet();
+        int r = checking.getRow();
+        int c = checking.getCol();
+        int count = 0;
+
+        while (c>=0)
+        {
+            if (board[s][r][c] == letter)
+            {
+                count++;
+            }
+            c--;
+        }
+
+        c  = checking.getRow();
+        while (c<4)
+        {
+            if (board[s][r][c] == letter)
+            {
+                count++;
+            }
+            c++;
+        }
+
+        // System.out.println("row count score: " + (int)(Math.pow(3,count)));
+        return (int)(Math.pow(3,count));
+    }
+
+    public int diagonalCountSheet() //will calculate scored based on diagonals on sheet \  (RECODE FOR THOSE THAT DONT LIE ON DIAGONAL)
+    {
+        int s = checking.getSheet();
+        int r = checking.getRow();
+        int c = checking.getCol();
+        int count = 0;
+
+        if (board[s][0][0]!= board[s][r][c] && board[s][1][1]!=board[s][r][c] && board[s][2][2] != board[s][r][c] &&board[s][3][3] !=  board[s][r][c])
+            return 1; //same thing as count being 0
+
+
+        if (board[s][0][0] == letter)
+            count++;
+        if (board[s][1][1] == letter)
+            count++;
+        if (board[s][2][2] == letter)
+            count++;
+        if (board[s][3][3] == letter)
+            count++;
+
+        //System.out.println("diagonal 1 count score: " + (int)(Math.pow(3,count)));
+        return (int)(Math.pow(3,count));
+    }
+
+    public int diagonalCountSheetForwardSlash() // / diagonal on each sheet
+    {
+
+        int s = checking.getSheet();
+        int r = checking.getRow();
+        int c = checking.getCol();
+
+        if (board[s][0][3]!= board[s][r][c] && board[s][1][2]!=board[s][r][c] && board[s][2][1] != board[s][r][c] &&board[s][3][0] !=  board[s][r][c])
+            return 1; //same thing as count being 0 (if this move cant even be a part of a diagonal, its not valid)
+
+        int count =0;
+        if (board[s][0][3] == letter)
+            count++;
+        if (board[s][1][2] == letter)
+            count++;
+        if (board[s][2][1] == letter)
+            count++;
+        if (board[s][3][0] == letter)
+            count++;
+
+        //System.out.println("diagonalCountSheetForwardSlash: " + (int)(Math.pow(3,count)));
+        return (int)(Math.pow(3,count));
+    }
+
+    public int rowThruCount()
+    {
+        int count =0;
+        int r = checking.getRow();
+
+        if (board[0][r][0] ==letter)
+            count++;
+        if (board[1][r][1] == letter)
+            count++;
+        if (board[2][r][2] == letter)
+            count++;
+        if (board[3][r][3] == letter)
+            count++;
+
+        //System.out.println("rowthru count score: " + (int)(Math.pow(3,count)));
+        return (int)(Math.pow(3,count));
+    }
+
+    public int colThruCount()
+    {
+        int c = checking.getCol();
+        int count =0;
+
+        if (board[0][0][c] == letter) {
+            count++;
+        }
+        if (board[1][1][c] == letter)
+            count++;
+        if (board[2][2][c] == letter)
+            count++;
+        if (board[3][3][c] == letter)
+            count++;
+
+        return (int)(Math.pow(3,count));
+    }
+
+    public int colSameThruCount()
+    {
+        int count =0;
+        int r = checking.getRow();
+        int c= checking.getCol();
+
+        for (int s = 0; s <4; s++)
+        {
+            if (board[s][r][c] == letter)
+            {
+                count++;
+            }
+        }
+        //System.out.println("colSameThruCount: " + (int)(Math.pow(3,count)));
+        return (int)(Math.pow(3,count));
+    }
+
+    public int specialDiagonalBackSlash() // \ diagonal
+    {
+        int s = checking.getSheet();
+        int r = checking.getRow();
+        int c = checking.getCol();
+
+        if (board[0][0][0]!= board[s][r][c] && board[1][1][1]!=board[s][r][c] && board[2][2][2] != board[s][r][c] &&board[3][3][3] !=  board[s][r][c])
+            return 1; //same thing as count being 0 (if this move cant even be a part of a diagonal, its not valid)
+
+        s= 0;
+        int count =0;
+        if (board[s][0][0] == letter)
+            count++;
+        if (board[s+1][1][1] == letter)
+            count++;
+        if (board[s+2][2][2] == letter)
+            count++;
+        if (board[s+3][3][3] == letter)
+            count++;
+
+        return (int)(Math.pow(3,count));
+    }
+
+    public int specialDiagonalForwardSlash() // / diagonal
+    {
+
+        int s = checking.getSheet();
+        int r = checking.getRow();
+        int c = checking.getCol();
+
+        if (board[0][0][3]!= board[s][r][c] && board[1][1][2]!=board[s][r][c] && board[2][2][1] != board[s][r][c] &&board[3][3][0] !=  board[s][r][c])
+            return 1; //same thing as count being 0 (if this move cant even be a part of a diagonal, its not valid)
+        s= 0;
+        int count = 0;
+
+        if (board[s][0][3] == letter)
+            count++;
+        if (board[s+1][1][2] == letter)
+            count++;
+        if (board[s+2][2][1] == letter)
+            count++;
+        if (board[s+3][3][0] == letter)
+            count++;
+
+        return (int)(Math.pow(3,count));
+    }
+
+    public static void displayBoard(char[][][] board)
+    {
+        for (int i = 0; i < 4; i++) {
+
+            for (int j = 0; j < 4; j++) {
+
+                for (int k = 0; k < 4; k++) {
+
+                    System.out.print("[" + board[i][j][k] + "] ");
+                }
+
+                System.out.println();
+            }
+            System.out.println();
+        }
+    }
+
+    //row thu done
+    //col thru done
+    //col same thru done
+
+    //special diagonal \ done
+    //special diagonal / done
+    // diagonal sheet / done
+}
+
