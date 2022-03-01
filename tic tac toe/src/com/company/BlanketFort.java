@@ -206,7 +206,8 @@ public class BlanketFort extends Game3
             if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
             {
                 //System.out.println(" col thoruhg count was 3");
-                return colThruForce(c);
+                if (colThruForce(c)!=null)
+                    return colThruForce(c);
             }
             count =0;
         }
@@ -241,7 +242,8 @@ public class BlanketFort extends Game3
                 if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
                 {
                     //System.out.println("count was 3");
-                    return rowForce(s,r);
+                    if (rowForce(s,r)!=null)
+                        return rowForce(s,r);
                 }
                 count =0; //reset count after every row to make sure not double counting in a sheet
                 //System.out.println(" count reset ");
@@ -274,7 +276,9 @@ public class BlanketFort extends Game3
                 if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
                 {
                     //System.out.println(" col count was 3");
-                    return colForce(s,c);
+                    if (colForce(s,c) !=null) {
+                        return colForce(s, c);
+                    }
                 }
                 count =0; //reset count after every row to make sure not double counting in a sheet
                 //System.out.println(" count reset col ");
@@ -296,7 +300,8 @@ public class BlanketFort extends Game3
             if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
             {
                 //System.out.println(" col count was 3");
-                return rowThruForce(r);
+                if (rowThruForce(r)!=null)
+                    return rowThruForce(r);
             }
             count =0; //reset count after every row to make sure not double counting in a sheet
             //System.out.println(" count reset col ");
@@ -326,7 +331,8 @@ public class BlanketFort extends Game3
             if (count==3) //if there is a 3 in a row, run row force (becuase checking for row 3s)
             {
                 //System.out.println(" col thoruhg count was 3");
-                return colThruForce(c);
+                if (colThruForce(c)!=null)
+                    return colThruForce(c);
             }
             count =0;
         }
@@ -344,7 +350,8 @@ public class BlanketFort extends Game3
 
             if (count == 3)
             {
-                return backslashDiagForce(s);
+                if (backslashDiagForce(s) != null)
+                    return backslashDiagForce(s);
             }
 
             count = 0;
@@ -363,7 +370,8 @@ public class BlanketFort extends Game3
 
             if (count == 3)
             {
-                return frontSlashDiagForce(s);
+                if (frontSlashDiagForce(s)!=null)
+                    return frontSlashDiagForce(s);
             }
 
             count =0;
@@ -382,7 +390,8 @@ public class BlanketFort extends Game3
 
         if (count==3)
         {
-            return backSlashThruForce();
+            if (backSlashThruForce()!=null)
+                return backSlashThruForce();
         }
 
         count =0;
@@ -401,7 +410,8 @@ public class BlanketFort extends Game3
 
         if (count == 3)
         {
-            return  frontSlashThruForce();
+            if (frontSlashThruForce() != null)
+                return  frontSlashThruForce();
         }
 
         count =0;
@@ -423,7 +433,8 @@ public class BlanketFort extends Game3
                 if (count==3)
                 {
                     //System.out.println("thru called");
-                    return thru(r,c);
+                    if (thru(r,c)!=null)
+                        return thru(r,c);
                 }
                 count=0;
             }
