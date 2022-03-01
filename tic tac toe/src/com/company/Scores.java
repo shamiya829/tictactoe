@@ -30,7 +30,7 @@ public class Scores
 
     public int getScore()
     {
-        displayBoard(board);
+        //displayBoard(board);
         score=colCount() +rowCount() + diagonalCountSheet()
                 +rowThruCount() +colThruCount()
                 +colSameThruCount() + specialDiagonalBackSlash()
@@ -76,7 +76,7 @@ public class Scores
             }
             r++;
         }
-        System.out.println("col count score: " + (int)(Math.pow(3,count)));
+        //System.out.println("col count score: " + (int)(Math.pow(3,count)));
         return (int)(Math.pow(3,count));
     }
 
@@ -106,7 +106,7 @@ public class Scores
             c++;
         }
 
-        System.out.println("row count score: " + (int)(Math.pow(3,count)));
+        // System.out.println("row count score: " + (int)(Math.pow(3,count)));
         return (int)(Math.pow(3,count));
     }
 
@@ -130,7 +130,7 @@ public class Scores
         if (board[s][3][3] == letter)
             count++;
 
-        System.out.println("diagonal 1 count score: " + (int)(Math.pow(3,count)));
+        //System.out.println("diagonal 1 count score: " + (int)(Math.pow(3,count)));
         return (int)(Math.pow(3,count));
     }
 
@@ -154,7 +154,7 @@ public class Scores
         if (board[s][3][0] == letter)
             count++;
 
-        System.out.println("diagonalCountSheetForwardSlash: " + (int)(Math.pow(3,count)));
+        //System.out.println("diagonalCountSheetForwardSlash: " + (int)(Math.pow(3,count)));
         return (int)(Math.pow(3,count));
     }
 
@@ -172,7 +172,7 @@ public class Scores
         if (board[3][r][3] == letter)
             count++;
 
-        System.out.println("rowthru count score: " + (int)(Math.pow(3,count)));
+        //System.out.println("rowthru count score: " + (int)(Math.pow(3,count)));
         return (int)(Math.pow(3,count));
     }
 
@@ -207,7 +207,7 @@ public class Scores
                 count++;
             }
         }
-        System.out.println("colSameThruCount: " + (int)(Math.pow(3,count)));
+        //System.out.println("colSameThruCount: " + (int)(Math.pow(3,count)));
         return (int)(Math.pow(3,count));
     }
 
