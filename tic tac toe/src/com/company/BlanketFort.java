@@ -23,7 +23,20 @@ public class BlanketFort extends Game3
     {
         this.letter = name;
         winType = (int)Math.floor(Math.random()*(8-1+1)+1); //will pick a certain wintype at random
-        System.out.println("win tyep number: "+winType);
+        ArrayList<Location> arr = new ArrayList<>();
+        arr.add(new Location(1,1,1));
+        arr.add(new Location(2,1,1));
+        arr.add(new Location(1,2,1));
+        arr.add(new Location(2,2,1));
+
+        firstMove = arr.remove((int)Math.floor(Math.random()*(3-0+1)+0));
+
+        while (board[firstMove.getSheet()][firstMove.getRow()][firstMove.getCol()] != '-')
+        {
+            firstMove = arr.remove((int)Math.floor(Math.random()*(3-0+1)+0));
+        }
+
+        //System.out.println("win tyep number: "+winType);
 
         if (letter == 'o')
             opponentName = 'x';
@@ -181,6 +194,7 @@ public class BlanketFort extends Game3
     {
         char[][][] board = Board.getBoard();
 
+
         int count = 0;
 
         //col through
@@ -308,6 +322,26 @@ public class BlanketFort extends Game3
         }
 
         count = 0;
+
+        //row through backwards checks
+        for(int r = 0; r < 4; r++) {
+                if (board[3][r][0] ==value)
+                    count++;
+                if ( board[2][r][1]==value)
+                    count++;
+                if (board[1][r][2] == value)
+                    count++;
+                if (board[0][r][3]==value)
+                    count++;
+
+                if (count==3 && rowthruBackwardsForce(r)!=null)
+                {
+                    return rowthruBackwardsForce(r);
+                }
+            count=0;
+        }
+
+        count = 0;
         //col through
         for (int c=0;c<4;c++)
         {
@@ -377,8 +411,8 @@ public class BlanketFort extends Game3
             count =0;
         }
 
-
-
+        count=0;
+        //back slash thru
         if (board[0][0][0] == value)
             count++;
         if (board[1][1][1] == value)
@@ -394,18 +428,16 @@ public class BlanketFort extends Game3
                 return backSlashThruForce();
         }
 
-        count =0;
-
+        count=0;
         //frontSlashThruMove
-
 
         if (board[0][0][3] == value)
             count++;
-        if (board[0+1][1][2] == value)
+        if (board[1][1][2] == value)
             count++;
-        if (board[0+2][2][1] == value)
+        if (board[2][2][1] == value)
             count++;
-        if (board[0+3][3][0] == value)
+        if (board[3][3][0] == value)
             count++;
 
         if (count == 3)
@@ -460,6 +492,25 @@ public class BlanketFort extends Game3
 
         return null;
     }
+
+    public Location rowthruBackwardsForce(int r)
+    {
+        char[][][] board = Board.getBoard();
+
+        System.out.println("rowthruBackwardsForce");
+
+        if (board[3][r][0] =='-')
+            return(new Location(0,r,3));
+        if ( board[2][r][1]=='-')
+            return(new Location(1,r,2));
+        if (board[1][r][2] == '-')
+            return(new Location(2,r,1));
+        if (board[0][r][3]=='-')
+            return(new Location(3,r,0));
+
+        return null;
+    }
+
 
     public Location rowForce(int s, int r) //will check for the open spot and play there
     {
@@ -848,6 +899,12 @@ public class BlanketFort extends Game3
         }
     }
 }
+
+
+
+
+
+
 
 class Scores
 {
